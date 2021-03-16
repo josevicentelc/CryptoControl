@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Grids,
-  Buttons, udatabaseconector, ucryptomanager, ucryptos;
+  Buttons, udatabaseconector, ucryptomanager, ucryptos, uwallets;
 
 type
 
@@ -45,6 +45,7 @@ procedure Tmainform.FormCreate(Sender: TObject);
 begin
      db := TDatabaseConnector.create('myfile.sql3');
      initCryptoController(db);
+     initwalletController(db);
 end;
 
 procedure Tmainform.btn_admin_cryptosClick(Sender: TObject);

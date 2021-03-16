@@ -147,7 +147,7 @@ function TCryptoController.getNextId(): Integer;
 var
    Q : TSqlQuery;
 begin
-     Q := db.getSqlQuery('select max(crypto_id) from cryptocurrency');
+     Q := db.getSqlQuery('select max(crypto_id) from "cryptocurrency"');
      while not Q.Eof do
      begin
           if Q.Fields[0].AsString = '' then result := 1
@@ -192,8 +192,7 @@ begin
      begin
           if crypto.getId() <= 0 then
           begin
-            crypto.setId(getNextId());
-            sql := 'delete from "cryptocurrency where crypto_id = ' + inttostr(crypto.getId());
+            sql := 'delete from "cryptocurrency" where crypto_id = ' + inttostr(crypto.getId());
             db.launchSql(sql);
           end;
      end;
@@ -206,7 +205,7 @@ var
 begin
      // refresh and returns crypto list
      result := TCryptoList.create;
-     Q := db.getSqlQuery('select * from cryptocurrency order by crypto_name');
+     Q := db.getSqlQuery('select * from "cryptocurrency" order by crypto_name');
      while not Q.Eof do
      begin
          crypto := TCrypto.create;
