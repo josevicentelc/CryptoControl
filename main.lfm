@@ -7,7 +7,7 @@ object mainform: Tmainform
   ClientHeight = 594
   ClientWidth = 868
   OnCreate = FormCreate
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '1.8.2.0'
   object Panel1: TPanel
     Left = 0
     Height = 98
@@ -21,8 +21,9 @@ object mainform: Tmainform
       Left = 0
       Height = 98
       Top = 0
-      Width = 96
-      Caption = 'Register wallet'
+      Width = 116
+      Caption = 'Wallet manager'
+      Flat = True
       Glyph.Data = {
         CE400000424DCE4000000000000036000000280000004E000000350000000100
         2000000000009840000064000000640000000000000000000000C9AEFFFFC9AE
@@ -547,11 +548,12 @@ object mainform: Tmainform
       Layout = blGlyphTop
     end
     object btn_admin_cryptos: TSpeedButton
-      Left = 96
+      Left = 116
       Height = 98
       Top = 0
-      Width = 96
-      Caption = 'Cryptos'
+      Width = 116
+      Caption = 'Crypto Manager'
+      Flat = True
       Glyph.Data = {
         12310000424D123100000000000036000000280000004E000000350000000100
         180000000000DC30000064000000640000000000000000000000C9AEFFC9AEFF
@@ -951,11 +953,12 @@ object mainform: Tmainform
       OnClick = btn_admin_cryptosClick
     end
     object btn_admin_exchanges: TSpeedButton
-      Left = 192
+      Left = 232
       Height = 98
       Top = 0
-      Width = 95
-      Caption = 'Exchanges'
+      Width = 115
+      Caption = 'Exchange Manager'
+      Flat = True
       Glyph.Data = {
         CE400000424DCE4000000000000036000000280000004E000000350000000100
         2000000000009840000064000000640000000000000000000000C9AEFFFFC9AE
@@ -1480,18 +1483,20 @@ object mainform: Tmainform
       Layout = blGlyphTop
     end
     object btn_add_movement: TSpeedButton
-      Left = 287
+      Left = 347
       Height = 98
       Top = 0
-      Width = 95
+      Width = 115
       Caption = 'Movements'
+      Flat = True
     end
     object btn_settings: TSpeedButton
-      Left = 382
+      Left = 461
       Height = 98
       Top = 0
-      Width = 95
+      Width = 115
       Caption = 'Settings'
+      Flat = True
     end
   end
   object StringGrid1: TStringGrid

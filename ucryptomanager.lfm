@@ -3,21 +3,13 @@ object fcryptomanager: Tfcryptomanager
   Height = 332
   Top = 337
   Width = 504
+  BorderStyle = bsDialog
   Caption = 'Crypto manager'
   ClientHeight = 332
   ClientWidth = 504
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.2.0'
-  object cryptolist: TDrawGrid
-    Left = 0
-    Height = 332
-    Top = 0
-    Width = 334
-    Align = alClient
-    ExtendedSelect = False
-    TabOrder = 0
-  end
+  LCLVersion = '1.8.2.0'
   object Panel1: TPanel
     Left = 334
     Height = 332
@@ -26,13 +18,14 @@ object fcryptomanager: Tfcryptomanager
     Align = alRight
     ClientHeight = 332
     ClientWidth = 170
-    TabOrder = 1
+    TabOrder = 0
     object SpeedButton1: TSpeedButton
       Left = 8
       Height = 56
       Top = 8
       Width = 152
       Caption = 'Add new crypto'
+      OnClick = SpeedButton1Click
     end
     object SpeedButton2: TSpeedButton
       Left = 8
@@ -41,5 +34,15 @@ object fcryptomanager: Tfcryptomanager
       Width = 152
       Caption = 'Remove crypto'
     end
+  end
+  object cryptolist: TStringGrid
+    Left = 0
+    Height = 332
+    Top = 0
+    Width = 334
+    Align = alClient
+    ColCount = 3
+    Options = [goFixedHorzLine, goHorzLine, goRangeSelect, goSmoothScroll]
+    TabOrder = 1
   end
 end

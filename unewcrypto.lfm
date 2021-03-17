@@ -1,0 +1,63 @@
+object fnewcrypto: Tfnewcrypto
+  Left = 721
+  Height = 128
+  Top = 392
+  Width = 367
+  BorderStyle = bsDialog
+  Caption = 'Add new crypto'
+  ClientHeight = 128
+  ClientWidth = 367
+  Position = poScreenCenter
+  LCLVersion = '1.8.2.0'
+  object text_crypto_name: TEdit
+    Left = 24
+    Height = 23
+    Top = 48
+    Width = 224
+    OnChange = text_crypto_nameChange
+    TabOrder = 0
+  end
+  object text_short_name: TEdit
+    Left = 264
+    Height = 23
+    Top = 48
+    Width = 80
+    OnChange = text_crypto_nameChange
+    TabOrder = 1
+  end
+  object btnCancel: TBitBtn
+    Left = 173
+    Height = 30
+    Top = 85
+    Width = 75
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 2
+  end
+  object btnAdd: TBitBtn
+    Left = 269
+    Height = 30
+    Top = 85
+    Width = 75
+    Caption = 'Add'
+    Enabled = False
+    ModalResult = 6
+    TabOrder = 3
+  end
+  object Label1: TLabel
+    Left = 26
+    Height = 15
+    Top = 24
+    Width = 89
+    Caption = 'Full crypto name'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 264
+    Height = 15
+    Top = 24
+    Width = 61
+    Caption = 'Short name'
+    ParentColor = False
+  end
+end
