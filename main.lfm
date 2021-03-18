@@ -1,13 +1,14 @@
 object mainform: Tmainform
-  Left = 352
+  Left = 702
   Height = 594
-  Top = 113
+  Top = 223
   Width = 868
   Caption = 'Crypto Tracer'
   ClientHeight = 594
   ClientWidth = 868
   OnCreate = FormCreate
-  LCLVersion = '1.8.2.0'
+  Position = poScreenCenter
+  LCLVersion = '2.0.2.0'
   object Panel1: TPanel
     Left = 0
     Height = 98
@@ -546,6 +547,7 @@ object mainform: Tmainform
         FFFFC9AEFFFFC9AEFFFFC9AEFFFFC9AEFFFF
       }
       Layout = blGlyphTop
+      OnClick = btn_register_walletClick
     end
     object btn_admin_cryptos: TSpeedButton
       Left = 116
@@ -1489,6 +1491,7 @@ object mainform: Tmainform
       Width = 115
       Caption = 'Movements'
       Flat = True
+      OnClick = btn_add_movementClick
     end
     object btn_settings: TSpeedButton
       Left = 461
@@ -1516,12 +1519,31 @@ object mainform: Tmainform
     Align = alTop
     ResizeAnchor = akTop
   end
-  object StringGrid2: TStringGrid
+  object Panel2: TPanel
     Left = 0
     Height = 298
     Top = 296
     Width = 868
     Align = alClient
+    ClientHeight = 298
+    ClientWidth = 868
     TabOrder = 3
+    object StringGrid2: TStringGrid
+      Left = 1
+      Height = 273
+      Top = 24
+      Width = 866
+      Align = alBottom
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      TabOrder = 0
+    end
+    object Label1: TLabel
+      Left = 8
+      Height = 15
+      Top = 0
+      Width = 28
+      Caption = 'Taxes'
+      ParentColor = False
+    end
   end
 end

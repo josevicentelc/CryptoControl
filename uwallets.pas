@@ -5,7 +5,7 @@ unit uwallets;
 interface
 
 uses
-  Classes, SysUtils, udatabaseconector, sqldb;
+  Classes, SysUtils, udatabaseconector, sqldb, utils;
 
 type
 
@@ -13,15 +13,28 @@ type
   private
          pk : string;
          user: integer;
+         wname: String;
          crypto: integer;
+         balance: double;
+         contable_value : double;
   public
     constructor create();
     procedure setPk(_pk : string);
+    procedure setName(_name : string);
     procedure setUser(_user : integer);
     procedure setCrypto(_crypto : integer);
+    procedure setBalance(_balance : double);
+    procedure setContableValue(_value : double);
+
     function getPk(): string;
     function getUser(): integer;
     function getCrypto(): integer;
+    function getName(): String;
+    function getBalance(): double;
+    function getContableValue(): double;
+
+    procedure addBalance(_balance: double; _value: double);
+
   end;
 
 
@@ -61,34 +74,30 @@ constructor TWallet.create();
 begin
 end;
 
-procedure TWallet.setPk(_pk : string);
-begin
-     pk := _pk;
-end;
+procedure TWallet.setPk(_pk : string);             begin     pk := _pk;         end;
+procedure TWallet.setName(_name : string);         begin     wname := _name;    end;
+procedure TWallet.setUser(_user : integer);        begin     user := _user;     end;
+procedure TWallet.setCrypto(_crypto : integer);    begin     crypto := _crypto; end;
+function TWallet.getPk(): string;                  begin     result := pk;      end;
+function TWallet.getName(): string;                begin     result := wname;   end;
+function TWallet.getUser(): integer;               begin     result := user;    end;
+function TWallet.getCrypto(): integer;             begin     result := crypto;  end;
+procedure TWallet.setBalance(_balance : double);   begin     balance := _balance;end;
+procedure TWallet.setContableValue(_value : double);begin    contable_value:=_value;end;
+function TWallet.getBalance(): double;             begin     result := balance; end;
+function TWallet.getContableValue(): double;       begin     result := contable_value;end;
 
-procedure TWallet.setUser(_user : integer);
+procedure TWallet.addBalance(_balance: double; _value: double);
+var
+  f : double;
+  newBalance : double;
+  newValue : double;
 begin
-     user := _user;
-end;
-
-procedure TWallet.setCrypto(_crypto : integer);
-begin
-     crypto := _crypto;
-end;
-
-function TWallet.getPk(): string;
-begin
-     result := pk;
-end;
-
-function TWallet.getUser(): integer;
-begin
-     result := user;
-end;
-
-function TWallet.getCrypto(): integer;
-begin
-     result := crypto;;
+     newBalance := _balance + balance;
+     f := _balance / newBalance;
+     newValue:=_value*f + contable_value*(1-f);
+     setBalance(newValue);
+     setContableValue(newValue);
 end;
 
 // *****************************************************************************
@@ -172,14 +181,20 @@ begin
         begin
           sql := 'update "wallets" set ';
           sql := sql + 'wallet_crypto = ' + inttostr(Wallet.getCrypto()) + ', ';
+          sql := sql + 'wallet_name = "' + Wallet.getName() +'",';
           sql := sql + 'wallet_user = ' + inttostr(Wallet.getUser());
+          sql := sql + 'wallet_balance = '+ floatToSql(wallet.getBalance()) +',';
+          sql := sql + 'wallet_contable_value = '+ floatToSql(wallet.getContableValue()) +',';
           sql := sql + ' where wallet_pk = "' + Wallet.getPk() + '"';
         end
         else
         begin
-            sql := 'insert into "wallets" (Wallet_pk, wallet_crypto, Wallet_user) values(';
+            sql := 'insert into "wallets" (Wallet_pk, Wallet_name, wallet_crypto, wallet_balance , wallet_contable_value, Wallet_user) values(';
             sql := sql + '"' + Wallet.getPk() + '", ';
+            sql := sql + '"' + Wallet.getName() + '", ';
             sql := sql + inttostr(Wallet.getCrypto()) + ', ';
+            sql := sql + floatToSql(wallet.getBalance()) +',';
+            sql := sql + floatToSql(wallet.getContableValue()) +',';
             sql := sql + inttostr(Wallet.getUser()) + ')';
         end;
         db.launchSql(sql);
@@ -207,13 +222,16 @@ var
 begin
      // refresh and returns Wallet list
      result := TWalletList.create;
-     Q := db.getSqlQuery('select * from Walletcurrency order by Wallet_name');
+     Q := db.getSqlQuery('select * from "Wallets" order by Wallet_pk');
      while not Q.Eof do
      begin
          Wallet := TWallet.create;
          Wallet.setpk(Q.FieldByName('Wallet_pk').AsString);
+         Wallet.setName(Q.FieldByName('Wallet_name').AsString);
          Wallet.setCrypto(Q.FieldByName('Wallet_crypto').Asinteger);
          Wallet.setUser(Q.FieldByName('Wallet_user').Asinteger);
+         Wallet.setContableValue(Q.FieldByName('wallet_contable_value').AsFloat);
+         Wallet.setBalance(Q.FieldByName('wallet_balance').AsFloat);
          result.push(Wallet);
          Q.Next;
      end;

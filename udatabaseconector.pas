@@ -83,14 +83,15 @@ begin
       // Wallet list
       database.ExecuteDirect('CREATE TABLE "wallets"('+
                   ' "wallet_pk" char(100) not null PRIMARY KEY,'+
+                  ' "wallet_name" char(100),'+
                   ' "wallet_user" integer NOT NULL,'+
                   ' "wallet_crypto" integer not null,'+
+                  ' "wallet_balance" numeric(9, 16) NOT NULL default 0,'+
+                  ' "wallet_contable_value" numeric(16, 2) NOT NULL default 0,'+
                   ' FOREIGN KEY (wallet_crypto) REFERENCES cryptocurrency (crypto_id),'+
                   ' FOREIGN KEY (wallet_user) REFERENCES users (user_id));');
 
-      database.ExecuteDirect('CREATE UNIQUE INDEX "wallets_idx" ON "wallets"( "wallet_id" );');
-
-
+      database.ExecuteDirect('CREATE UNIQUE INDEX "wallets_pkx" ON "wallets"( "wallet_pk" );');
 
 
       // Crypto movements
@@ -99,12 +100,15 @@ begin
                   ' "move_type" integer not null,'+
                   ' "move_datetime" numeric(18,6) not null default 0,'+
                   ' "move_crypto_price" numeric(9, 16)  NOT NULL,'+
-                  ' "move_wallet" char(100) NOT NULL,'+
+                  ' "move_wallet_origin" char(100) NOT NULL,'+
+                  ' "move_wallet_destiny" char(100) NOT NULL,'+
                   ' "move_currencyimport" numeric(10, 2) NOT NULL,'+
-                  ' "move_comision" char(100) NOT NULL default 0,'+
+                  ' "move_comision_buy" char(100) NOT NULL default 0,'+
+                  ' "move_comision_shell" char(100) NOT NULL default 0,'+
                   ' "move_fee" numeric(9, 16) NOT NULL default 0,'+
                   ' "move_currency" integer not null,'+
-                  ' FOREIGN KEY (move_wallet) REFERENCES wallets (wallet_pk));');
+                  ' FOREIGN KEY (move_wallet_destiny) REFERENCES wallets (wallet_pk),'+
+                  ' FOREIGN KEY (move_wallet_origin) REFERENCES wallets (wallet_pk));');
 
       database.ExecuteDirect('CREATE UNIQUE INDEX "moves_idx" ON "moves"( "moves_id" );');
 

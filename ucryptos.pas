@@ -45,9 +45,12 @@ type
   public
     constructor create(_db: TDatabaseConnector);
     function getNextId(): integer;
+
     procedure save(crypto: TCrypto);
     procedure remove(crypto: TCrypto);
     function getCryptos(): TCryptoList;
+    function getById(_id: integer): TCrypto;
+
   end;
 
 
@@ -196,6 +199,23 @@ begin
             db.launchSql(sql);
           end;
      end;
+end;
+
+function TCryptoController.getById(_id: integer): TCrypto;
+var
+   Q : TSQLQuery;
+begin
+   result := TCrypto.create();
+   Q := db.getSqlQuery('select * from "cryptocurrency" where crypto_id = ' + inttostr(_id));
+   while not Q.Eof do
+   begin
+       result.setId(Q.FieldByName('crypto_id').AsInteger);
+       result.setName(Q.FieldByName('crypto_name').AsString);
+       result.setShorName(Q.FieldByName('crypto_short').AsString);
+       Q.Next;
+   end;
+   Q.Close;
+   Q.Free;
 end;
 
 function TCryptoController.getCryptos(): TCryptoList;
