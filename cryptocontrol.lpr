@@ -7,8 +7,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, main, ucryptomanager, ucryptos, uwallets, unewcrypto, uwalletmanager,
-  unewwallet, utils, umovementManager
+  Forms, datetimectrls, main, ucryptomanager, ucryptos, uwallets, unewcrypto,
+  uwalletmanager, unewwallet, utils, umovementManager, umovements, ubuycrypto
   { you can add units after this };
 
 {$R *.res}
@@ -23,6 +23,7 @@ begin
   Application.CreateForm(Tfwalletmanager, fwalletmanager);
   Application.CreateForm(TfnewWallet, fnewWallet);
   Application.CreateForm(TfMovementsManager, fMovementsManager);
+  Application.CreateForm(Tfbuycrypto, fbuycrypto);
   Application.Run;
 end.
 

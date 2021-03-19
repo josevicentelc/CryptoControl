@@ -62,6 +62,7 @@ public
   procedure save(Wallet: TWallet);
   procedure remove(Wallet: TWallet);
   function getWallets(): TWalletList;
+  function getWallet(pk: String): TWallet;
 end;
 
 var
@@ -214,6 +215,28 @@ begin
           end;
      end;
 end;
+
+function TWalletController.getWallet(pk: String): TWallet;
+var
+   Q : TSQLQuery;
+begin
+     // refresh and returns Wallet list
+     result := TWallet.create;
+     Q := db.getSqlQuery('select * from "Wallets" where Wallet_pk = "'+pk+'"');
+     while not Q.Eof do
+     begin
+         result.setpk(Q.FieldByName('Wallet_pk').AsString);
+         result.setName(Q.FieldByName('Wallet_name').AsString);
+         result.setCrypto(Q.FieldByName('Wallet_crypto').Asinteger);
+         result.setUser(Q.FieldByName('Wallet_user').Asinteger);
+         result.setContableValue(Q.FieldByName('wallet_contable_value').AsFloat);
+         result.setBalance(Q.FieldByName('wallet_balance').AsFloat);
+         Q.Next;
+     end;
+     Q.Close;
+     Q.Free;
+end;
+
 
 function TWalletController.getWallets(): TWalletList;
 var

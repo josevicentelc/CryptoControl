@@ -1,7 +1,7 @@
 object fMovementsManager: TfMovementsManager
-  Left = 602
+  Left = 436
   Height = 236
-  Top = 257
+  Top = 251
   Width = 500
   BorderStyle = bsDialog
   Caption = 'Movements'
@@ -537,6 +537,7 @@ object fMovementsManager: TfMovementsManager
       FFFFC9AEFFFFC9AEFFFFC9AEFFFFC9AEFFFF
     }
     Layout = blGlyphTop
+    OnClick = SpeedButton1Click
   end
   object SpeedButton2: TSpeedButton
     Left = 128

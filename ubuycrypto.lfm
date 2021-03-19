@@ -1,0 +1,251 @@
+object fbuycrypto: Tfbuycrypto
+  Left = 618
+  Height = 390
+  Top = 196
+  Width = 420
+  BorderStyle = bsDialog
+  Caption = 'Buy crypto movement'
+  ClientHeight = 390
+  ClientWidth = 420
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '2.0.2.0'
+  object Edit1: TEdit
+    Left = 24
+    Height = 23
+    Top = 93
+    Width = 354
+    TabOrder = 0
+  end
+  object Label1: TLabel
+    Left = 24
+    Height = 20
+    Top = 71
+    Width = 55
+    Caption = 'Concept'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object ComboBox1: TComboBox
+    Left = 24
+    Height = 23
+    Top = 40
+    Width = 352
+    ItemHeight = 15
+    TabOrder = 1
+    Text = 'ComboBox1'
+  end
+  object Label2: TLabel
+    Left = 25
+    Height = 20
+    Top = 14
+    Width = 42
+    Caption = 'Wallet'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object DateTimePicker1: TDateTimePicker
+    Left = 24
+    Height = 23
+    Top = 148
+    Width = 137
+    CenturyFrom = 1941
+    MaxDate = 2958465
+    MinDate = -53780
+    TabOrder = 2
+    TrailingSeparator = False
+    TextForNullDate = 'NULL'
+    LeadingZeros = True
+    Kind = dtkDateTime
+    TimeFormat = tf24
+    TimeDisplay = tdHMS
+    DateMode = dmComboBox
+    Date = 44274
+    Time = 0.416268981483881
+    UseDefaultSeparators = True
+    AutoAdvance = False
+    HideDateTimeParts = []
+    MonthNames = 'Long'
+    CalAlignment = dtaRight
+    Options = [dtpoFlatButton]
+  end
+  object Label3: TLabel
+    Left = 24
+    Height = 20
+    Top = 126
+    Width = 141
+    Caption = 'Movement date/time'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object Edit2: TEdit
+    Left = 25
+    Height = 23
+    Top = 207
+    Width = 126
+    OnKeyPress = Edit2KeyPress
+    PopupMenu = PopupMenu1
+    TabOrder = 3
+    Text = '0.00000'
+  end
+  object Label4: TLabel
+    Left = 25
+    Height = 15
+    Top = 188
+    Width = 62
+    Caption = 'CEFI Import'
+    ParentColor = False
+  end
+  object Edit3: TEdit
+    Left = 232
+    Height = 23
+    Top = 207
+    Width = 126
+    OnKeyPress = Edit2KeyPress
+    PopupMenu = PopupMenu1
+    TabOrder = 4
+    Text = '0.00000'
+  end
+  object Label5: TLabel
+    Left = 232
+    Height = 15
+    Top = 188
+    Width = 51
+    Caption = 'Comision'
+    ParentColor = False
+  end
+  object Edit4: TEdit
+    Left = 25
+    Height = 23
+    Top = 263
+    Width = 126
+    OnKeyPress = Edit2KeyPress
+    PopupMenu = PopupMenu1
+    TabOrder = 5
+    Text = '0.00000'
+  end
+  object Label6: TLabel
+    Left = 25
+    Height = 15
+    Top = 244
+    Width = 79
+    Caption = 'Transaction fee'
+    ParentColor = False
+  end
+  object Edit5: TEdit
+    Left = 232
+    Height = 23
+    Top = 263
+    Width = 126
+    OnKeyPress = Edit2KeyPress
+    PopupMenu = PopupMenu1
+    TabOrder = 6
+    Text = '0.00000'
+  end
+  object Label7: TLabel
+    Left = 232
+    Height = 15
+    Top = 244
+    Width = 80
+    Caption = 'Cryptos earned'
+    ParentColor = False
+  end
+  object BitBtn1: TBitBtn
+    Left = 265
+    Height = 38
+    Top = 328
+    Width = 104
+    Caption = 'BitBtn1'
+    TabOrder = 7
+  end
+  object BitBtn2: TBitBtn
+    Left = 137
+    Height = 38
+    Top = 328
+    Width = 104
+    Caption = 'BitBtn2'
+    TabOrder = 8
+  end
+  object Label8: TLabel
+    Left = 363
+    Height = 20
+    Top = 265
+    Width = 34
+    Caption = '_cryp'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label9: TLabel
+    Left = 363
+    Height = 20
+    Top = 208
+    Width = 22
+    Caption = '$/€'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label10: TLabel
+    Left = 160
+    Height = 20
+    Top = 208
+    Width = 22
+    Caption = '$/€'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label11: TLabel
+    Left = 160
+    Height = 20
+    Top = 265
+    Width = 34
+    Caption = '_cryp'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object PopupMenu1: TPopupMenu
+    left = 20
+    top = 317
+  end
+end

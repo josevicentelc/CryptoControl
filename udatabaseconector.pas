@@ -99,6 +99,7 @@ begin
                   ' "move_id" integer not null PRIMARY KEY,'+
                   ' "move_type" integer not null,'+
                   ' "move_datetime" numeric(18,6) not null default 0,'+
+                  ' "move_concept" char(100) NOT NULL,'+
                   ' "move_crypto_price" numeric(9, 16)  NOT NULL,'+
                   ' "move_wallet_origin" char(100) NOT NULL,'+
                   ' "move_wallet_destiny" char(100) NOT NULL,'+
@@ -126,6 +127,11 @@ begin
       database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (10, "Aave", "AAVE")');
       database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (11, "Cosmos", "ATOM")');
 
+
+      // Debug data
+      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("0xDfgFd", "Bitcoin wallet", 0, 1)');
+      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("FF5h6F", "Bitcoin Cash wallet", 0, 2)');
+      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("DFdfx0x", "Ethereum wallet", 0, 3)');
 
       transaction.Commit;
 
