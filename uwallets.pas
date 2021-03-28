@@ -25,6 +25,8 @@ type
     procedure setCrypto(_crypto : integer);
     procedure setBalance(_balance : double);
     procedure setContableValue(_value : double);
+    procedure clear();
+    procedure save();
 
     function getPk(): string;
     function getUser(): integer;
@@ -83,10 +85,20 @@ function TWallet.getPk(): string;                  begin     result := pk;      
 function TWallet.getName(): string;                begin     result := wname;   end;
 function TWallet.getUser(): integer;               begin     result := user;    end;
 function TWallet.getCrypto(): integer;             begin     result := crypto;  end;
+
 procedure TWallet.setBalance(_balance : double);   begin     balance := _balance;end;
 procedure TWallet.setContableValue(_value : double);begin    contable_value:=_value;end;
 function TWallet.getBalance(): double;             begin     result := balance; end;
 function TWallet.getContableValue(): double;       begin     result := contable_value;end;
+procedure TWallet.save();
+begin
+     walletController.save(self);
+end;
+procedure TWallet.clear();
+begin
+     balance:=0;
+     contable_value :=0;
+end;
 
 procedure TWallet.addBalance(_balance: double; _value: double);
 var
@@ -97,7 +109,7 @@ begin
      newBalance := _balance + balance;
      f := _balance / newBalance;
      newValue:=_value*f + contable_value*(1-f);
-     setBalance(newValue);
+     setBalance(newBalance);
      setContableValue(newValue);
 end;
 
@@ -139,8 +151,8 @@ var
 begin
      for I := 0 to length(list) -1 do
          list[I].free;
-
-     inherited;
+     setLength(list, 0);
+     _count := 0;
 end;
 
 destructor TWalletList.Destroy;
@@ -183,9 +195,9 @@ begin
           sql := 'update "wallets" set ';
           sql := sql + 'wallet_crypto = ' + inttostr(Wallet.getCrypto()) + ', ';
           sql := sql + 'wallet_name = "' + Wallet.getName() +'",';
-          sql := sql + 'wallet_user = ' + inttostr(Wallet.getUser());
-          sql := sql + 'wallet_balance = '+ floatToSql(wallet.getBalance()) +',';
-          sql := sql + 'wallet_contable_value = '+ floatToSql(wallet.getContableValue()) +',';
+          sql := sql + 'wallet_user = ' + inttostr(Wallet.getUser()) + ', ';
+          sql := sql + 'wallet_balance = '+ floatToSql(wallet.getBalance()) +', ';
+          sql := sql + 'wallet_contable_value = '+ floatToSql(wallet.getContableValue()) +' ';
           sql := sql + ' where wallet_pk = "' + Wallet.getPk() + '"';
         end
         else

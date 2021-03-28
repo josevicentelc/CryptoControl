@@ -99,20 +99,27 @@ begin
                   ' "move_id" integer not null PRIMARY KEY,'+
                   ' "move_type" integer not null,'+
                   ' "move_datetime" numeric(18,6) not null default 0,'+
-                  ' "move_concept" char(100) NOT NULL,'+
-                  ' "move_crypto_price" numeric(9, 16)  NOT NULL,'+
-                  ' "move_wallet_origin" char(100) NOT NULL,'+
-                  ' "move_wallet_destiny" char(100) NOT NULL,'+
-                  ' "move_currencyimport" numeric(10, 2) NOT NULL,'+
-                  ' "move_comision_buy" char(100) NOT NULL default 0,'+
-                  ' "move_comision_shell" char(100) NOT NULL default 0,'+
-                  ' "move_fee" numeric(9, 16) NOT NULL default 0,'+
-                  ' "move_currency" integer not null,'+
-                  ' FOREIGN KEY (move_wallet_destiny) REFERENCES wallets (wallet_pk),'+
-                  ' FOREIGN KEY (move_wallet_origin) REFERENCES wallets (wallet_pk));');
+                  ' "move_concept" char(100),'+
 
-      database.ExecuteDirect('CREATE UNIQUE INDEX "moves_idx" ON "moves"( "moves_id" );');
+                  ' "move_wallet_output" char(100),'+
+                  ' "move_wallet_input" char(100),'+
 
+                  ' "move_cefi_input" numeric(10, 2) NOT NULL default 0,'+
+                  ' "move_cefi_output" numeric(10, 2) NOT NULL default 0,'+
+
+                  ' "move_contable_value_input" numeric(10, 2) NOT NULL default 0,'+
+                  ' "move_contable_value_output" numeric(10, 2) NOT NULL default 0,'+
+
+                  ' "move_comision_buy" numeric(10, 2) NOT NULL default 0,'+
+                  ' "move_comision_shell" numeric(10, 2) NOT NULL default 0,'+
+
+                  ' "move_input_fee" numeric(9, 16) NOT NULL default 0,'+
+                  ' "move_output_fee" numeric(9, 16) NOT NULL default 0,'+
+
+                  ' "move_input_cryptos" numeric(9, 16) NOT NULL default 0,'+
+                  ' "move_output_cryptos" numeric(9, 16) NOT NULL default 0);');
+
+      database.ExecuteDirect('CREATE UNIQUE INDEX "moves_idx" ON "moves"( "move_id" );');
 
       // Default crypto list
       database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (1, "Bitcoin", "BTC")');
@@ -129,9 +136,10 @@ begin
 
 
       // Debug data
-      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("0xDfgFd", "Bitcoin wallet", 0, 1)');
-      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("FF5h6F", "Bitcoin Cash wallet", 0, 2)');
-      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("DFdfx0x", "Ethereum wallet", 0, 3)');
+      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("0xDdfGDSFfgSDgfgFd", "Bitcoin wallet", 0, 1)');
+      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("FF5wGgewgh6F", "Bitcoin Cash wallet", 0, 2)');
+      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("DFdfwq45wG54gvgx0x", "Ethereum wallet", 0, 3)');
+      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("0xDdfGDSdFGDFG", "Cold Bitcoin wallet", 0, 3)');
 
       transaction.Commit;
 

@@ -1,26 +1,44 @@
-object fbuycrypto: Tfbuycrypto
-  Left = 618
-  Height = 417
-  Top = 196
-  Width = 420
+object ftransfercrytps: Tftransfercrytps
+  Left = 423
+  Height = 350
+  Top = 162
+  Width = 756
   BorderStyle = bsDialog
-  Caption = 'Buy crypto movement'
-  ClientHeight = 417
-  ClientWidth = 420
+  Caption = 'Transfer cryptos'
+  ClientHeight = 350
+  ClientWidth = 756
   OnShow = FormShow
   Position = poScreenCenter
   LCLVersion = '1.8.2.0'
+  object Bevel3: TBevel
+    Left = 5
+    Height = 153
+    Top = 125
+    Width = 742
+  end
+  object Bevel2: TBevel
+    Left = 376
+    Height = 118
+    Top = 7
+    Width = 372
+  end
+  object Bevel1: TBevel
+    Left = 5
+    Height = 118
+    Top = 7
+    Width = 371
+  end
   object editConcept: TEdit
-    Left = 24
+    Left = 16
     Height = 23
-    Top = 93
-    Width = 354
+    Top = 166
+    Width = 720
     TabOrder = 0
   end
   object Label1: TLabel
     Left = 24
     Height = 20
-    Top = 71
+    Top = 144
     Width = 127
     Caption = 'Concept (Optional)'
     Font.CharSet = ANSI_CHARSET
@@ -32,22 +50,22 @@ object fbuycrypto: Tfbuycrypto
     ParentColor = False
     ParentFont = False
   end
-  object walletlist: TComboBox
-    Left = 24
+  object walletorigin: TComboBox
+    Left = 18
     Height = 23
     Top = 40
     Width = 352
     ItemHeight = 15
-    OnChange = walletlistChange
+    OnChange = walletoriginChange
     TabOrder = 1
-    Text = 'walletlist'
+    Text = 'walletorigin'
   end
   object Label2: TLabel
-    Left = 25
+    Left = 18
     Height = 20
     Top = 14
-    Width = 42
-    Caption = 'Wallet'
+    Width = 85
+    Caption = 'Origin wallet'
     Font.CharSet = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -15
@@ -58,9 +76,9 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object dt_dateTime: TDateTimePicker
-    Left = 24
+    Left = 18
     Height = 23
-    Top = 148
+    Top = 230
     Width = 137
     CenturyFrom = 1941
     MaxDate = 2958465
@@ -81,11 +99,12 @@ object fbuycrypto: Tfbuycrypto
     MonthNames = 'Long'
     CalAlignment = dtaRight
     Options = [dtpoFlatButton]
+    OnChange = walletoriginChange
   end
   object Label3: TLabel
-    Left = 24
+    Left = 18
     Height = 20
-    Top = 126
+    Top = 208
     Width = 141
     Caption = 'Movement date/time'
     Font.CharSet = ANSI_CHARSET
@@ -97,105 +116,120 @@ object fbuycrypto: Tfbuycrypto
     ParentColor = False
     ParentFont = False
   end
-  object editCefiImport: TEdit
-    Left = 25
+  object editTransactionFee: TEdit
+    Left = 515
     Height = 23
-    Top = 207
+    Top = 230
     Width = 126
-    OnChange = editCefiImportChange
-    OnKeyPress = editCefiImportKeyPress
-    PopupMenu = PopupMenu1
+    OnChange = walletoriginChange
     TabOrder = 3
     Text = '0.00000'
   end
-  object Label4: TLabel
-    Left = 25
-    Height = 15
-    Top = 188
-    Width = 62
-    Caption = 'CEFI Import'
-    ParentColor = False
-  end
-  object editCefiComision: TEdit
-    Left = 232
-    Height = 23
-    Top = 207
-    Width = 126
-    OnChange = editCefiImportChange
-    OnKeyPress = editCefiImportKeyPress
-    PopupMenu = PopupMenu1
-    TabOrder = 4
-    Text = '0.00000'
-  end
-  object Label5: TLabel
-    Left = 232
-    Height = 15
-    Top = 188
-    Width = 51
-    Caption = 'Comision'
-    ParentColor = False
-  end
-  object editTransactionFee: TEdit
-    Left = 25
-    Height = 23
-    Top = 263
-    Width = 126
-    OnChange = editCefiImportChange
-    OnKeyPress = editCefiImportKeyPress
-    PopupMenu = PopupMenu1
-    TabOrder = 5
-    Text = '0.00000'
-  end
   object Label6: TLabel
-    Left = 25
+    Left = 515
     Height = 15
-    Top = 244
+    Top = 211
     Width = 79
     Caption = 'Transaction fee'
     ParentColor = False
   end
   object editCryptoEarned: TEdit
-    Left = 232
+    Left = 291
     Height = 23
-    Top = 263
+    Top = 230
     Width = 126
-    OnChange = editCefiImportChange
-    OnKeyPress = editCefiImportKeyPress
-    PopupMenu = PopupMenu1
-    TabOrder = 6
+    OnChange = walletoriginChange
+    TabOrder = 4
     Text = '0.00000'
   end
   object Label7: TLabel
-    Left = 232
+    Left = 291
     Height = 15
-    Top = 244
-    Width = 80
-    Caption = 'Cryptos earned'
+    Top = 211
+    Width = 96
+    Caption = 'Transfered cryptos'
     ParentColor = False
   end
+  object _short1: TLabel
+    Left = 650
+    Height = 20
+    Top = 232
+    Width = 34
+    Caption = '_cryp'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object walletdestiny: TComboBox
+    Left = 384
+    Height = 23
+    Top = 40
+    Width = 352
+    ItemHeight = 15
+    OnChange = walletoriginChange
+    TabOrder = 5
+    Text = 'walletdestiny'
+  end
+  object Label4: TLabel
+    Left = 384
+    Height = 20
+    Top = 14
+    Width = 95
+    Caption = 'Destiny Wallet'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object editWalletDestiny: TEdit
+    Left = 384
+    Height = 23
+    Top = 96
+    Width = 354
+    OnChange = walletoriginChange
+    TabOrder = 6
+  end
   object btnOk: TBitBtn
-    Left = 272
+    Left = 632
     Height = 38
-    Top = 360
+    Top = 288
     Width = 104
     Caption = 'Save'
+    Enabled = False
     ModalResult = 6
     OnClick = btnOkClick
     TabOrder = 7
   end
   object btnCancel: TBitBtn
-    Left = 135
+    Left = 495
     Height = 38
-    Top = 360
+    Top = 288
     Width = 104
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 8
   end
+  object Label5: TLabel
+    Left = 385
+    Height = 15
+    Top = 75
+    Width = 97
+    Caption = 'Use another wallet'
+    ParentColor = False
+  end
   object _short2: TLabel
-    Left = 363
+    Left = 424
     Height = 20
-    Top = 265
+    Top = 230
     Width = 34
     Caption = '_cryp'
     Font.CharSet = ANSI_CHARSET
@@ -206,70 +240,5 @@ object fbuycrypto: Tfbuycrypto
     Font.Quality = fqDraft
     ParentColor = False
     ParentFont = False
-  end
-  object Label9: TLabel
-    Left = 363
-    Height = 20
-    Top = 208
-    Width = 22
-    Caption = '$/€'
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -15
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    ParentColor = False
-    ParentFont = False
-  end
-  object Label10: TLabel
-    Left = 160
-    Height = 20
-    Top = 208
-    Width = 22
-    Caption = '$/€'
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -15
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    ParentColor = False
-    ParentFont = False
-  end
-  object _short1: TLabel
-    Left = 160
-    Height = 20
-    Top = 265
-    Width = 34
-    Caption = '_cryp'
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
-    Font.Height = -15
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    ParentColor = False
-    ParentFont = False
-  end
-  object lbConversion: TLabel
-    Left = 25
-    Height = 15
-    Top = 304
-    Width = 5
-    Caption = '-'
-    ParentColor = False
-  end
-  object lbContableValue: TLabel
-    Left = 24
-    Height = 15
-    Top = 328
-    Width = 5
-    Caption = '-'
-    ParentColor = False
-  end
-  object PopupMenu1: TPopupMenu
-    left = 24
-    top = 368
   end
 end

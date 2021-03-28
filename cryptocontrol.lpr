@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, datetimectrls, main, ucryptomanager, ucryptos, uwallets, unewcrypto,
-  uwalletmanager, unewwallet, utils, umovementManager, umovements, ubuycrypto
+  uwalletmanager, unewwallet, utils, umovementManager, umovements, ubuycrypto,
+  umovementscompute, utransfercrytos
   { you can add units after this };
 
 {$R *.res}
@@ -24,6 +25,7 @@ begin
   Application.CreateForm(TfnewWallet, fnewWallet);
   Application.CreateForm(TfMovementsManager, fMovementsManager);
   Application.CreateForm(Tfbuycrypto, fbuycrypto);
+  Application.CreateForm(Tftransfercrytps, ftransfercrytps);
   Application.Run;
 end.
 

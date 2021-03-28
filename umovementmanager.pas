@@ -5,7 +5,7 @@ unit umovementManager;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, ubuycrypto;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, ubuycrypto, utransfercrytos;
 
 type
 
@@ -16,11 +16,10 @@ type
     SpeedButton2: TSpeedButton;
     SpeedButton3: TSpeedButton;
     SpeedButton4: TSpeedButton;
-    SpeedButton5: TSpeedButton;
     SpeedButton6: TSpeedButton;
-    SpeedButton7: TSpeedButton;
     SpeedButton8: TSpeedButton;
     procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
   private
 
   public
@@ -40,10 +39,18 @@ procedure TfMovementsManager.SpeedButton1Click(Sender: TObject);
 var
   form : Tfbuycrypto;
 begin
-     application.createform(Tfbuycrypto, fbuycrypto);
-     fbuycrypto.ShowModal;
-     fbuycrypto.free;
+     application.createform(Tfbuycrypto, form);
+     form.ShowModal;
+     form.free;
 end;
 
+procedure TfMovementsManager.SpeedButton2Click(Sender: TObject);
+var
+  form : Tftransfercrytps;
+begin
+     application.createform(Tftransfercrytps, form);
+     form.ShowModal;
+     form.free;
+end;
 end.
 
