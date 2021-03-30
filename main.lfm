@@ -1,29 +1,38 @@
 object mainform: Tmainform
-  Left = 424
-  Height = 707
-  Top = 110
-  Width = 1146
+  Left = 436
+  Height = 726
+  Top = 176
+  Width = 1125
   Caption = 'Crypto Tracer'
-  ClientHeight = 707
-  ClientWidth = 1146
-  Color = clWindow
+  ClientHeight = 726
+  ClientWidth = 1125
+  Color = 6052956
   Font.CharSet = ANSI_CHARSET
-  Font.Height = -19
+  Font.Color = clSilver
+  Font.Height = -16
   Font.Name = '@Arial Unicode MS'
   Font.Pitch = fpVariable
   Font.Quality = fqDraft
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '2.0.2.0'
   object Panel1: TPanel
     Left = 0
     Height = 98
     Top = 0
-    Width = 1146
+    Width = 1125
     Align = alTop
+    BevelOuter = bvNone
     ClientHeight = 98
-    ClientWidth = 1146
+    ClientWidth = 1125
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -19
+    Font.Name = '@Arial Unicode MS'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentFont = False
     TabOrder = 0
     object btn_register_wallet: TSpeedButton
       Left = 0
@@ -1513,7 +1522,7 @@ object mainform: Tmainform
       Height = 65
       Top = 16
       Width = 65
-      Brush.Color = 14002338
+      Brush.Color = 2038809
       Visible = False
     end
     object Shape2: TShape
@@ -1521,16 +1530,17 @@ object mainform: Tmainform
       Height = 65
       Top = 16
       Width = 65
-      Brush.Color = 13473679
+      Brush.Color = 7880502
       Visible = False
     end
   end
   object gridWallets: TStringGrid
     Left = 0
-    Height = 193
+    Height = 289
     Top = 98
-    Width = 1146
+    Width = 1125
     Align = alTop
+    BorderStyle = bsNone
     FixedCols = 0
     Options = [goFixedHorzLine, goHorzLine, goRangeSelect, goRelaxedRowSelect, goSmoothScroll, goRowHighlight]
     TabOrder = 1
@@ -1539,15 +1549,19 @@ object mainform: Tmainform
     TitleFont.Name = '@Arial Unicode MS'
     TitleFont.Pitch = fpVariable
     TitleFont.Quality = fqDraft
+    OnSelectCell = gridWalletsSelectCell
     ColWidths = (
-      10
-      373
-      231
-      210
+      279
+      328
+      203
+      182
       86
     )
     Cells = (
-      3
+      4
+      0
+      0
+      'PK'
       1
       0
       'Wallet'
@@ -1563,39 +1577,73 @@ object mainform: Tmainform
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 291
-    Width = 1146
+    Top = 387
+    Width = 1125
     Align = alTop
     ResizeAnchor = akTop
   end
   object Panel2: TPanel
     Left = 0
-    Height = 411
-    Top = 296
-    Width = 1146
+    Height = 334
+    Top = 392
+    Width = 1125
     Align = alClient
-    ClientHeight = 411
-    ClientWidth = 1146
+    BevelOuter = bvNone
+    ClientHeight = 334
+    ClientWidth = 1125
     TabOrder = 3
     object gridMovements: TStringGrid
-      Left = 1
-      Height = 386
+      Left = 0
+      Height = 310
       Top = 24
-      Width = 1144
+      Width = 1125
       Align = alBottom
       Anchors = [akTop, akLeft, akRight, akBottom]
+      BorderStyle = bsNone
       TabOrder = 0
       TitleFont.CharSet = ANSI_CHARSET
       TitleFont.Height = -19
       TitleFont.Name = '@Arial Unicode MS'
       TitleFont.Pitch = fpVariable
       TitleFont.Quality = fqDraft
+      ColWidths = (
+        136
+        484
+        207
+        191
+        173
+      )
+      RowHeights = (
+        32
+        32
+        32
+        32
+        32
+      )
+      Cells = (
+        5
+        0
+        0
+        'Date/Time'
+        1
+        0
+        'Action'
+        2
+        0
+        'Amount'
+        3
+        0
+        'Balance'
+        4
+        0
+        'Value'
+      )
     end
     object Label1: TLabel
       Left = 8
-      Height = 25
+      Height = 21
       Top = 0
-      Width = 100
+      Width = 82
       Caption = 'Movements'
       ParentColor = False
     end

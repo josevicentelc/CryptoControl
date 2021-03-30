@@ -90,8 +90,21 @@ begin
                   ' "wallet_contable_value" numeric(16, 2) NOT NULL default 0,'+
                   ' FOREIGN KEY (wallet_crypto) REFERENCES cryptocurrency (crypto_id),'+
                   ' FOREIGN KEY (wallet_user) REFERENCES users (user_id));');
-
       database.ExecuteDirect('CREATE UNIQUE INDEX "wallets_pkx" ON "wallets"( "wallet_pk" );');
+
+
+      // Wallet history
+      database.ExecuteDirect('CREATE TABLE "walletshistory"('+
+                  ' "hist_pk" char(100) not null,'+
+                  ' "hist_id" integer not null,'+
+                  ' "hist_datetime" char(20),'+
+                  ' "hist_description" char(50),'+
+                  ' "hist_concept" char(100),'+
+                  ' "hist_import" numeric(9, 16) NOT NULL default 0,'+
+                  ' "hist_balance" numeric(9, 16) NOT NULL default 0,'+
+                  ' "hist_value" numeric(16, 2) NOT NULL default 0,'+
+                  ' PRIMARY KEY("hist_pk", "hist_id"));');
+      database.ExecuteDirect('CREATE UNIQUE INDEX "wallets_history_pkx" ON "walletshistory"( "hist_pk", "hist_id" );');
 
 
       // Crypto movements
@@ -120,6 +133,11 @@ begin
                   ' "move_output_cryptos" numeric(9, 16) NOT NULL default 0);');
 
       database.ExecuteDirect('CREATE UNIQUE INDEX "moves_idx" ON "moves"( "move_id" );');
+
+
+
+
+
 
       // Default crypto list
       database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (1, "Bitcoin", "BTC")');

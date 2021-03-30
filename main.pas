@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Grids,
   Buttons, StdCtrls, udatabaseconector, ucryptomanager, ucryptos, uwallets,
-  uwalletmanager, umovementManager, umovements, umovementscompute;
+  uwalletmanager, umovementManager, umovements, umovementscompute, uwallethistory, utils;
 
 type
 
@@ -33,15 +33,18 @@ type
     procedure FormCreate(Sender: TObject);
     procedure formatColors();
     procedure FormShow(Sender: TObject);
+    procedure gridWalletsClick(Sender: TObject);
+    procedure gridWalletsSelectCell(Sender: TObject; aCol, aRow: Integer;
+      var CanSelect: Boolean);
   private
     db : TDatabaseConnector;
     form_admin_cryto : tfcryptomanager;
     form_admin_wallet : Tfwalletmanager;
     form_admin_movementst : TfMovementsManager;
+    wallets: TWalletList;
+
   public
     procedure refreshWalletBalances();
-    procedure refresMovements();
-
 
   end;
 
@@ -56,29 +59,21 @@ implementation
 
 procedure Tmainform.refreshWalletBalances();
 var
-  wallets: TWalletList;
   I : Integer;
 begin
      wallets := walletController.getWallets();
-
      gridWallets.RowCount:=wallets.count() + 1;
      gridWallets.ColCount:= 4;
 
      for I := 0 to wallets.count() -1 do
      begin
+       gridWallets.Cells[0, I+1] := wallets.get(I).getPk();
        gridWallets.Cells[1, I+1] := wallets.get(I).getName();
        gridWallets.Cells[2, I+1] := formatFloat('##0.000000000000', wallets.get(I).getBalance());
        gridWallets.Cells[3, I+1] := formatFloat('##0.00', wallets.get(I).getContableValue());
-
      end;
-
-
 end;
 
-procedure Tmainform.refresMovements();
-begin
-
-end;
 
 procedure Tmainform.formatColors();
 begin
@@ -97,11 +92,38 @@ begin
      initCryptoController(db);
      initwalletController(db);
      initMovementsontroller(db);
+     initHistoryController(db);
 end;
 
 procedure Tmainform.FormShow(Sender: TObject);
 begin
   refreshWalletBalances();
+end;
+
+procedure Tmainform.gridWalletsClick(Sender: TObject);
+begin
+
+end;
+
+procedure Tmainform.gridWalletsSelectCell(Sender: TObject; aCol, aRow: Integer;
+  var CanSelect: Boolean);
+var
+  wallet : String;
+  history : THistoryList;
+  I : Integer;
+begin
+     wallet := gridWallets.Cells[0, aRow];
+     history := historyController.getFromWallet(wallet);
+     gridMovements.RowCount:=history.count() + 1;
+     for I := 0 to history.count() -1 do
+     begin
+        gridMovements.Cells[0, I+1] := history.get(i).getDateTime();
+        gridMovements.Cells[1, I+1] := history.get(i).getDescription();
+        gridMovements.Cells[2, I+1] := floatToSql(history.get(i).getImport());
+        gridMovements.Cells[3, I+1] := floatToSql(history.get(i).getbalance());
+        gridMovements.Cells[4, I+1] := floatToSql(history.get(i).getvalue());
+     end;
+
 end;
 
 procedure Tmainform.btn_admin_cryptosClick(Sender: TObject);
@@ -118,7 +140,6 @@ begin
      form_admin_movementst.showModal();
      computeWalletBalances();
      refreshWalletBalances();
-     refresMovements();
 end;
 
 procedure Tmainform.btn_register_walletClick(Sender: TObject);
