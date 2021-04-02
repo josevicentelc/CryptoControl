@@ -1,0 +1,201 @@
+object fshellcryptos: Tfshellcryptos
+  Left = 702
+  Height = 219
+  Top = 422
+  Width = 529
+  BorderStyle = bsDialog
+  Caption = 'fshellcryptos'
+  ClientHeight = 219
+  ClientWidth = 529
+  Color = 4927270
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '2.0.2.0'
+  object dt_dateTime: TDateTimePicker
+    Left = 8
+    Height = 23
+    Top = 26
+    Width = 137
+    CenturyFrom = 1941
+    MaxDate = 2958465
+    MinDate = -53780
+    TabOrder = 0
+    TrailingSeparator = False
+    TextForNullDate = 'NULL'
+    LeadingZeros = True
+    Kind = dtkDateTime
+    TimeFormat = tf24
+    TimeDisplay = tdHMS
+    DateMode = dmComboBox
+    Date = 44274
+    Time = 0.416268981483881
+    UseDefaultSeparators = True
+    AutoAdvance = False
+    HideDateTimeParts = []
+    MonthNames = 'Long'
+    CalAlignment = dtaRight
+    Options = [dtpoFlatButton]
+  end
+  object Label3: TLabel
+    Left = 8
+    Height = 20
+    Top = 2
+    Width = 141
+    Caption = 'Movement date/time'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object walletorigin: TComboBox
+    Left = 168
+    Height = 23
+    Top = 26
+    Width = 352
+    ItemHeight = 15
+    OnChange = walletoriginChange
+    TabOrder = 1
+    Text = 'walletorigin'
+  end
+  object Label2: TLabel
+    Left = 168
+    Height = 20
+    Top = 0
+    Width = 85
+    Caption = 'Origin wallet'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label7: TLabel
+    Left = 8
+    Height = 20
+    Top = 72
+    Width = 82
+    Caption = 'Sold cryptos'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object editCrypto: TEdit
+    Left = 8
+    Height = 23
+    Top = 91
+    Width = 126
+    OnChange = walletoriginChange
+    TabOrder = 2
+    Text = '0.00000'
+  end
+  object Label6: TLabel
+    Left = 216
+    Height = 20
+    Top = 72
+    Width = 92
+    Caption = 'Paid comision'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object editComision: TEdit
+    Left = 216
+    Height = 23
+    Top = 91
+    Width = 126
+    OnChange = walletoriginChange
+    TabOrder = 3
+    Text = '0.00000'
+  end
+  object _short1: TLabel
+    Left = 144
+    Height = 20
+    Top = 91
+    Width = 34
+    Caption = '_cryp'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label8: TLabel
+    Left = 392
+    Height = 20
+    Top = 72
+    Width = 108
+    Caption = 'Total import get'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object editTotalCefi: TEdit
+    Left = 392
+    Height = 23
+    Top = 91
+    Width = 126
+    OnChange = walletoriginChange
+    TabOrder = 4
+    Text = '0.00000'
+  end
+  object btnOk: TBitBtn
+    Left = 408
+    Height = 38
+    Top = 160
+    Width = 104
+    Caption = 'Save'
+    Enabled = False
+    ModalResult = 6
+    OnClick = btnOkClick
+    TabOrder = 5
+  end
+  object btnCancel: TBitBtn
+    Left = 280
+    Height = 38
+    Top = 160
+    Width = 104
+    Caption = 'Cancel'
+    ModalResult = 2
+    TabOrder = 6
+  end
+  object lblPrice: TLabel
+    Left = 16
+    Height = 20
+    Top = 168
+    Width = 35
+    Caption = 'Price:'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+end

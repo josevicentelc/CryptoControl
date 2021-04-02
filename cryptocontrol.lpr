@@ -9,7 +9,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, datetimectrls, main, ucryptomanager, ucryptos, uwallets, unewcrypto,
   uwalletmanager, unewwallet, utils, umovementManager, umovements, ubuycrypto,
-  umovementscompute, utransfercrytos, uwallethistory
+  umovementscompute, utransfercrytos, uwallethistory, uabout, ureport, ushellcryptos
   { you can add units after this };
 
 {$R *.res}
@@ -19,13 +19,8 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(Tmainform, mainform);
-  Application.CreateForm(Tfcryptomanager, fcryptomanager);
-  Application.CreateForm(Tfnewcrypto, fnewcrypto);
-  Application.CreateForm(Tfwalletmanager, fwalletmanager);
-  Application.CreateForm(TfnewWallet, fnewWallet);
-  Application.CreateForm(TfMovementsManager, fMovementsManager);
-  Application.CreateForm(Tfbuycrypto, fbuycrypto);
-  Application.CreateForm(Tftransfercrytps, ftransfercrytps);
+  Application.CreateForm(Tfreport, freport);
+  Application.CreateForm(Tfshellcryptos, fshellcryptos);
   Application.Run;
 end.
 

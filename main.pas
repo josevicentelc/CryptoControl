@@ -7,13 +7,15 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Grids,
   Buttons, StdCtrls, udatabaseconector, ucryptomanager, ucryptos, uwallets,
-  uwalletmanager, umovementManager, umovements, umovementscompute, uwallethistory, utils;
+  uwalletmanager, umovementManager, umovements, umovementscompute, uwallethistory, utils, uabout;
 
 type
 
   { Tmainform }
 
   Tmainform = class(TForm)
+    btn_settings1: TSpeedButton;
+    color_grid_fixed: TShape;
     Label1: TLabel;
     Panel1: TPanel;
     btn_register_wallet: TSpeedButton;
@@ -22,8 +24,9 @@ type
     btn_add_movement: TSpeedButton;
     btn_settings: TSpeedButton;
     Panel2: TPanel;
-    Shape1: TShape;
-    Shape2: TShape;
+    color_background: TShape;
+    color_grid_1: TShape;
+    color_grid_2: TShape;
     Splitter1: TSplitter;
     gridWallets: TStringGrid;
     gridMovements: TStringGrid;
@@ -33,6 +36,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure formatColors();
     procedure FormShow(Sender: TObject);
+    procedure gridMovementsDblClick(Sender: TObject);
     procedure gridWalletsClick(Sender: TObject);
     procedure gridWalletsSelectCell(Sender: TObject; aCol, aRow: Integer;
       var CanSelect: Boolean);
@@ -45,6 +49,7 @@ type
 
   public
     procedure refreshWalletBalances();
+    procedure showAbout();
 
   end;
 
@@ -69,20 +74,35 @@ begin
      begin
        gridWallets.Cells[0, I+1] := wallets.get(I).getPk();
        gridWallets.Cells[1, I+1] := wallets.get(I).getName();
-       gridWallets.Cells[2, I+1] := formatFloat('##0.000000000000', wallets.get(I).getBalance());
-       gridWallets.Cells[3, I+1] := formatFloat('##0.00', wallets.get(I).getContableValue());
+       gridWallets.Cells[2, I+1] := floatToSql(wallets.get(I).getBalance());
+       gridWallets.Cells[3, I+1] := formatFloat('##0.00', wallets.get(I).getContableValue()) + ' €';
      end;
 end;
 
 
 procedure Tmainform.formatColors();
 begin
-     self.Color:=Shape1.Brush.Color;
+     self.Color:=color_background.Brush.Color;
 
-     gridWallets.Color:=shape1.Brush.color;
-     gridMovements.Color:=shape1.Brush.color;
-     gridWallets.FixedColor:=shape2.Brush.color;
-     gridMovements.FixedColor:=shape2.Brush.color;
+     gridWallets.Color:=color_grid_1.Brush.color;
+     gridMovements.Color:=color_grid_1.Brush.color;
+
+     gridWallets.AlternateColor:=color_grid_2.Brush.color;
+     gridMovements.AlternateColor:=color_grid_2.Brush.color;
+
+     gridWallets.FixedColor:=color_grid_fixed.Brush.color;
+     gridMovements.FixedColor:=color_grid_fixed.Brush.color;
+
+end;
+
+
+procedure Tmainform.showAbout();
+var
+  fAbout: TFAbout;
+begin
+     Application.createForm(TFAbout, fAbout);
+     fAbout.ShowModal;
+     fabout.free;
 end;
 
 procedure Tmainform.FormCreate(Sender: TObject);
@@ -98,6 +118,12 @@ end;
 procedure Tmainform.FormShow(Sender: TObject);
 begin
   refreshWalletBalances();
+  showAbout();
+end;
+
+procedure Tmainform.gridMovementsDblClick(Sender: TObject);
+begin
+
 end;
 
 procedure Tmainform.gridWalletsClick(Sender: TObject);
@@ -121,7 +147,8 @@ begin
         gridMovements.Cells[1, I+1] := history.get(i).getDescription();
         gridMovements.Cells[2, I+1] := floatToSql(history.get(i).getImport());
         gridMovements.Cells[3, I+1] := floatToSql(history.get(i).getbalance());
-        gridMovements.Cells[4, I+1] := floatToSql(history.get(i).getvalue());
+        gridMovements.Cells[4, I+1] := floatToSql(history.get(i).getvalue())+ ' €';
+        gridMovements.Cells[5, I+1] := inttostr(history.get(i).getMoveId());
      end;
 
 end;

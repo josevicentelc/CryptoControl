@@ -59,7 +59,7 @@ end;
 
 function floatToSql(v: double): String;
 begin
-  result := stringReplace(formatFloat('##0.000000000000', v), ',', '.', [rfReplaceAll]) ;
+  result := stringReplace(formatFloat('##0.00##########', v), ',', '.', [rfReplaceAll]) ;
 end;
 
 function dateToSql(value  :double): String;

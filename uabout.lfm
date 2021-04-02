@@ -1,0 +1,190 @@
+object fAbout: TfAbout
+  Left = 370
+  Height = 461
+  Top = 127
+  Width = 536
+  BorderStyle = bsDialog
+  Caption = 'Acerca de...'
+  ClientHeight = 461
+  ClientWidth = 536
+  Color = 4927270
+  Position = poScreenCenter
+  LCLVersion = '2.0.2.0'
+  object Label1: TLabel
+    Left = 16
+    Height = 80
+    Top = 74
+    Width = 521
+    AutoSize = False
+    Caption = 'Es una aplicación de código abierto creada para facilitar la declaración'#13#10'de  la  renta  en  lo  relativo  a la posesión de  crypto-divisas  frente  al '#13#10'fisco Español.'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 16
+    Height = 96
+    Top = 154
+    Width = 528
+    AutoSize = False
+    Caption = 'Si bien el uso de este software es totalmente gratuito, el desarrollador le '#13#10'agradecerá  eternamente  cualquier donación  voluntaria que le ayude a '#13#10'llenar la nevera, alimentos que se usarán para  recargar energía y poder '#13#10'continuar mejorando la aplicación.'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+    OnClick = Label2Click
+  end
+  object Shape1: TShape
+    Left = 13
+    Height = 3
+    Top = 250
+    Width = 502
+  end
+  object Label3: TLabel
+    Left = 17
+    Height = 21
+    Top = 298
+    Width = 58
+    Caption = 'Bitcoin:'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clOlive
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 17
+    Height = 21
+    Top = 331
+    Width = 98
+    Caption = 'Bitcoin Cash:'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clOlive
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label5: TLabel
+    Left = 17
+    Height = 21
+    Top = 364
+    Width = 78
+    Caption = 'Ethereum:'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clOlive
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label6: TLabel
+    Left = 128
+    Height = 15
+    Top = 304
+    Width = 228
+    Caption = '1Yb1NaDjrJqCn77qHp2ZrdCTQa7x3vwZr'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label7: TLabel
+    Left = 128
+    Height = 15
+    Top = 337
+    Width = 348
+    Caption = 'bitcoincash:qzx7qty939shh6pmlzaedf30n6uvwhe95ut3379znc'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label8: TLabel
+    Left = 128
+    Height = 15
+    Top = 370
+    Width = 290
+    Caption = '0x9670CA60114Fc885Fa2CFD9f4d5BCe73272F7395'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    OnClick = Label8Click
+  end
+  object Button1: TButton
+    Left = 200
+    Height = 41
+    Top = 402
+    Width = 115
+    Caption = 'Ok'
+    ModalResult = 1
+    TabOrder = 0
+  end
+  object Label9: TLabel
+    Left = 19
+    Height = 21
+    Top = 267
+    Width = 168
+    Caption = 'Cuentas de donativos:'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clSilver
+    Font.Height = -16
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label10: TLabel
+    Left = 184
+    Height = 30
+    Top = 16
+    Width = 147
+    Caption = 'Crypto Control'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -21
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+end

@@ -18,6 +18,7 @@ type
     _import: double;
     _balance: double;
     _value: double;
+    _moveid: integer;
   public
     constructor create;
     procedure save();
@@ -30,6 +31,7 @@ type
     procedure setImport(v: double);
     procedure setbalance(v: double);
     procedure setvalue(v: double);
+    procedure setMoveId(v: integer);
 
     function getWallet():string;
     function getDateTime(): string;
@@ -39,6 +41,7 @@ type
     function getImport(): double;
     function getbalance(): double;
     function getvalue(): double;
+    function getMoveId(): integer;
 
   end;
 
@@ -67,6 +70,7 @@ type
     procedure remove(v: THistoryLine);
     function getNextId(w: String): integer;
     function getFromWallet(w: String): THistoryList;
+    function getById(id: integer): THistoryLine;
   end;
 
   var
@@ -104,6 +108,7 @@ procedure THistoryLine.setId(v: integer);        begin          _id:=v;         
 procedure THistoryLine.setImport(v: double);     begin          _import:=v;             end;
 procedure THistoryLine.setbalance(v: double);    begin          _balance:=v;            end;
 procedure THistoryLine.setvalue(v: double);      begin          _value:=v;              end;
+procedure THistoryLine.setMoveId(v: integer);    begin          _moveid:=v;              end;
 
 function THistoryLine.getWallet():string;        begin          result:=_wallet;        end;
 function THistoryLine.getDateTime(): string;     begin          result:=_datetimestr;   end;
@@ -113,6 +118,7 @@ function THistoryLine.getId(): integer;          begin          result:=_id;    
 function THistoryLine.getImport(): double;       begin          result:=_import;        end;
 function THistoryLine.getbalance(): double;      begin          result:=_balance;       end;
 function THistoryLine.getvalue(): double;        begin          result:=_value;         end;
+function THistoryLine.getMoveId(): integer;      begin          result:=_moveid;         end;
 
 
 // *****************************************************************************
@@ -193,13 +199,14 @@ begin
            sql := sql + 'hist_import = '+floatToSql(v.getImport()) + ', ';
            sql := sql + 'hist_balance = '+ floatToSql(v.getbalance()) + ', ';
            sql := sql + 'hist_value = ' + floatToSql(v.getvalue());
+           sql := sql + 'hist_moveid = ' + inttostr(v.getMoveId());
            sql := sql + ' where hist_pk = "' + v.getWallet() + '" and hist_id = ' + inttostr(v.getId());
              // update
         end
         else
         begin
              v.setId(getNextId(v.getWallet()));
-             sql := 'insert into "walletshistory" (hist_pk, hist_id, hist_datetime, hist_description, hist_concept, hist_import, hist_balance, hist_value) values ( ';
+             sql := 'insert into "walletshistory" (hist_pk, hist_id, hist_datetime, hist_description, hist_concept, hist_import, hist_balance, hist_value, hist_moveid) values ( ';
              sql := sql + '"' + v.getWallet() + '", ';
              sql := sql + inttostr(v.getId()) + ', ';
              sql := sql + '"' + v.getDateTime() + '", ';
@@ -207,7 +214,8 @@ begin
              sql := sql + '"' + v.getConcept() + '", ';
              sql := sql + floatToSql(v.getImport()) + ', ';
              sql := sql + floatToSql(v.getbalance()) + ', ';
-             sql := sql + floatToSql(v.getvalue()) + ')';
+             sql := sql + floatToSql(v.getvalue()) + ',';
+             sql := sql + inttostr(v.getMoveId()) + ')';
              // insert
         end;
         db.launchSql(sql);
@@ -242,12 +250,38 @@ begin
          line.setImport(Q.FieldByName('hist_import').AsFloat);
          line.setbalance(Q.FieldByName('hist_balance').AsFloat);
          line.setvalue(Q.FieldByName('hist_value').AsFloat);
+         line.setMoveId(Q.FieldByName('hist_moveid').AsInteger);
          result.push(line);
          Q.Next;
      end;
      Q.Close;
      Q.Free;
 end;
+
+
+function THistoryController.getById(id: integer): THistoryLine;
+var
+    Q : TSQLQuery;
+begin
+     result := THistoryLine.create;
+     Q := db.getSqlQuery('select * from "walletshistory" where hist_id = '+inttostr(id)+' order by hist_id');
+     while not Q.Eof do
+     begin
+         result.setWallet(Q.FieldByName('hist_pk').AsString);
+         result.setId(Q.FieldByName('hist_id').AsInteger);
+         result.setDateTime(Q.FieldByName('hist_datetime').AsString);
+         result.setDescription(Q.FieldByName('hist_description').AsString);
+         result.setConcept(Q.FieldByName('hist_concept').AsString);
+         result.setImport(Q.FieldByName('hist_import').AsFloat);
+         result.setbalance(Q.FieldByName('hist_balance').AsFloat);
+         result.setvalue(Q.FieldByName('hist_value').AsFloat);
+         result.setMoveId(Q.FieldByName('hist_moveid').AsInteger);
+         Q.Next;
+     end;
+     Q.Close;
+     Q.Free;
+end;
+
 
 function THistoryController.getNextId(w: String): integer;
 var

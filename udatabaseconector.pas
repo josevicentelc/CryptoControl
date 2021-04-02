@@ -103,6 +103,7 @@ begin
                   ' "hist_import" numeric(9, 16) NOT NULL default 0,'+
                   ' "hist_balance" numeric(9, 16) NOT NULL default 0,'+
                   ' "hist_value" numeric(16, 2) NOT NULL default 0,'+
+                  ' "hist_moveid" integer NOT NULL default 0,'+
                   ' PRIMARY KEY("hist_pk", "hist_id"));');
       database.ExecuteDirect('CREATE UNIQUE INDEX "wallets_history_pkx" ON "walletshistory"( "hist_pk", "hist_id" );');
 

@@ -8,7 +8,7 @@ object fMovementsManager: TfMovementsManager
   ClientHeight = 236
   ClientWidth = 371
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '2.0.2.0'
   object SpeedButton1: TSpeedButton
     Left = 9
     Height = 100
@@ -1597,6 +1597,7 @@ object fMovementsManager: TfMovementsManager
       FFFFC9AEFFFFC9AEFFFFC9AEFFFFC9AEFFFF
     }
     Layout = blGlyphTop
+    OnClick = SpeedButton3Click
   end
   object SpeedButton4: TSpeedButton
     Left = 9

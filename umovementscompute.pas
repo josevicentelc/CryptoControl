@@ -63,6 +63,7 @@ begin
                      histLine.setImport(mov.getInputCryptos());
                      histLine.setbalance(wallet.getBalance());
                      histLine.setvalue(wallet.getContableValue());
+                     histLine.setMoveId(mov.getId());
                      histLine.save();
 
                      wallet.Free;
@@ -90,11 +91,12 @@ begin
                                 histLine := THistoryLine.create();
                                 histLine.setWallet(wallet.getPk());
                                 histLine.setDateTime(FormatDateTime('dd/mm/yyyy hh:nn:ss', mov.getDateTime()));
-                                histLine.setDescription('Pay Fee' + floatToSql(mov.getOutputFee()));
+                                histLine.setDescription('Pay Fee ' + floatToSql(mov.getOutputFee()));
                                 histLine.setConcept(mov.getConcept());
                                 histLine.setImport(mov.getOutputFee() * -1);
                                 histLine.setbalance(totalcryptos - mov.getOutputFee());
                                 histLine.setvalue(totalvalue - feeValue);
+                                histLine.setMoveId(mov.getId());
                                 histLine.save();
                                 histLine.Free;
 
@@ -107,6 +109,7 @@ begin
                                 histLine.setImport(mov.getOutputCryptos() * -1);
                                 histLine.setbalance(wallet.getBalance() - outputcryptos);
                                 histLine.setvalue(wallet.getContableValue() - outputvalue);
+                                histLine.setMoveId(mov.getId());
                                 histLine.save();
                                 histLine.Free;
 
