@@ -75,7 +75,7 @@ var
 begin
      wallets := walletController.getWallets();
      gridWallets.RowCount:=wallets.count() + 1;
-     gridWallets.ColCount:= 4;
+     gridWallets.ColCount:= 6;
 
      for I := 0 to wallets.count() -1 do
      begin

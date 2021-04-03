@@ -12,12 +12,20 @@ uses
 function getUrl(url: string): string;
 function postUrl(url: string; msg: string): string;
 function getCurrentCompanies(): TJsonArray;
+function getMarketValue(pair: string): double;
 
 var
 
 
 implementation
 
+
+function getMarketValue(pair: string): double;
+var res : string;
+begin
+  res := getUrl('https://api.cryptowat.ch/markets/coinbase-pro/'+pair+'/price' );
+  result := 0;
+end;
 
 {
   Solicita al middleware la lista de empresas autorizadas para el usuario logeado

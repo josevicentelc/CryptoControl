@@ -2,10 +2,10 @@ object mainform: Tmainform
   Left = 370
   Height = 726
   Top = 157
-  Width = 1265
+  Width = 1302
   Caption = 'Crypto Tracer'
   ClientHeight = 726
-  ClientWidth = 1265
+  ClientWidth = 1302
   Color = 6052956
   Font.CharSet = ANSI_CHARSET
   Font.Color = clSilver
@@ -21,11 +21,11 @@ object mainform: Tmainform
     Left = 0
     Height = 98
     Top = 0
-    Width = 1265
+    Width = 1302
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 98
-    ClientWidth = 1265
+    ClientWidth = 1302
     Font.CharSet = ANSI_CHARSET
     Font.Color = clWhite
     Font.Height = -19
@@ -2633,14 +2633,15 @@ object mainform: Tmainform
     Left = 0
     Height = 289
     Top = 98
-    Width = 1265
+    Width = 1302
     Align = alTop
     BorderStyle = bsNone
+    ColCount = 7
     FixedCols = 0
     Flat = True
     Font.CharSet = ANSI_CHARSET
     Font.Color = clWhite
-    Font.Height = -16
+    Font.Height = -15
     Font.Name = '@Arial Unicode MS'
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
@@ -2655,14 +2656,23 @@ object mainform: Tmainform
     TitleFont.Quality = fqDraft
     OnSelectCell = gridWalletsSelectCell
     ColWidths = (
-      376
-      328
-      176
-      153
-      86
+      357
+      243
+      147
+      140
+      143
+      132
+      64
+    )
+    RowHeights = (
+      28
+      28
+      28
+      28
+      28
     )
     Cells = (
-      4
+      6
       0
       0
       'PK'
@@ -2674,7 +2684,13 @@ object mainform: Tmainform
       'Balance'
       3
       0
-      'Contable Value '
+      'Value.'
+      4
+      0
+      'Market Prc.'
+      5
+      0
+      'Market value'
     )
   end
   object Splitter1: TSplitter
@@ -2682,7 +2698,7 @@ object mainform: Tmainform
     Left = 0
     Height = 5
     Top = 387
-    Width = 1265
+    Width = 1302
     Align = alTop
     ResizeAnchor = akTop
   end
@@ -2690,17 +2706,17 @@ object mainform: Tmainform
     Left = 0
     Height = 334
     Top = 392
-    Width = 1265
+    Width = 1302
     Align = alClient
     BevelOuter = bvNone
     ClientHeight = 334
-    ClientWidth = 1265
+    ClientWidth = 1302
     TabOrder = 3
     object gridMovements: TStringGrid
       Left = 0
       Height = 310
       Top = 24
-      Width = 1265
+      Width = 1302
       Align = alBottom
       Anchors = [akTop, akLeft, akRight, akBottom]
       BorderStyle = bsNone
@@ -2709,7 +2725,7 @@ object mainform: Tmainform
       Flat = True
       Font.CharSet = ANSI_CHARSET
       Font.Color = clWhite
-      Font.Height = -16
+      Font.Height = -15
       Font.Name = '@Arial Unicode MS'
       Font.Pitch = fpVariable
       Font.Quality = fqDraft
