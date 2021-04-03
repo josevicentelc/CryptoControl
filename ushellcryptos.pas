@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons,
-  DateTimePicker, ucryptos, uwallets, umovements;
+  DateTimePicker, ucryptos, uwallets, umovements, utils;
 
 type
 
@@ -28,13 +28,16 @@ type
     walletorigin: TComboBox;
     _short1: TLabel;
     procedure btnOkClick(Sender: TObject);
+    procedure editCryptoKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure walletoriginChange(Sender: TObject);
   private
     wallets : TWalletList;
     procedure updateWalletList();
     procedure checkStatus();
+    procedure loadMove(id : integer);
   public
+    moveId: integer;
     totalCryptos: double;
     totalCefi: double;
     TotalComision: double;
@@ -48,10 +51,34 @@ implementation
 
 {$R *.lfm}
 
+procedure Tfshellcryptos.loadMove(id : integer);
+var
+  mvnt : TMovement;
+  I : integer;
+begin
+     mvnt := movementsController.getById(id);
+     if mvnt.getType() = MV_SHELL then
+     begin
+          for I := 0 to wallets.count() -1 do
+          begin
+            if wallets.get(I).getPk() = mvnt.getWalletOutput() then
+            begin
+                 walletorigin.ItemIndex:=I;
+            end;
+          end;
+          dt_dateTime.DateTime:=mvnt.getDateTime();
+          editCrypto.text := floatToSql(mvnt.getOutputCryptos());
+          editComision.text := floatToSql(mvnt.getComisionShell());
+          editTotalCefi.text := floatToSql(mvnt.getCefiInput());
+     end;
+     mvnt.free;
+end;
+
 procedure Tfshellcryptos.FormShow(Sender: TObject);
 begin
   dt_dateTime.DateTime:=now();
   updateWalletList();
+  if moveId >= 0 then loadMove(moveId);
   checkStatus();
 end;
 
@@ -69,7 +96,14 @@ begin
      mvnt.setComisionShell(TotalComision);
      mvnt.setCefiInput(totalCefi);
      mvnt.setContableValueInput(totalCefi + TotalComision);
+
+     if moveId >= 0 then mvnt.setId(moveId);
      mvnt.save();
+end;
+
+procedure Tfshellcryptos.editCryptoKeyPress(Sender: TObject; var Key: char);
+begin
+    if not checkKeyForNumber(key) then key := #0;
 end;
 
 procedure Tfshellcryptos.walletoriginChange(Sender: TObject);

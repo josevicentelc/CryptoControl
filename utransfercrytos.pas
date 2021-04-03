@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, DateTimePicker, Forms, Controls, Graphics,
-  Dialogs, StdCtrls, Buttons, ExtCtrls, uwallets, ucryptos, umovements;
+  Dialogs, StdCtrls, Buttons, ExtCtrls, uwallets, ucryptos, umovements, utils;
 
 type
 
@@ -35,6 +35,7 @@ type
     _short1: TLabel;
     _short2: TLabel;
     procedure btnOkClick(Sender: TObject);
+    procedure dt_dateTimeKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
     procedure walletoriginChange(Sender: TObject);
   private
@@ -58,7 +59,8 @@ implementation
 
 procedure Tftransfercrytps.FormShow(Sender: TObject);
 begin
-    updateWalletList();
+  dt_dateTime.DateTime:=now();
+  updateWalletList();
 end;
 
 procedure Tftransfercrytps.btnOkClick(Sender: TObject);
@@ -84,6 +86,11 @@ begin
      mvnt.setInputCryptos(cryptos);
 
      mvnt.save();
+end;
+
+procedure Tftransfercrytps.dt_dateTimeKeyPress(Sender: TObject; var Key: char);
+begin
+    if not checkKeyForNumber(key) then key := #0;
 end;
 
 procedure Tftransfercrytps.walletoriginChange(Sender: TObject);

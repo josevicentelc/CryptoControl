@@ -37,14 +37,12 @@ begin
     oldBalance:=wallet.getBalance();
     totalvalue:=wallet.getContableValue();
 
-
     newBalance:= oldBalance - mov.getOutputCryptos();
     if oldBalance <> 0 then  newValue:=totalValue * ( newBalance / oldBalance );
     shellValue:=totalValue - newValue;
 
     totalCefiGet:=mov.getComisionShell() + mov.getCefiInput();
-    if mov.getOutputCryptos() <> 0 then gotValue := totalCefiGet / mov.getOutputCryptos();
-    profit := gotValue-shellValue;
+    profit := totalCefiGet-shellValue;
 
     wallet.setBalance(newBalance);
     wallet.setContableValue(newValue);
@@ -53,7 +51,7 @@ begin
     histLine := THistoryLine.create();
     histLine.setWallet(wallet.getPk());
     histLine.setDateTime(FormatDateTime('dd/mm/yyyy hh:nn:ss', mov.getDateTime()));
-    histLine.setDescription('Shell ' + floatToSql(mov.getOutputCryptos())+ ' for ' + floatToSql(totalCefiGet) + '€ (Profit: '+floatToSql(profit)+')');
+    histLine.setDescription('Shell ' + floatToSql(mov.getOutputCryptos())+ ' (value: '+floatToSql(shellValue)+'€) for ' + floatToSql(totalCefiGet) + '€ (Profit: '+floatToSql(profit)+'€)');
     histLine.setConcept(mov.getConcept());
     histLine.setProfit(profit);
 
@@ -65,9 +63,6 @@ begin
 
     histLine.free;
     wallet.free;
-
-
-
 end;
 
 procedure computeWalletBalances();

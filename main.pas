@@ -4,6 +4,8 @@ unit main;
 
 interface
 
+// https://api.cryptowat.ch/markets/coinbase-pro/btceur/price
+
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Grids,
   Buttons, StdCtrls, udatabaseconector, ucryptomanager, ucryptos, uwallets,
@@ -22,7 +24,6 @@ type
     Panel1: TPanel;
     btn_register_wallet: TSpeedButton;
     btn_admin_cryptos: TSpeedButton;
-    btn_admin_exchanges: TSpeedButton;
     btn_add_movement: TSpeedButton;
     btn_settings: TSpeedButton;
     Panel2: TPanel;
@@ -34,6 +35,7 @@ type
     gridMovements: TStringGrid;
     procedure btn_add_movementClick(Sender: TObject);
     procedure btn_admin_cryptosClick(Sender: TObject);
+    procedure btn_admin_exchangesClick(Sender: TObject);
     procedure btn_register_walletClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure formatColors();
@@ -159,6 +161,7 @@ begin
              if movType = MV_SHELL then
                 begin
                     application.CreateForm(Tfshellcryptos, frmShell);
+                    frmShell.moveId:=movId;
                     frmShell.ShowModal;
                     frmShell.free;
                 end;
@@ -208,6 +211,11 @@ begin
      if form_admin_cryto = nil then Application.CreateForm(Tfcryptomanager, form_admin_cryto);
      form_admin_cryto.setConnection(db);
      form_admin_cryto.showModal();
+
+end;
+
+procedure Tmainform.btn_admin_exchangesClick(Sender: TObject);
+begin
 
 end;
 

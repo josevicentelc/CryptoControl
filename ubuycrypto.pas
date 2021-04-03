@@ -73,21 +73,28 @@ implementation
 
 { Tfbuycrypto }
 
+// *****************************************************************************
+
 procedure Tfbuycrypto.editCefiImportKeyPress(Sender: TObject; var Key: char);
 begin
-
-if not checkKeyForNumber(key) then key := #0;
+  if not checkKeyForNumber(key) then key := #0;
 end;
+
+// *****************************************************************************
 
 procedure Tfbuycrypto.FormCreate(Sender: TObject);
 begin
   moveId:=-1;
 end;
 
+// *****************************************************************************
+
 procedure Tfbuycrypto.editCefiImportChange(Sender: TObject);
 begin
   checkStatus();
 end;
+
+// *****************************************************************************
 
 procedure Tfbuycrypto.btnOkClick(Sender: TObject);
 var
@@ -108,6 +115,8 @@ begin
      mvnt.save();
 end;
 
+// *****************************************************************************
+
 procedure Tfbuycrypto.loadMove(id : integer);
 var
   mvnt : TMovement;
@@ -123,12 +132,21 @@ begin
                  walletlist.ItemIndex:=I;
             end;
           end;
+          if crypto <> nil then crypto.free;
+          crypto := cryptoController.getById(wallets.get(walletlist.ItemIndex).getCrypto());
+          _short1.caption := crypto.getShorName();
+          _short2.caption := crypto.getShorName();
 
-
+          dt_dateTime.DateTime:=mvnt.getDateTime();
+          editCefiImport.text := floatToSql(mvnt.getComisionBuy() + mvnt.getCotnableValueInput());
+          editCefiComision.text := floatToSql(mvnt.getComisionBuy());
+          editTransactionFee.text := floatToSql(mvnt.getInputFee());
+          editCryptoEarned.text := floatToSql(mvnt.getInputCryptos());
      end;
      mvnt.free;
-
 end;
+
+// *****************************************************************************
 
 procedure Tfbuycrypto.FormShow(Sender: TObject);
 begin
@@ -138,6 +156,8 @@ begin
      checkStatus();
 end;
 
+// *****************************************************************************
+
 procedure Tfbuycrypto.walletlistChange(Sender: TObject);
 begin
   if crypto <> nil then crypto.free;
@@ -146,6 +166,8 @@ begin
   _short2.caption := crypto.getShorName();
   checkStatus();
 end;
+
+// *****************************************************************************
 
 procedure Tfbuycrypto.updateWalletList();
 var
@@ -162,6 +184,8 @@ begin
     crypto.Free;
   end;
 end;
+
+// *****************************************************************************
 
 procedure Tfbuycrypto.checkStatus();
 begin
@@ -197,17 +221,14 @@ begin
 
             contableValue:=cefiMinusComision - cefiMinusComision * (feeValue / (earnedPlusFee));
 
-
-
             lbConversion.caption := '1 '+crypto.getShorName() + ' = ' + FormatFloat('###,##0.00', cryptoPrice) + '$/€';
             lbContableValue.caption := 'Contable value: ' + FormatFloat('###,##0.00', contableValue) + '$/€';;
 
             btnOk.Enabled:=true;
        end;
-
-
      end;
 end;
+// *****************************************************************************
 
 end.
 

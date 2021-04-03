@@ -7,16 +7,17 @@ object fbuycrypto: Tfbuycrypto
   Caption = 'Buy crypto movement'
   ClientHeight = 417
   ClientWidth = 420
+  Color = 4927270
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '2.0.2.0'
   object editConcept: TEdit
     Left = 24
     Height = 23
     Top = 93
     Width = 354
-    TabOrder = 0
+    TabOrder = 1
   end
   object Label1: TLabel
     Left = 24
@@ -25,7 +26,7 @@ object fbuycrypto: Tfbuycrypto
     Width = 127
     Caption = 'Concept (Optional)'
     Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
+    Font.Color = clWhite
     Font.Height = -15
     Font.Name = 'Segoe UI'
     Font.Pitch = fpVariable
@@ -40,7 +41,7 @@ object fbuycrypto: Tfbuycrypto
     Width = 352
     ItemHeight = 15
     OnChange = walletlistChange
-    TabOrder = 1
+    TabOrder = 0
     Text = 'walletlist'
   end
   object Label2: TLabel
@@ -50,7 +51,7 @@ object fbuycrypto: Tfbuycrypto
     Width = 42
     Caption = 'Wallet'
     Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
+    Font.Color = clWhite
     Font.Height = -15
     Font.Name = 'Segoe UI'
     Font.Pitch = fpVariable
@@ -90,7 +91,7 @@ object fbuycrypto: Tfbuycrypto
     Width = 141
     Caption = 'Movement date/time'
     Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
+    Font.Color = clWhite
     Font.Height = -15
     Font.Name = 'Segoe UI'
     Font.Pitch = fpVariable
@@ -111,11 +112,18 @@ object fbuycrypto: Tfbuycrypto
   end
   object Label4: TLabel
     Left = 25
-    Height = 15
+    Height = 20
     Top = 188
-    Width = 62
+    Width = 77
     Caption = 'CEFI Import'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
     ParentColor = False
+    ParentFont = False
   end
   object editCefiComision: TEdit
     Left = 232
@@ -134,7 +142,14 @@ object fbuycrypto: Tfbuycrypto
     Top = 188
     Width = 51
     Caption = 'Comision'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
     ParentColor = False
+    ParentFont = False
   end
   object editTransactionFee: TEdit
     Left = 25
@@ -149,11 +164,18 @@ object fbuycrypto: Tfbuycrypto
   end
   object Label6: TLabel
     Left = 25
-    Height = 15
+    Height = 20
     Top = 244
-    Width = 79
+    Width = 100
     Caption = 'Transaction fee'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
     ParentColor = False
+    ParentFont = False
   end
   object editCryptoEarned: TEdit
     Left = 232
@@ -172,7 +194,14 @@ object fbuycrypto: Tfbuycrypto
     Top = 244
     Width = 80
     Caption = 'Cryptos earned'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
     ParentColor = False
+    ParentFont = False
   end
   object btnOk: TBitBtn
     Left = 272
@@ -200,7 +229,7 @@ object fbuycrypto: Tfbuycrypto
     Width = 34
     Caption = '_cryp'
     Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
+    Font.Color = clWhite
     Font.Height = -15
     Font.Name = 'Segoe UI'
     Font.Pitch = fpVariable
@@ -215,7 +244,7 @@ object fbuycrypto: Tfbuycrypto
     Width = 22
     Caption = '$/€'
     Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
+    Font.Color = clWhite
     Font.Height = -15
     Font.Name = 'Segoe UI'
     Font.Pitch = fpVariable
@@ -230,7 +259,7 @@ object fbuycrypto: Tfbuycrypto
     Width = 22
     Caption = '$/€'
     Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
+    Font.Color = clWhite
     Font.Height = -15
     Font.Name = 'Segoe UI'
     Font.Pitch = fpVariable
@@ -245,7 +274,7 @@ object fbuycrypto: Tfbuycrypto
     Width = 34
     Caption = '_cryp'
     Font.CharSet = ANSI_CHARSET
-    Font.Color = clBlack
+    Font.Color = clWhite
     Font.Height = -15
     Font.Name = 'Segoe UI'
     Font.Pitch = fpVariable
@@ -259,7 +288,15 @@ object fbuycrypto: Tfbuycrypto
     Top = 304
     Width = 5
     Caption = '-'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
     ParentColor = False
+    ParentFont = False
   end
   object lbContableValue: TLabel
     Left = 24
@@ -267,7 +304,15 @@ object fbuycrypto: Tfbuycrypto
     Top = 328
     Width = 5
     Caption = '-'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
     ParentColor = False
+    ParentFont = False
   end
   object PopupMenu1: TPopupMenu
     left = 24

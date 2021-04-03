@@ -98,7 +98,7 @@ begin
                   ' "hist_pk" char(100) not null,'+
                   ' "hist_id" integer not null,'+
                   ' "hist_datetime" char(20),'+
-                  ' "hist_description" char(50),'+
+                  ' "hist_description" char(100),'+
                   ' "hist_concept" char(100),'+
                   ' "hist_import" numeric(9, 16) NOT NULL default 0,'+
                   ' "hist_balance" numeric(9, 16) NOT NULL default 0,'+

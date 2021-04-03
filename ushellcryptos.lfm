@@ -10,7 +10,7 @@ object fshellcryptos: Tfshellcryptos
   Color = 4927270
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '2.0.2.0'
   object dt_dateTime: TDateTimePicker
     Left = 8
     Height = 23
@@ -97,6 +97,7 @@ object fshellcryptos: Tfshellcryptos
     Top = 91
     Width = 126
     OnChange = walletoriginChange
+    OnKeyPress = editCryptoKeyPress
     TabOrder = 2
     Text = '0.00000'
   end
@@ -121,6 +122,7 @@ object fshellcryptos: Tfshellcryptos
     Top = 91
     Width = 126
     OnChange = walletoriginChange
+    OnKeyPress = editCryptoKeyPress
     TabOrder = 3
     Text = '0.00000'
   end
@@ -160,6 +162,7 @@ object fshellcryptos: Tfshellcryptos
     Top = 91
     Width = 126
     OnChange = walletoriginChange
+    OnKeyPress = editCryptoKeyPress
     TabOrder = 4
     Text = '0.00000'
   end
