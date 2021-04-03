@@ -39,6 +39,7 @@ type
     procedure btnOkClick(Sender: TObject);
     procedure editCefiImportChange(Sender: TObject);
     procedure editCefiImportKeyPress(Sender: TObject; var Key: char);
+    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure walletlistChange(Sender: TObject);
   private
@@ -57,7 +58,9 @@ type
     crypto: TCrypto;
     procedure updateWalletList();
     procedure checkStatus();
+    procedure loadMove(id : integer);
   public
+    moveId: integer;
 
   end;
 
@@ -76,9 +79,13 @@ begin
 if not checkKeyForNumber(key) then key := #0;
 end;
 
+procedure Tfbuycrypto.FormCreate(Sender: TObject);
+begin
+  moveId:=-1;
+end;
+
 procedure Tfbuycrypto.editCefiImportChange(Sender: TObject);
 begin
-
   checkStatus();
 end;
 
@@ -96,13 +103,38 @@ begin
      mvnt.setInputCryptos(earnedValue);
      mvnt.setDateTime(dt_dateTime.DateTime);
 
+     if moveId >= 0 then mvnt.setId(moveId);
+
      mvnt.save();
+end;
+
+procedure Tfbuycrypto.loadMove(id : integer);
+var
+  mvnt : TMovement;
+  I : integer;
+begin
+     mvnt := movementsController.getById(id);
+     if mvnt.getType() = MV_BUY then
+     begin
+          for I := 0 to wallets.count() -1 do
+          begin
+            if wallets.get(I).getPk() = mvnt.getWalletInput() then
+            begin
+                 walletlist.ItemIndex:=I;
+            end;
+          end;
+
+
+     end;
+     mvnt.free;
+
 end;
 
 procedure Tfbuycrypto.FormShow(Sender: TObject);
 begin
      dt_dateTime.DateTime:=now();
      updateWalletList();
+     if moveId >= 0 then loadMove(moveId);
      checkStatus();
 end;
 

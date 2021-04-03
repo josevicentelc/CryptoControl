@@ -7,6 +7,7 @@ object fbuycrypto: Tfbuycrypto
   Caption = 'Buy crypto movement'
   ClientHeight = 417
   ClientWidth = 420
+  OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
   LCLVersion = '1.8.2.0'

@@ -19,6 +19,7 @@ type
     _balance: double;
     _value: double;
     _moveid: integer;
+    _profit: double;
   public
     constructor create;
     procedure save();
@@ -30,6 +31,7 @@ type
     procedure setId(v: integer);
     procedure setImport(v: double);
     procedure setbalance(v: double);
+    procedure setProfit(v: double);
     procedure setvalue(v: double);
     procedure setMoveId(v: integer);
 
@@ -40,6 +42,7 @@ type
     function getId(): integer;
     function getImport(): double;
     function getbalance(): double;
+    function getProfit(): double;
     function getvalue(): double;
     function getMoveId(): integer;
 
@@ -109,6 +112,7 @@ procedure THistoryLine.setImport(v: double);     begin          _import:=v;     
 procedure THistoryLine.setbalance(v: double);    begin          _balance:=v;            end;
 procedure THistoryLine.setvalue(v: double);      begin          _value:=v;              end;
 procedure THistoryLine.setMoveId(v: integer);    begin          _moveid:=v;              end;
+procedure THistoryLine.setProfit(v: double);     begin          _profit:=v;             end;
 
 function THistoryLine.getWallet():string;        begin          result:=_wallet;        end;
 function THistoryLine.getDateTime(): string;     begin          result:=_datetimestr;   end;
@@ -119,6 +123,7 @@ function THistoryLine.getImport(): double;       begin          result:=_import;
 function THistoryLine.getbalance(): double;      begin          result:=_balance;       end;
 function THistoryLine.getvalue(): double;        begin          result:=_value;         end;
 function THistoryLine.getMoveId(): integer;      begin          result:=_moveid;         end;
+function THistoryLine.getProfit(): double;       begin          result:=_profit;       end;
 
 
 // *****************************************************************************
@@ -198,15 +203,17 @@ begin
            sql := sql + 'hist_concept = "' + v.getConcept() + '", ';
            sql := sql + 'hist_import = '+floatToSql(v.getImport()) + ', ';
            sql := sql + 'hist_balance = '+ floatToSql(v.getbalance()) + ', ';
-           sql := sql + 'hist_value = ' + floatToSql(v.getvalue());
-           sql := sql + 'hist_moveid = ' + inttostr(v.getMoveId());
+           sql := sql + 'hist_value = ' + floatToSql(v.getvalue()) + ', ' ;
+           sql := sql + 'hist_moveid = ' + inttostr(v.getMoveId()) + ', ' ;
+           sql := sql + 'hist_profit = ' + floatToSql(v.getProfit());
+
            sql := sql + ' where hist_pk = "' + v.getWallet() + '" and hist_id = ' + inttostr(v.getId());
              // update
         end
         else
         begin
              v.setId(getNextId(v.getWallet()));
-             sql := 'insert into "walletshistory" (hist_pk, hist_id, hist_datetime, hist_description, hist_concept, hist_import, hist_balance, hist_value, hist_moveid) values ( ';
+             sql := 'insert into "walletshistory" (hist_pk, hist_id, hist_datetime, hist_description, hist_concept, hist_import, hist_balance, hist_value,hist_profit, hist_moveid) values ( ';
              sql := sql + '"' + v.getWallet() + '", ';
              sql := sql + inttostr(v.getId()) + ', ';
              sql := sql + '"' + v.getDateTime() + '", ';
@@ -215,6 +222,7 @@ begin
              sql := sql + floatToSql(v.getImport()) + ', ';
              sql := sql + floatToSql(v.getbalance()) + ', ';
              sql := sql + floatToSql(v.getvalue()) + ',';
+             sql := sql + floatToSql(v.getProfit()) + ',';
              sql := sql + inttostr(v.getMoveId()) + ')';
              // insert
         end;
@@ -250,6 +258,7 @@ begin
          line.setImport(Q.FieldByName('hist_import').AsFloat);
          line.setbalance(Q.FieldByName('hist_balance').AsFloat);
          line.setvalue(Q.FieldByName('hist_value').AsFloat);
+         line.setProfit(Q.FieldByName('hist_profit').AsFloat);
          line.setMoveId(Q.FieldByName('hist_moveid').AsInteger);
          result.push(line);
          Q.Next;
@@ -275,6 +284,7 @@ begin
          result.setImport(Q.FieldByName('hist_import').AsFloat);
          result.setbalance(Q.FieldByName('hist_balance').AsFloat);
          result.setvalue(Q.FieldByName('hist_value').AsFloat);
+         result.setProfit(Q.FieldByName('hist_profit').AsFloat);
          result.setMoveId(Q.FieldByName('hist_moveid').AsInteger);
          Q.Next;
      end;

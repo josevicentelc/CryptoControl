@@ -107,7 +107,7 @@ var
   newValue : double;
 begin
      newBalance := _balance + balance;
-     f := _balance / newBalance;
+     if newBalance <> 0 then f := _balance / newBalance;
      newValue:=_value*f + contable_value*(1-f);
      setBalance(newBalance);
      setContableValue(newValue);

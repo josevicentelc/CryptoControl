@@ -10,11 +10,65 @@ uses
 
 
   procedure computeWalletBalances();
+  procedure processShellMove(mov: TMovement);
   //cryptoController : TCryptoController;
   //procedure initCryptoController(db: TDatabaseConnector);
 
 
 implementation
+
+procedure processShellMove(mov: TMovement);
+var
+ wallet : TWallet;
+ oldBalance: double;
+ totalValue : double;
+ histLine : THistoryLine;
+ newBalance : double;
+ newValue : double;
+ shellValue: double;
+ totalCefiGet : double;
+
+ gotValue:double;
+ profit: double;
+
+begin
+    wallet := walletController.getWallet(mov.getWalletOutput());
+
+    oldBalance:=wallet.getBalance();
+    totalvalue:=wallet.getContableValue();
+
+
+    newBalance:= oldBalance - mov.getOutputCryptos();
+    if oldBalance <> 0 then  newValue:=totalValue * ( newBalance / oldBalance );
+    shellValue:=totalValue - newValue;
+
+    totalCefiGet:=mov.getComisionShell() + mov.getCefiInput();
+    if mov.getOutputCryptos() <> 0 then gotValue := totalCefiGet / mov.getOutputCryptos();
+    profit := gotValue-shellValue;
+
+    wallet.setBalance(newBalance);
+    wallet.setContableValue(newValue);
+    wallet.save();
+
+    histLine := THistoryLine.create();
+    histLine.setWallet(wallet.getPk());
+    histLine.setDateTime(FormatDateTime('dd/mm/yyyy hh:nn:ss', mov.getDateTime()));
+    histLine.setDescription('Shell ' + floatToSql(mov.getOutputCryptos())+ ' for ' + floatToSql(totalCefiGet) + '€ (Profit: '+floatToSql(profit)+')');
+    histLine.setConcept(mov.getConcept());
+    histLine.setProfit(profit);
+
+    histLine.setImport(mov.getOutputCryptos() * -1);
+    histLine.setbalance(wallet.getBalance());
+    histLine.setvalue(wallet.getContableValue());
+    histLine.setMoveId(mov.getId());
+    histLine.save();
+
+    histLine.free;
+    wallet.free;
+
+
+
+end;
 
 procedure computeWalletBalances();
 var
@@ -49,6 +103,10 @@ begin
        mov := movements.get(I);
        movType := mov.getType();
        case movType of
+            MV_SHELL:
+                begin
+                     processShellMove(mov);
+                end;
             MV_BUY:
                 begin
                      wallet := walletController.getWallet(mov.getWalletInput());

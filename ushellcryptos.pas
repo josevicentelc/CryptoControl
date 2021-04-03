@@ -50,6 +50,7 @@ implementation
 
 procedure Tfshellcryptos.FormShow(Sender: TObject);
 begin
+  dt_dateTime.DateTime:=now();
   updateWalletList();
   checkStatus();
 end;

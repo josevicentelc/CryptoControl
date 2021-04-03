@@ -10,7 +10,7 @@ object fshellcryptos: Tfshellcryptos
   Color = 4927270
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '1.8.2.0'
   object dt_dateTime: TDateTimePicker
     Left = 8
     Height = 23

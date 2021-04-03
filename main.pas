@@ -7,7 +7,9 @@ interface
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Grids,
   Buttons, StdCtrls, udatabaseconector, ucryptomanager, ucryptos, uwallets,
-  uwalletmanager, umovementManager, umovements, umovementscompute, uwallethistory, utils, uabout;
+  uwalletmanager, umovementManager, umovements, umovementscompute, uwallethistory, utils, uabout,
+  ubuycrypto, utransfercrytos, ushellcryptos
+  ;
 
 type
 
@@ -37,10 +39,13 @@ type
     procedure formatColors();
     procedure FormShow(Sender: TObject);
     procedure gridMovementsDblClick(Sender: TObject);
+    procedure gridMovementsSelectCell(Sender: TObject; aCol, aRow: Integer;
+      var CanSelect: Boolean);
     procedure gridWalletsClick(Sender: TObject);
     procedure gridWalletsSelectCell(Sender: TObject; aCol, aRow: Integer;
       var CanSelect: Boolean);
   private
+    selectedMoveRow: integer;
     db : TDatabaseConnector;
     form_admin_cryto : tfcryptomanager;
     form_admin_wallet : Tfwalletmanager;
@@ -107,6 +112,7 @@ end;
 
 procedure Tmainform.FormCreate(Sender: TObject);
 begin
+     selectedMoveRow:=-1;
      formatColors();
      db := TDatabaseConnector.create('myfile.sql3');
      initCryptoController(db);
@@ -122,8 +128,51 @@ begin
 end;
 
 procedure Tmainform.gridMovementsDblClick(Sender: TObject);
+var
+  movId : integer;
+  mov : TMovement;
+  movType : TMovementType;
+  frmBuy : Tfbuycrypto;
+  frmTransfer : Tftransfercrytps;
+  frmShell : Tfshellcryptos;
 begin
+  if gridMovements.Cells[5, selectedMoveRow] <> '' then
+     begin
+       movId := strtoint(gridMovements.Cells[5, selectedMoveRow]);
+       mov := movementsController.getById(movId);
+       if mov <> nil then
+          begin
+             movType := mov.getType();
+             if movType = MV_BUY then
+                begin
+                    application.CreateForm(Tfbuycrypto, frmBuy);
+                    frmBuy.moveId:=movId;
+                    frmBuy.ShowModal;
+                    frmBuy.free;
+                end;
+             if movType = MV_TRANSFER then
+                begin
+                    application.CreateForm(Tftransfercrytps, frmTransfer);
+                    frmTransfer.ShowModal;
+                    frmTransfer.free;
+                end;
+             if movType = MV_SHELL then
+                begin
+                    application.CreateForm(Tfshellcryptos, frmShell);
+                    frmShell.ShowModal;
+                    frmShell.free;
+                end;
 
+             computeWalletBalances();
+             refreshWalletBalances();
+          end;
+     end;
+end;
+
+procedure Tmainform.gridMovementsSelectCell(Sender: TObject; aCol,
+  aRow: Integer; var CanSelect: Boolean);
+begin
+     selectedMoveRow:=aRow;
 end;
 
 procedure Tmainform.gridWalletsClick(Sender: TObject);
@@ -138,6 +187,7 @@ var
   history : THistoryList;
   I : Integer;
 begin
+     selectedMoveRow:=-1;
      wallet := gridWallets.Cells[0, aRow];
      history := historyController.getFromWallet(wallet);
      gridMovements.RowCount:=history.count() + 1;
