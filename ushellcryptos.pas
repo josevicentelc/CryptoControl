@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons,
-  DateTimePicker, ucryptos, uwallets, umovements, utils;
+  ExtCtrls, DateTimePicker, ucryptos, uwallets, umovements, utils;
 
 type
 
@@ -19,6 +19,7 @@ type
     editCrypto: TEdit;
     editComision: TEdit;
     editTotalCefi: TEdit;
+    Image1: TImage;
     Label2: TLabel;
     Label3: TLabel;
     lblPrice: TLabel;

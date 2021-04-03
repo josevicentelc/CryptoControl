@@ -15,7 +15,6 @@ type
   Tftransfercrytps = class(TForm)
     Bevel1: TBevel;
     Bevel2: TBevel;
-    Bevel3: TBevel;
     btnCancel: TBitBtn;
     btnOk: TBitBtn;
     dt_dateTime: TDateTimePicker;
@@ -23,6 +22,7 @@ type
     editWalletDestiny: TEdit;
     editCryptoEarned: TEdit;
     editTransactionFee: TEdit;
+    Image1: TImage;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -30,6 +30,9 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
+    lbloutput: TLabel;
+    Label9: TLabel;
+    Shape1: TShape;
     walletorigin: TComboBox;
     walletdestiny: TComboBox;
     _short1: TLabel;
@@ -37,6 +40,7 @@ type
     procedure btnOkClick(Sender: TObject);
     procedure dt_dateTimeKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
     procedure walletoriginChange(Sender: TObject);
   private
     wallets : TWalletList;
@@ -61,6 +65,11 @@ procedure Tftransfercrytps.FormShow(Sender: TObject);
 begin
   dt_dateTime.DateTime:=now();
   updateWalletList();
+end;
+
+procedure Tftransfercrytps.Image1Click(Sender: TObject);
+begin
+
 end;
 
 procedure Tftransfercrytps.btnOkClick(Sender: TObject);
@@ -135,6 +144,7 @@ begin
        _short2.caption := crypto.getShorName();
        TryStrToFloat(StringReplace(editTransactionFee.text, '.', ',', [rfreplaceall]), fee);
        TryStrToFloat(StringReplace(editCryptoEarned.text, '.', ',', [rfreplaceall]), cryptos);
+       lbloutput.Caption:=floatToSql(cryptos + fee);
        if (cryptos > 0) then
          begin
             isValid:=true;

@@ -10,8 +10,8 @@ uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Grids,
   Buttons, StdCtrls, udatabaseconector, ucryptomanager, ucryptos, uwallets,
   uwalletmanager, umovementManager, umovements, umovementscompute, uwallethistory, utils, uabout,
-  ubuycrypto, utransfercrytos, ushellcryptos
-  ;
+  ubuycrypto, utransfercrytos, ushellcryptos, uconfig;
+
 
 type
 
@@ -72,17 +72,24 @@ implementation
 procedure Tmainform.refreshWalletBalances();
 var
   I : Integer;
+  crypto: TCrypto;
+  c : String;
 begin
+     c := getConfig().currency();
      wallets := walletController.getWallets();
      gridWallets.RowCount:=wallets.count() + 1;
      gridWallets.ColCount:= 6;
 
      for I := 0 to wallets.count() -1 do
      begin
+       crypto := cryptoController.getById(wallets.get(i).getCrypto());
+       crypto.refreshMarketValue();
        gridWallets.Cells[0, I+1] := wallets.get(I).getPk();
        gridWallets.Cells[1, I+1] := wallets.get(I).getName();
        gridWallets.Cells[2, I+1] := floatToSql(wallets.get(I).getBalance());
-       gridWallets.Cells[3, I+1] := formatFloat('##0.00', wallets.get(I).getContableValue()) + ' €';
+       gridWallets.Cells[3, I+1] := formatFloat('##0.00', wallets.get(I).getContableValue()) + c;
+       gridWallets.Cells[4, I+1] := formatFloat('##0.00', crypto.getMarketPrice()) + c;
+       gridWallets.Cells[5, I+1] := formatFloat('##0.00', crypto.getMarketPrice() * wallets.get(I).getBalance() ) + c;
      end;
 end;
 
@@ -189,7 +196,9 @@ var
   wallet : String;
   history : THistoryList;
   I : Integer;
+  c : String;
 begin
+     c := getConfig().currency();
      selectedMoveRow:=-1;
      wallet := gridWallets.Cells[0, aRow];
      history := historyController.getFromWallet(wallet);
@@ -200,7 +209,7 @@ begin
         gridMovements.Cells[1, I+1] := history.get(i).getDescription();
         gridMovements.Cells[2, I+1] := floatToSql(history.get(i).getImport());
         gridMovements.Cells[3, I+1] := floatToSql(history.get(i).getbalance());
-        gridMovements.Cells[4, I+1] := floatToSql(history.get(i).getvalue())+ ' €';
+        gridMovements.Cells[4, I+1] := floatToSql(history.get(i).getvalue())+ c;
         gridMovements.Cells[5, I+1] := inttostr(history.get(i).getMoveId());
      end;
 

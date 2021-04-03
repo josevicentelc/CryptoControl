@@ -11,82 +11,29 @@ uses
 
 function getUrl(url: string): string;
 function postUrl(url: string; msg: string): string;
-function getCurrentCompanies(): TJsonArray;
 function getMarketValue(pair: string): double;
-
-var
 
 
 implementation
 
 
 function getMarketValue(pair: string): double;
-var res : string;
-begin
-  res := getUrl('https://api.cryptowat.ch/markets/coinbase-pro/'+pair+'/price' );
-  result := 0;
-end;
-
-{
-  Solicita al middleware la lista de empresas autorizadas para el usuario logeado
-}
-function getCurrentCompanies(): TJsonArray;
 var
-    msg : String;
-    json : String;
-    jsonObj : TJSONObject;
+  jsonObj : TJSONObject;
+  json : String;
 begin
-  result := nil;
-  if (currentUser <> '') and (currentSession <> '') then
-  begin
-     msg := '{';
-     msg:= msg + '"email":"'+currentUser+'",';
-     msg:= msg + '"sesion":"'+currentSession+'"';
-     msg:= msg + '}';
-     try
-       json := postUrl('http://localhost:3001/usercompanies', msg);
-       jsonObj := TJSONObject(GetJSON(json));
-       if jsonObj.IndexOfName('companies') <> -1 then
+  json := getUrl('https://api.cryptowat.ch/markets/coinbase-pro/'+pair+'/price' );
+  jsonObj := TJSONObject(GetJSON(json));
+  if jsonObj.IndexOfName('result') <> -1 then
        begin
-          result := jsonObj.Arrays['companies'];
+          jsonObj := jsonObj.Objects['result'];
+          if jsonObj.IndexOfName('price') <> -1 then
+               begin
+                  result := jsonObj.Floats['price'];
+               end;
        end;
-     except
-        result := nil;
-     end;
-  end;
 end;
 
-
-
-{
-  Solicitud de login en el middleware
-  Si el login es correcto, se recibira un hash de sesion que almacenaremos
-  y que debera acompañar a cada llamada que se haga al middleware
-}
-//function login(usr: String; pass : String): String;
-//var
-//  jData : TJSONData;
-//  jObject : TJSONObject;
-//  loginRes : String;
-//  msg : String;
-//  json : String;
-//begin
-{  msg := '{';
-  msg:= msg + '"email":"'+usr+'",';
-  msg:= msg + '"password":"'+pass+'"';
-  msg:= msg + '}';
-  json := postUrl('http://localhost:3001/login', msg);
-  result := TJSONObject(GetJSON(json)).Strings['result'];
-  if result = 'LOGIN_SUCCESS' then
-  begin
-        jData := GetJSON(json);
-        jObject := TJSONObject(jdata);
-        loginRes := jObject.Strings['result'];
-        currentSession := jObject.Strings['sesion'];
-        currentUser := usr;
-        result := loginRes;
-  end;}
-//end;
 
 // Funcion generica que envia un Json stringificado (msg) a la (url) indicada
 function postUrl(url: string; msg: string): string;

@@ -1,18 +1,52 @@
 object fshellcryptos: Tfshellcryptos
   Left = 702
-  Height = 219
+  Height = 305
   Top = 422
-  Width = 529
+  Width = 612
   BorderStyle = bsDialog
-  Caption = 'fshellcryptos'
-  ClientHeight = 219
-  ClientWidth = 529
+  Caption = 'Shell cryptos'
+  ClientHeight = 305
+  ClientWidth = 612
   Color = 4927270
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '1.8.2.0'
+  object Image1: TImage
+    Left = 103
+    Height = 123
+    Top = 72
+    Width = 442
+    Picture.Data = {
+      1754506F727461626C654E6574776F726B47726170686963E402000089504E47
+      0D0A1A0A0000000D4948445200000102000000440802000000E55BACC2000000
+      017352474200AECE1CE90000000467414D410000B18F0BFC6105000000097048
+      597300000EC300000EC301C76FA8640000027949444154785EEDD76B6EDB3010
+      45E1AE20FBDF52D7D05F5E894B80472987AE1C4BA465913A1F0648A231E887EE
+      45E05F77E9F2AC81640D246B2025D640B206923590126B205903C91A48893590
+      AC81640DA4C41A48D640B206EAE576BBF1DB80ACC111FEF07366A906E336C11A
+      A88F5C8384BF87620DF42FC1BD70EE38ACC14511D8B7E16906610D2E84841E85
+      671D8135B8048279209E7810D6607E04F3403CF138ACC1CC48E54F78741BCE1A
+      B00389359816A95CC7E33A79C79987B10613CA895CC3837A7BDFC907B006B3C9
+      59FF2F1EA107D6602AE4FD016BADB006F320F20F586B9D359804918FD8E927D6
+      6006A43E62A71758831910FC020BBDC61A0C8FE01758E865D6A0B7DF5FCC2108
+      7E8185B6B0065D7D7760BD09A4B5535E39ABC0425B58837EAA0EA4794054175C
+      DD8B530A2CB49135E8A42A409E88A81658ECC2110516DACE1AF450A53F4F4454
+      2376BB70448185B6B306CDAAF4E789C869C46E178E28B0D02ED6A04D95FE3C11
+      398DD8EDC5290516DAC51A34A8D29F2722A411BB061CB4E0AAF6B2067B55E9CF
+      1311D2885D1BCE5A70F573CEF01A5A9CBE0655CECE3C510E68855D1BCE2AB0F8
+      9C93BC8CDDCE5D832A67679E28C7A2C2AE19C72DB8FA51BC94619B600D7A4C44
+      22AE8A4F6128D6A07922B2706D7C16E3F0BB41DB44A440A335E1F43538892AFD
+      7922EEBFFC6F30A72AFD7922EEBFFC6E30A72AFD7922EE7FC4EE1A78CFC3BE6B
+      6BF05495FE3C11F73F627719A3BF6B6BB0AE4A7F9E28DFFE0ABB2B19FD5D5B83
+      755501D24439F415761A8A3558F7B40309C12FB0D068ACC153EB1D48C8FE82AB
+      1A9035684203ECC0E0AC81640D246B2025D640B206923590126B205903C91A48
+      893590AC81640DA4FBFDFE176EB6E483F7FA04A80000000049454E44AE426082
+    }
+    Stretch = True
+    Transparent = True
+  end
   object dt_dateTime: TDateTimePicker
-    Left = 8
+    Left = 48
     Height = 23
     Top = 26
     Width = 137
@@ -37,7 +71,7 @@ object fshellcryptos: Tfshellcryptos
     Options = [dtpoFlatButton]
   end
   object Label3: TLabel
-    Left = 8
+    Left = 48
     Height = 20
     Top = 2
     Width = 141
@@ -52,7 +86,7 @@ object fshellcryptos: Tfshellcryptos
     ParentFont = False
   end
   object walletorigin: TComboBox
-    Left = 168
+    Left = 208
     Height = 23
     Top = 26
     Width = 352
@@ -62,7 +96,7 @@ object fshellcryptos: Tfshellcryptos
     Text = 'walletorigin'
   end
   object Label2: TLabel
-    Left = 168
+    Left = 208
     Height = 20
     Top = 0
     Width = 85
@@ -77,9 +111,9 @@ object fshellcryptos: Tfshellcryptos
     ParentFont = False
   end
   object Label7: TLabel
-    Left = 8
+    Left = 16
     Height = 20
-    Top = 72
+    Top = 120
     Width = 82
     Caption = 'Sold cryptos'
     Font.CharSet = ANSI_CHARSET
@@ -92,19 +126,19 @@ object fshellcryptos: Tfshellcryptos
     ParentFont = False
   end
   object editCrypto: TEdit
-    Left = 8
+    Left = 16
     Height = 23
-    Top = 91
-    Width = 126
+    Top = 139
+    Width = 121
     OnChange = walletoriginChange
     OnKeyPress = editCryptoKeyPress
     TabOrder = 2
     Text = '0.00000'
   end
   object Label6: TLabel
-    Left = 216
+    Left = 456
     Height = 20
-    Top = 72
+    Top = 75
     Width = 92
     Caption = 'Paid comision'
     Font.CharSet = ANSI_CHARSET
@@ -117,10 +151,10 @@ object fshellcryptos: Tfshellcryptos
     ParentFont = False
   end
   object editComision: TEdit
-    Left = 216
+    Left = 455
     Height = 23
-    Top = 91
-    Width = 126
+    Top = 94
+    Width = 121
     OnChange = walletoriginChange
     OnKeyPress = editCryptoKeyPress
     TabOrder = 3
@@ -129,7 +163,7 @@ object fshellcryptos: Tfshellcryptos
   object _short1: TLabel
     Left = 144
     Height = 20
-    Top = 91
+    Top = 139
     Width = 34
     Caption = '_cryp'
     Font.CharSet = ANSI_CHARSET
@@ -142,9 +176,9 @@ object fshellcryptos: Tfshellcryptos
     ParentFont = False
   end
   object Label8: TLabel
-    Left = 392
+    Left = 456
     Height = 20
-    Top = 72
+    Top = 131
     Width = 108
     Caption = 'Total import get'
     Font.CharSet = ANSI_CHARSET
@@ -157,19 +191,19 @@ object fshellcryptos: Tfshellcryptos
     ParentFont = False
   end
   object editTotalCefi: TEdit
-    Left = 392
+    Left = 456
     Height = 23
-    Top = 91
-    Width = 126
+    Top = 150
+    Width = 121
     OnChange = walletoriginChange
     OnKeyPress = editCryptoKeyPress
     TabOrder = 4
     Text = '0.00000'
   end
   object btnOk: TBitBtn
-    Left = 408
+    Left = 472
     Height = 38
-    Top = 160
+    Top = 240
     Width = 104
     Caption = 'Save'
     Enabled = False
@@ -178,19 +212,21 @@ object fshellcryptos: Tfshellcryptos
     TabOrder = 5
   end
   object btnCancel: TBitBtn
-    Left = 280
+    Left = 344
     Height = 38
-    Top = 160
+    Top = 240
     Width = 104
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 6
   end
   object lblPrice: TLabel
-    Left = 16
+    Left = 162
     Height = 20
-    Top = 168
-    Width = 35
+    Top = 184
+    Width = 249
+    Alignment = taCenter
+    AutoSize = False
     Caption = 'Price:'
     Font.CharSet = ANSI_CHARSET
     Font.Color = clWhite

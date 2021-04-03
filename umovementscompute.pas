@@ -5,7 +5,7 @@ unit umovementscompute;
 interface
 
 uses
-  Classes, SysUtils, umovements, ucryptos, uwallets, uwallethistory, utils;
+  Classes, SysUtils, umovements, ucryptos, uwallets, uwallethistory, utils, uconfig;
 
 
 
@@ -30,8 +30,10 @@ var
 
  gotValue:double;
  profit: double;
+ c : String;
 
 begin
+    c := getConfig().currency();
     wallet := walletController.getWallet(mov.getWalletOutput());
 
     oldBalance:=wallet.getBalance();
@@ -51,7 +53,7 @@ begin
     histLine := THistoryLine.create();
     histLine.setWallet(wallet.getPk());
     histLine.setDateTime(FormatDateTime('dd/mm/yyyy hh:nn:ss', mov.getDateTime()));
-    histLine.setDescription('Shell ' + floatToSql(mov.getOutputCryptos())+ ' (value: '+floatToSql(shellValue)+'€) for ' + floatToSql(totalCefiGet) + '€ (Profit: '+floatToSql(profit)+'€)');
+    histLine.setDescription('Shell ' + floatToSql(mov.getOutputCryptos())+ ' (value: '+floatToSql(shellValue)+ c +') for ' + floatToSql(totalCefiGet) + c+ ' (Profit: '+floatToSql(profit)+c+')');
     histLine.setConcept(mov.getConcept());
     histLine.setProfit(profit);
 
@@ -82,7 +84,10 @@ var
 
  outputcryptos: double;
  histLine : THistoryLine;
+ c : String;
 begin
+
+  c := getConfig().currency();
 
   wallets := walletController.getWallets();
   for I := 0 to wallets.count() -1 do
@@ -111,7 +116,7 @@ begin
                      histLine := THistoryLine.create();
                      histLine.setWallet(wallet.getPk());
                      histLine.setDateTime(FormatDateTime('dd/mm/yyyy hh:nn:ss', mov.getDateTime()));
-                     histLine.setDescription('Buy ' + floatToSql(mov.getInputCryptos())+ ' coins');
+                     histLine.setDescription('Buy ' + floatToSql(mov.getInputCryptos())+ ' coins by '+floatToSql(mov.getCotnableValueInput()) + c);
                      histLine.setConcept(mov.getConcept());
                      histLine.setImport(mov.getInputCryptos());
                      histLine.setbalance(wallet.getBalance());

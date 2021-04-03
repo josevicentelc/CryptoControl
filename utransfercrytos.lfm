@@ -1,21 +1,49 @@
 object ftransfercrytps: Tftransfercrytps
   Left = 423
-  Height = 350
+  Height = 436
   Top = 162
-  Width = 756
+  Width = 767
   BorderStyle = bsDialog
   Caption = 'Transfer cryptos'
-  ClientHeight = 350
-  ClientWidth = 756
+  ClientHeight = 436
+  ClientWidth = 767
   Color = 4927270
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.2.0'
-  object Bevel3: TBevel
-    Left = 5
-    Height = 153
-    Top = 125
-    Width = 742
+  LCLVersion = '1.8.2.0'
+  object Shape1: TShape
+    Left = 118
+    Height = 21
+    Top = 280
+    Width = 106
+  end
+  object Image1: TImage
+    Left = 167
+    Height = 130
+    Top = 212
+    Width = 369
+    OnClick = Image1Click
+    Picture.Data = {
+      1754506F727461626C654E6574776F726B477261706869630202000089504E47
+      0D0A1A0A0000000D49484452000001050000004408020000000787B7BB000000
+      017352474200AECE1CE90000000467414D410000B18F0BFC6105000000097048
+      597300000EC300000EC301C76FA8640000019749444154785EEDDAC151C25014
+      86D168032EECC55A2CD15AECC58515A083811F86101809E425F79C8DD96506F3
+      BD7BA33C6D369B0ED87AEE7F027A80437A80D003841E20F400A107083D40E801
+      420FF3F97CE92F68861E662589C6E8616E926889EFF3FDCBE40FF1DB777FC1AC
+      F470B57B1FE49268801E463D789991C4DCF470C6E3D77A3134C0FBF410315465
+      3E1CBBB284491EDFFDBDC4D00C3D1CB818C3B40FEEDFEDC4D0123D6C8D9770A7
+      47F6F7A662688C1E4663F0BC1653BE87733128A1A4DA7F5F1203C70ACF87C118
+      94505BD5F9200686F87FDC8E1828DAC3E97010035BF57A1003E7D997208AF560
+      3830AA520F62E012FB1244991E0C07AE603E4054EDC1706088F9C00D4EB7D085
+      ABD1C3EA7E6D0D59D7675B723E5896A6B5A22496F07DEF9AA7FBD77BF7FAD15F
+      2FC22A4E99E67BB0EA2CC8F293F03ECD74967F78E981E9980F77E7DD7729BC3F
+      50DD7E415ACBB1655FE2662B9AE17AE036EB5A68ED4B10E603841E20F400A107
+      083D40E801420F107A80D003841E20F400A107083D40E801420F107A80D00384
+      1E20F400A107D8E9BA1F78296F4D3C6F13780000000049454E44AE426082
+    }
+    Stretch = True
+    Transparent = True
   end
   object Bevel2: TBevel
     Left = 376
@@ -32,14 +60,14 @@ object ftransfercrytps: Tftransfercrytps
   object editConcept: TEdit
     Left = 16
     Height = 23
-    Top = 166
+    Top = 158
     Width = 720
     TabOrder = 3
   end
   object Label1: TLabel
     Left = 24
     Height = 20
-    Top = 144
+    Top = 136
     Width = 127
     Caption = 'Concept (Optional)'
     Font.CharSet = ANSI_CHARSET
@@ -79,7 +107,7 @@ object ftransfercrytps: Tftransfercrytps
   object dt_dateTime: TDateTimePicker
     Left = 18
     Height = 23
-    Top = 230
+    Top = 94
     Width = 137
     CenturyFrom = 1941
     MaxDate = 2958465
@@ -106,7 +134,7 @@ object ftransfercrytps: Tftransfercrytps
   object Label3: TLabel
     Left = 18
     Height = 20
-    Top = 208
+    Top = 72
     Width = 141
     Caption = 'Movement date/time'
     Font.CharSet = ANSI_CHARSET
@@ -119,9 +147,9 @@ object ftransfercrytps: Tftransfercrytps
     ParentFont = False
   end
   object editTransactionFee: TEdit
-    Left = 515
+    Left = 375
     Height = 23
-    Top = 230
+    Top = 228
     Width = 126
     OnChange = walletoriginChange
     OnKeyPress = dt_dateTimeKeyPress
@@ -129,9 +157,9 @@ object ftransfercrytps: Tftransfercrytps
     Text = '0.00000'
   end
   object Label6: TLabel
-    Left = 515
+    Left = 375
     Height = 20
-    Top = 211
+    Top = 204
     Width = 100
     Caption = 'Transaction fee'
     Font.CharSet = ANSI_CHARSET
@@ -144,9 +172,9 @@ object ftransfercrytps: Tftransfercrytps
     ParentFont = False
   end
   object editCryptoEarned: TEdit
-    Left = 291
+    Left = 455
     Height = 23
-    Top = 230
+    Top = 279
     Width = 126
     OnChange = walletoriginChange
     OnKeyPress = dt_dateTimeKeyPress
@@ -154,9 +182,9 @@ object ftransfercrytps: Tftransfercrytps
     Text = '0.00000'
   end
   object Label7: TLabel
-    Left = 291
+    Left = 455
     Height = 20
-    Top = 211
+    Top = 260
     Width = 121
     Caption = 'Transfered cryptos'
     Font.CharSet = ANSI_CHARSET
@@ -169,9 +197,9 @@ object ftransfercrytps: Tftransfercrytps
     ParentFont = False
   end
   object _short1: TLabel
-    Left = 650
+    Left = 511
     Height = 20
-    Top = 232
+    Top = 231
     Width = 34
     Caption = '_cryp'
     Font.CharSet = ANSI_CHARSET
@@ -219,7 +247,7 @@ object ftransfercrytps: Tftransfercrytps
   object btnOk: TBitBtn
     Left = 632
     Height = 38
-    Top = 288
+    Top = 368
     Width = 104
     Caption = 'Save'
     Enabled = False
@@ -230,7 +258,7 @@ object ftransfercrytps: Tftransfercrytps
   object btnCancel: TBitBtn
     Left = 495
     Height = 38
-    Top = 288
+    Top = 368
     Width = 104
     Caption = 'Cancel'
     ModalResult = 2
@@ -252,11 +280,43 @@ object ftransfercrytps: Tftransfercrytps
     ParentFont = False
   end
   object _short2: TLabel
-    Left = 424
+    Left = 588
     Height = 20
-    Top = 230
+    Top = 279
     Width = 34
     Caption = '_cryp'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -15
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object lbloutput: TLabel
+    Left = 110
+    Height = 20
+    Top = 280
+    Width = 117
+    Alignment = taCenter
+    AutoSize = False
+    Caption = '0.00'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -16
+    Font.Name = 'Arial Narrow'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label9: TLabel
+    Left = 121
+    Height = 20
+    Top = 261
+    Width = 98
+    Caption = 'Output cryptos'
     Font.CharSet = ANSI_CHARSET
     Font.Color = clWhite
     Font.Height = -15

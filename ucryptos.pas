@@ -5,7 +5,7 @@ unit ucryptos;
 interface
 
 uses
-  Classes, SysUtils, udatabaseconector, SQLDB, ucomunicacion;
+  Classes, SysUtils, udatabaseconector, SQLDB, ucomunicacion, uconfig;
 
 type
   TCrypto = class(TObject)
@@ -13,21 +13,21 @@ type
      _id : integer;
      _name : String;
      _shortName : String;
-     _dolarMarketPrice : double;
-     _euroMarketPrice : double;
+     _MarketPrice : double;
   public
     constructor create();
     procedure setId(__id : Integer);
     procedure setName(__name : String);
     procedure setShorName(__short : String);
-    procedure setDolarMarketPrice(v : double);
-    procedure setEuroMarketPrice(v : double);
+    procedure setMarketPrice(v : double);
 
     function getId() : integer;
     function getName() : String;
     function getShorName() : String;
-    function getDolarMarketPrice(): double;
-    function getEuroMarketPrice(): double;
+    function getMarketPrice(): double;
+
+    procedure refreshMarketValue();
+
   end;
 
   TCryptoArray = Array of TCrypto;
@@ -57,7 +57,6 @@ type
     procedure remove(crypto: TCrypto);
     function getCryptos(): TCryptoList;
     function getById(_id: integer): TCrypto;
-    procedure refreshMarketValue();
 
   end;
 
@@ -88,15 +87,22 @@ function TCrypto.getId() : integer;             begin           result := _id;  
 function TCrypto.getName() : String;            begin           result := _name;        end;
 function TCrypto.getShorName() : String;        begin           result := _shortName;   end;
 
-procedure TCrypto.setDolarMarketPrice(v: double);begin          _dolarMarketPrice:=v;   end;
-procedure TCrypto.setEuroMarketPrice(v : double);begin          _euroMarketPrice:=v;    end;
-function TCrypto.getDolarMarketPrice(): double;  begin          result := _dolarMarketPrice;    end;
-function TCrypto.getEuroMarketPrice(): double;   begin          result := _euroMarketPrice;     end;
+procedure TCrypto.setMarketPrice(v: double);begin         _MarketPrice:=v;   end;
+function TCrypto.getMarketPrice(): double;  begin          result := _MarketPrice;    end;
 
 procedure TCrypto.refreshMarketValue();
 begin
-     _euroMarketPrice := getMarketValue(LowerCase(_shortName)+'eur');
-     _dolarMarketPrice := getMarketValue(LowerCase(_shortName)+'usd');
+     if getConfig().useMarketSync then
+     begin
+       if getConfig().useCurrencyEuro then
+           _MarketPrice := getMarketValue(LowerCase(_shortName)+'eur')
+       else
+           _MarketPrice := getMarketValue(LowerCase(_shortName)+'usd');
+     end
+     else
+     begin
+         _MarketPrice := 0;
+     end;
 end;
 
 // *****************************************************************************

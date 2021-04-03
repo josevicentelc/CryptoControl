@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons,
-  MaskEdit, Menus, JVEdit, DateTimePicker, utils, ucryptos, uwallets, umovements;
+  MaskEdit, Menus, ExtCtrls, JVEdit, DateTimePicker, utils, ucryptos, uwallets,
+  umovements;
 
 type
 
@@ -15,6 +16,7 @@ type
   Tfbuycrypto = class(TForm)
     btnOk: TBitBtn;
     btnCancel: TBitBtn;
+    Image1: TImage;
     lbConversion: TLabel;
     lbContableValue: TLabel;
     walletlist: TComboBox;

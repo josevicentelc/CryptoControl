@@ -9,7 +9,8 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, datetimectrls, main, ucryptomanager, ucryptos, uwallets, unewcrypto,
   uwalletmanager, unewwallet, utils, umovementManager, umovements, ubuycrypto,
-  umovementscompute, utransfercrytos, uwallethistory, uabout, ureport, ushellcryptos
+  umovementscompute, utransfercrytos, uwallethistory, uabout, ureport,
+  ushellcryptos, uconfig
   { you can add units after this };
 
 {$R *.res}

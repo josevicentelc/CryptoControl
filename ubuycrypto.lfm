@@ -1,26 +1,65 @@
 object fbuycrypto: Tfbuycrypto
   Left = 618
-  Height = 417
+  Height = 404
   Top = 196
-  Width = 420
+  Width = 644
   BorderStyle = bsDialog
   Caption = 'Buy crypto movement'
-  ClientHeight = 417
-  ClientWidth = 420
+  ClientHeight = 404
+  ClientWidth = 644
   Color = 4927270
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '1.8.2.0'
+  object Image1: TImage
+    Left = 78
+    Height = 169
+    Top = 147
+    Width = 470
+    Picture.Data = {
+      1754506F727461626C654E6574776F726B477261706869636503000089504E47
+      0D0A1A0A0000000D49484452000001320000004408020000008DA82EFA000000
+      017352474200AECE1CE90000000467414D410000B18F0BFC6105000000097048
+      597300000EC300000EC301C76FA864000002FA49444154785EEDD7D18D1B310C
+      45D15490FE5B4A19AEC411A0B784C4B5D789479229EA1EF063333464CF60EE47
+      7EDD01044396403864098443964038640984439640386409844396403864F98E
+      DBEDA6BF8009C8F21D254BCAC43C64F98E9A65A17F03439D9BA5C2BA4CC761BD
+      3FBFF5473A6765A99246D3E958AC6499B4CCFC592A9DC9F46558A96699B1CCCC
+      59AA98F9F47DF87756D4A8C9256D962A663E7D1F5E72210D9F441266A95C5ED1
+      A7DFA22368F22557CEECC9225B96CAE5397DEE9A8147A5E582593089E4C9B2A6
+      F28C3E34C8F003B371C12C985C926459DB7B489FC01AAE966733C4D8D322C990
+      A5FAFB466B2C639D3C9BB1669C19C3F6592AC16FB4C61A16DEC39964DEC99FB6
+      77964AB0A71D96690B7483B76C9CA52AEC6987655C8736B82055965A601997A2
+      0DAED9354B85D8D002CBB814EB60842DB354880D2DB08CABB10E06214BBCC505
+      5906E3EC97A5426C6881655C906530D466592AC4861658C6055906A39125FE93
+      6BB20C46DB294B85D8D002CBB820CB6002B2DC951EC1CA87E0822C833936CE52
+      578FA447F045579DE1F1D8813698832CF7A3FB6F68D11ADE8F3BB00CA6D9264B
+      BD800D2D0EA39BEF69675C3F65AE730796C134BB66A9AB87D1CDF7B4332E9E3A
+      D70D3F10CF91E53674E73DED8C8BA7CE1033CEBC22C26F98862CF7A0DBEE6967
+      DA6C6C86706796F9B8203F638E3DB2D46BF845578FA1DBEE69672C9876469974
+      EC15A17ECC68E1B2D44B871FE961197B47CF9C746265A9970E3FD2C332EE1D3D
+      737221CBCDE84919F7769E3C8990E54EF4988C7B2F4F9E5CF8BFE536F4808C7B
+      2F4F9E74C2650955D8D3CEB8F7B2CE5152DF3559C6A20A7BDA197B23DB394DEA
+      BB26CB4054614F3B631DB673A0D4774D9651A8C29E76A64DD106E9906508AAB0
+      A79D7135D6414664F979AAB0A79D7135D6415264F9790AB1A1857135D6415E64
+      F9796AF18BAEB65C9065901A5986A0221F3659D0E461C87213347912B204C221
+      4B201CB204C2214B201CB204C2214B201CB204C2214B201CB204C2214B201CB2
+      04C2214B201CB20482B9DFFF026B9AAF545B38134F0000000049454E44AE4260
+      82
+    }
+    Stretch = True
+    Transparent = True
+  end
   object editConcept: TEdit
-    Left = 24
+    Left = 40
     Height = 23
-    Top = 93
-    Width = 354
+    Top = 96
+    Width = 506
     TabOrder = 1
   end
   object Label1: TLabel
-    Left = 24
+    Left = 40
     Height = 20
     Top = 71
     Width = 127
@@ -35,7 +74,7 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object walletlist: TComboBox
-    Left = 24
+    Left = 40
     Height = 23
     Top = 40
     Width = 352
@@ -45,7 +84,7 @@ object fbuycrypto: Tfbuycrypto
     Text = 'walletlist'
   end
   object Label2: TLabel
-    Left = 25
+    Left = 41
     Height = 20
     Top = 14
     Width = 42
@@ -60,9 +99,9 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object dt_dateTime: TDateTimePicker
-    Left = 24
+    Left = 408
     Height = 23
-    Top = 148
+    Top = 40
     Width = 137
     CenturyFrom = 1941
     MaxDate = 2958465
@@ -85,9 +124,9 @@ object fbuycrypto: Tfbuycrypto
     Options = [dtpoFlatButton]
   end
   object Label3: TLabel
-    Left = 24
+    Left = 408
     Height = 20
-    Top = 126
+    Top = 18
     Width = 141
     Caption = 'Movement date/time'
     Font.CharSet = ANSI_CHARSET
@@ -100,10 +139,10 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object editCefiImport: TEdit
-    Left = 25
+    Left = 20
     Height = 23
-    Top = 207
-    Width = 126
+    Top = 239
+    Width = 87
     OnChange = editCefiImportChange
     OnKeyPress = editCefiImportKeyPress
     PopupMenu = PopupMenu1
@@ -111,9 +150,9 @@ object fbuycrypto: Tfbuycrypto
     Text = '0.00000'
   end
   object Label4: TLabel
-    Left = 25
+    Left = 20
     Height = 20
-    Top = 188
+    Top = 220
     Width = 77
     Caption = 'CEFI Import'
     Font.CharSet = ANSI_CHARSET
@@ -126,10 +165,10 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object editCefiComision: TEdit
-    Left = 232
+    Left = 255
     Height = 23
-    Top = 207
-    Width = 126
+    Top = 166
+    Width = 80
     OnChange = editCefiImportChange
     OnKeyPress = editCefiImportKeyPress
     PopupMenu = PopupMenu1
@@ -137,9 +176,9 @@ object fbuycrypto: Tfbuycrypto
     Text = '0.00000'
   end
   object Label5: TLabel
-    Left = 232
+    Left = 255
     Height = 15
-    Top = 188
+    Top = 147
     Width = 51
     Caption = 'Comision'
     Font.CharSet = ANSI_CHARSET
@@ -152,10 +191,10 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object editTransactionFee: TEdit
-    Left = 25
+    Left = 455
     Height = 23
-    Top = 263
-    Width = 126
+    Top = 177
+    Width = 95
     OnChange = editCefiImportChange
     OnKeyPress = editCefiImportKeyPress
     PopupMenu = PopupMenu1
@@ -163,9 +202,9 @@ object fbuycrypto: Tfbuycrypto
     Text = '0.00000'
   end
   object Label6: TLabel
-    Left = 25
+    Left = 456
     Height = 20
-    Top = 244
+    Top = 156
     Width = 100
     Caption = 'Transaction fee'
     Font.CharSet = ANSI_CHARSET
@@ -178,10 +217,10 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object editCryptoEarned: TEdit
-    Left = 232
+    Left = 455
     Height = 23
-    Top = 263
-    Width = 126
+    Top = 239
+    Width = 96
     OnChange = editCefiImportChange
     OnKeyPress = editCefiImportKeyPress
     PopupMenu = PopupMenu1
@@ -189,9 +228,9 @@ object fbuycrypto: Tfbuycrypto
     Text = '0.00000'
   end
   object Label7: TLabel
-    Left = 232
+    Left = 455
     Height = 15
-    Top = 244
+    Top = 220
     Width = 80
     Caption = 'Cryptos earned'
     Font.CharSet = ANSI_CHARSET
@@ -204,9 +243,9 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object btnOk: TBitBtn
-    Left = 272
+    Left = 446
     Height = 38
-    Top = 360
+    Top = 336
     Width = 104
     Caption = 'Save'
     ModalResult = 6
@@ -214,18 +253,18 @@ object fbuycrypto: Tfbuycrypto
     TabOrder = 7
   end
   object btnCancel: TBitBtn
-    Left = 135
+    Left = 333
     Height = 38
-    Top = 360
+    Top = 336
     Width = 104
     Caption = 'Cancel'
     ModalResult = 2
     TabOrder = 8
   end
   object _short2: TLabel
-    Left = 363
+    Left = 559
     Height = 20
-    Top = 265
+    Top = 244
     Width = 34
     Caption = '_cryp'
     Font.CharSet = ANSI_CHARSET
@@ -238,9 +277,9 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object Label9: TLabel
-    Left = 363
+    Left = 343
     Height = 20
-    Top = 208
+    Top = 169
     Width = 22
     Caption = '$/€'
     Font.CharSet = ANSI_CHARSET
@@ -253,9 +292,9 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object Label10: TLabel
-    Left = 160
+    Left = 115
     Height = 20
-    Top = 208
+    Top = 244
     Width = 22
     Caption = '$/€'
     Font.CharSet = ANSI_CHARSET
@@ -268,9 +307,9 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object _short1: TLabel
-    Left = 160
+    Left = 558
     Height = 20
-    Top = 265
+    Top = 180
     Width = 34
     Caption = '_cryp'
     Font.CharSet = ANSI_CHARSET
@@ -283,9 +322,9 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object lbConversion: TLabel
-    Left = 25
+    Left = 21
     Height = 15
-    Top = 304
+    Top = 297
     Width = 5
     Caption = '-'
     Font.CharSet = ANSI_CHARSET
@@ -299,9 +338,9 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object lbContableValue: TLabel
-    Left = 24
+    Left = 20
     Height = 15
-    Top = 328
+    Top = 321
     Width = 5
     Caption = '-'
     Font.CharSet = ANSI_CHARSET
@@ -315,7 +354,7 @@ object fbuycrypto: Tfbuycrypto
     ParentFont = False
   end
   object PopupMenu1: TPopupMenu
-    left = 24
-    top = 368
+    left = 576
+    top = 32
   end
 end

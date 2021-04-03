@@ -159,7 +159,7 @@ begin
       database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("0xDdfGDSFfgSDgfgFd", "Bitcoin wallet", 0, 1)');
       database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("FF5wGgewgh6F", "Bitcoin Cash wallet", 0, 2)');
       database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("DFdfwq45wG54gvgx0x", "Ethereum wallet", 0, 3)');
-      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("0xDdfGDSdFGDFG", "Cold Bitcoin wallet", 0, 3)');
+      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("0xDdfGDSdFGDFG", "Cold Bitcoin wallet", 0, 1)');
 
       transaction.Commit;
 
