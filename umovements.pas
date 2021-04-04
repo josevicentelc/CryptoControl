@@ -78,6 +78,9 @@ type
     function getPriceInputCrypto(): double;
     function getPriceOutputCrypto(): double;
 
+    procedure export(F : TStringList);
+    procedure import(line: String);
+
     procedure save();
 
   end;
@@ -107,10 +110,11 @@ type
     function getNextId(): integer;
 
     procedure save(mvnt: TMovement);
-    procedure remove(mvnt: TMovement);
     function getById(_id: integer): TMovement;
     function getAll(): TMovementList;
     function getByWallet(w: String): TMovementList;
+    procedure remove(id: integer);
+    procedure clearAll();
 
   end;
 
@@ -176,6 +180,55 @@ function TMovement.getOutputCryptos(): double;           begin          result :
 function TMovement.getCotnableValueOutput(): double;     begin          result := _contable_value_output;  end;
 function TMovement.getCotnableValueInput(): double;      begin          result := _contable_value_input;   end;
 
+procedure TMovement.export(F : TStringList);
+var
+  str : String;
+begin
+     str := inttostr(_id) + '^';
+     str := str + inttostr(getTypeInt()) + '^';
+     str := str + dateToSql(_datetime) + '^';
+     str := str + _concept + '^';
+     str := str + _wallet_input + '^';
+     str := str + _wallet_output + '^';
+     str := str + floatToSql(_cefi_input) + '^';
+     str := str + floatToSql(_cefi_output) + '^';
+     str := str + floatToSql(_comision_buy) + '^';
+     str := str + floatToSql(_comision_Shell) + '^';
+     str := str + floatToSql(_input_fee) + '^';
+     str := str + floatToSql(_output_fee) + '^';
+     str := str + floatToSql(_inputCryptos) + '^';
+     str := str + floatToSql(_outputCryptos) + '^';
+     str := str + floatToSql(_contable_value_input) + '^';
+     str := str + floatToSql(_contable_value_output) + '^';
+     F.add(str);
+end;
+
+procedure TMovement.import(line: String);
+var
+  str : TStringArray;
+begin
+     str := line.Split('^');
+     if length(str) = 16 then
+     begin
+          _id := strtoint(str[0]);
+          setTypeInt(strtoint(str[1]));
+          _datetime:=sqlToFloat(str[2]);
+          _concept:=str[3];
+          _wallet_input:=str[4];
+          _wallet_output:=str[5];
+          _cefi_input:=sqlToFloat(str[6]);
+          _cefi_output:=sqlToFloat(str[7]);
+          _comision_buy:=sqlToFloat(str[8]);
+          _comision_Shell:=sqlToFloat(str[9]);
+          _input_fee:=sqlToFloat(str[10]);
+          _output_fee:=sqlToFloat(str[11]);
+          _inputCryptos:=sqlToFloat(str[12]);
+          _outputCryptos:=sqlToFloat(str[13]);
+          _contable_value_input:=sqlToFloat(str[14]);
+          _contable_value_output:=sqlToFloat(str[15]);
+     end;
+end;
+
 function TMovement.getTypeInt(): Integer;
 begin
      result := -1;
@@ -226,16 +279,36 @@ begin
      Q.Free;
 end;
 
+procedure TMovementsController.remove(id: integer);
+var
+   sql : String;
+begin
+     sql := 'delete from "moves" where move_id = ' + inttostr(id);
+     db.launchSql(sql);
+end;
+
+procedure TMovementsController.clearAll();
+var
+   sql : String;
+begin
+     sql := 'delete from "moves"';
+     db.launchSql(sql);
+end;
+
 procedure TMovementsController.save(mvnt: TMovement);
 var
    sql : String;
+   Q : TSQLQuery;
+   exists : Boolean;
 begin
 
      if mvnt <> nil then
      begin
-          if mvnt.getId() <= 0 then
+          Q := db.getSqlQuery('select * from "moves" where move_id = "'+inttostr(mvnt.getId())+'"');
+          exists := not Q.Eof;
+          if (mvnt.getId() <= 0) or (not exists) then
           begin
-            mvnt.setId(getNextId());
+            if (mvnt.getId() <= 0) then mvnt.setId(getNextId());
             sql := 'insert into "moves" (move_id, move_type, move_datetime,move_concept,move_wallet_Input,move_wallet_output,';
             sql := sql + 'move_cefi_input,move_cefi_output,move_contable_value_input,move_contable_value_output,move_comision_buy,move_comision_shell,';
             sql := sql + 'move_input_fee,move_output_fee,move_input_cryptos,move_output_cryptos) values (';
@@ -279,11 +352,6 @@ begin
                db.launchSql(sql);
           end;
      end;
-end;
-
-procedure TMovementsController.remove(mvnt: TMovement);
-begin
-
 end;
 
 function TMovementsController.getById(_id: integer): TMovement;

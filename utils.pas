@@ -8,6 +8,7 @@ uses
   Classes, SysUtils, dateutils, StdCtrls, Graphics, base64, ExtCtrls, strutils;
 
 function floatToSql(v: double): String;
+function sqlToFloat(str: String): double;
 function dateToSql(value  :double): String;
 function checkKeyForNumber(Key: char): Boolean;
 function StringToSql(data : String):String;
@@ -60,6 +61,11 @@ end;
 function floatToSql(v: double): String;
 begin
   result := stringReplace(formatFloat('##0.00##########', v), ',', '.', [rfReplaceAll]) ;
+end;
+
+function sqlToFloat(str: String): double;
+begin
+  result := strToFloat(stringReplace(str, '.', ',', [rfReplaceAll]) );
 end;
 
 function dateToSql(value  :double): String;

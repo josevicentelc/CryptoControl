@@ -8,9 +8,10 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Grids,
-  Buttons, StdCtrls, udatabaseconector, ucryptomanager, ucryptos, uwallets,
-  uwalletmanager, umovementManager, umovements, umovementscompute, uwallethistory, utils, uabout,
-  ubuycrypto, utransfercrytos, ushellcryptos, uconfig;
+  Buttons, StdCtrls, Menus, udatabaseconector, ucryptomanager, ucryptos,
+  uwallets, uwalletmanager, umovementManager, umovements, umovementscompute,
+  uwallethistory, utils, uabout, ubuycrypto, utransfercrytos, ushellcryptos,
+  uconfig, exportdata, ufsettings;
 
 
 type
@@ -21,6 +22,7 @@ type
     btn_settings1: TSpeedButton;
     color_grid_fixed: TShape;
     Label1: TLabel;
+    MenuItem1: TMenuItem;
     Panel1: TPanel;
     btn_register_wallet: TSpeedButton;
     btn_admin_cryptos: TSpeedButton;
@@ -30,24 +32,31 @@ type
     color_background: TShape;
     color_grid_1: TShape;
     color_grid_2: TShape;
+    PopupMenu1: TPopupMenu;
     Splitter1: TSplitter;
     gridWallets: TStringGrid;
     gridMovements: TStringGrid;
     procedure btn_add_movementClick(Sender: TObject);
     procedure btn_admin_cryptosClick(Sender: TObject);
-    procedure btn_admin_exchangesClick(Sender: TObject);
     procedure btn_register_walletClick(Sender: TObject);
+    procedure btn_settingsClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure formatColors();
     procedure FormShow(Sender: TObject);
     procedure gridMovementsDblClick(Sender: TObject);
     procedure gridMovementsSelectCell(Sender: TObject; aCol, aRow: Integer;
       var CanSelect: Boolean);
-    procedure gridWalletsClick(Sender: TObject);
     procedure gridWalletsSelectCell(Sender: TObject; aCol, aRow: Integer;
       var CanSelect: Boolean);
+    procedure MenuItem1Click(Sender: TObject);
+    procedure PopupMenu1Popup(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure SpeedButton2Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
   private
     selectedMoveRow: integer;
+    selectedWalletRow: integer;
+
     db : TDatabaseConnector;
     form_admin_cryto : tfcryptomanager;
     form_admin_wallet : Tfwalletmanager;
@@ -56,6 +65,7 @@ type
 
   public
     procedure refreshWalletBalances();
+    procedure refreshMoves();
     procedure showAbout();
 
   end;
@@ -68,6 +78,9 @@ implementation
 {$R *.lfm}
 
 { Tmainform }
+
+// *****************************************************************************
+// *****************************************************************************
 
 procedure Tmainform.refreshWalletBalances();
 var
@@ -93,6 +106,8 @@ begin
      end;
 end;
 
+// *****************************************************************************
+// *****************************************************************************
 
 procedure Tmainform.formatColors();
 begin
@@ -109,6 +124,8 @@ begin
 
 end;
 
+// *****************************************************************************
+// *****************************************************************************
 
 procedure Tmainform.showAbout();
 var
@@ -118,6 +135,9 @@ begin
      fAbout.ShowModal;
      fabout.free;
 end;
+
+// *****************************************************************************
+// *****************************************************************************
 
 procedure Tmainform.FormCreate(Sender: TObject);
 begin
@@ -130,11 +150,17 @@ begin
      initHistoryController(db);
 end;
 
+// *****************************************************************************
+// *****************************************************************************
+
 procedure Tmainform.FormShow(Sender: TObject);
 begin
   refreshWalletBalances();
   showAbout();
 end;
+
+// *****************************************************************************
+// *****************************************************************************
 
 procedure Tmainform.gridMovementsDblClick(Sender: TObject);
 var
@@ -162,6 +188,7 @@ begin
              if movType = MV_TRANSFER then
                 begin
                     application.CreateForm(Tftransfercrytps, frmTransfer);
+                    frmTransfer.moveId:=movId;
                     frmTransfer.ShowModal;
                     frmTransfer.free;
                 end;
@@ -175,9 +202,13 @@ begin
 
              computeWalletBalances();
              refreshWalletBalances();
+             refreshMoves();
           end;
      end;
 end;
+
+// *****************************************************************************
+// *****************************************************************************
 
 procedure Tmainform.gridMovementsSelectCell(Sender: TObject; aCol,
   aRow: Integer; var CanSelect: Boolean);
@@ -185,13 +216,51 @@ begin
      selectedMoveRow:=aRow;
 end;
 
-procedure Tmainform.gridWalletsClick(Sender: TObject);
+// *****************************************************************************
+// *****************************************************************************
+
+procedure Tmainform.gridWalletsSelectCell(Sender: TObject; aCol, aRow: Integer;
+  var CanSelect: Boolean);
+begin
+     selectedWalletRow:=aRow;
+     refreshMoves;
+end;
+
+procedure Tmainform.MenuItem1Click(Sender: TObject);
+var
+  movid : integer;
+begin
+   movId := strtoint(gridMovements.Cells[5, selectedMoveRow]);
+   movementsController.remove(movid);
+   computeWalletBalances();
+   refreshWalletBalances();
+   refreshMoves();
+end;
+
+procedure Tmainform.PopupMenu1Popup(Sender: TObject);
+begin
+  MenuItem1.enabled := selectedMoveRow >= 0;
+end;
+
+procedure Tmainform.SpeedButton1Click(Sender: TObject);
 begin
 
 end;
 
-procedure Tmainform.gridWalletsSelectCell(Sender: TObject; aCol, aRow: Integer;
-  var CanSelect: Boolean);
+procedure Tmainform.SpeedButton2Click(Sender: TObject);
+begin
+
+end;
+
+procedure Tmainform.SpeedButton3Click(Sender: TObject);
+begin
+
+end;
+
+// *****************************************************************************
+// *****************************************************************************
+
+procedure Tmainform.refreshMoves();
 var
   wallet : String;
   history : THistoryList;
@@ -200,7 +269,7 @@ var
 begin
      c := getConfig().currency();
      selectedMoveRow:=-1;
-     wallet := gridWallets.Cells[0, aRow];
+     wallet := gridWallets.Cells[0, selectedWalletRow];
      history := historyController.getFromWallet(wallet);
      gridMovements.RowCount:=history.count() + 1;
      for I := 0 to history.count() -1 do
@@ -215,6 +284,9 @@ begin
 
 end;
 
+// *****************************************************************************
+// *****************************************************************************
+
 procedure Tmainform.btn_admin_cryptosClick(Sender: TObject);
 begin
      if form_admin_cryto = nil then Application.CreateForm(Tfcryptomanager, form_admin_cryto);
@@ -223,10 +295,8 @@ begin
 
 end;
 
-procedure Tmainform.btn_admin_exchangesClick(Sender: TObject);
-begin
-
-end;
+// *****************************************************************************
+// *****************************************************************************
 
 procedure Tmainform.btn_add_movementClick(Sender: TObject);
 begin
@@ -236,11 +306,31 @@ begin
      refreshWalletBalances();
 end;
 
+// *****************************************************************************
+// *****************************************************************************
+
 procedure Tmainform.btn_register_walletClick(Sender: TObject);
 begin
      if form_admin_wallet = nil then Application.CreateForm(Tfwalletmanager, form_admin_wallet);
      form_admin_wallet.showModal();
 end;
+
+procedure Tmainform.btn_settingsClick(Sender: TObject);
+var
+  fsettings : TfSettings;
+begin
+     Application.CreateForm(TfSettings, fsettings);
+     fsettings.ShowModal;
+     fsettings.free;
+
+     computeWalletBalances();
+     refreshWalletBalances();
+     refreshMoves();
+
+end;
+
+// *****************************************************************************
+// *****************************************************************************
 
 end.
 

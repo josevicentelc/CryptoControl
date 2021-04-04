@@ -193,6 +193,7 @@ begin
                            histLine.setImport(mov.getInputCryptos());
                            histLine.setbalance(wallet.getBalance());
                            histLine.setvalue(wallet.getContableValue());
+                           histLine.setMoveId(mov.getId());
                            histLine.save();
                            histLine.Free;
                      end;

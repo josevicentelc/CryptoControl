@@ -37,6 +37,9 @@ type
 
     procedure addBalance(_balance: double; _value: double);
 
+    procedure export(F : TStringList);
+    procedure import(line: String);
+
   end;
 
 
@@ -65,6 +68,7 @@ public
   procedure remove(Wallet: TWallet);
   function getWallets(): TWalletList;
   function getWallet(pk: String): TWallet;
+  procedure clearAll();
 end;
 
 var
@@ -111,6 +115,31 @@ begin
      newValue:=_value*f + contable_value*(1-f);
      setBalance(newBalance);
      setContableValue(newValue);
+end;
+
+procedure TWallet.export(F : TStringList);
+var
+  str : String;
+begin
+     str := pk + '^';
+     str := str + wname + '^';
+     str := str + inttostr(user) + '^';
+     str := str + inttostr(crypto);
+     F.add(str);
+end;
+
+procedure TWallet.import(line: String);
+var
+  str : TStringArray;
+begin
+     str := line.split('^');
+     if length(str) = 4 then
+     begin
+       pk := str[0];
+       wname := str[1];
+       user := strtoint(str[2]);
+       crypto := strtoint(str[3]);
+     end;
 end;
 
 // *****************************************************************************
@@ -177,6 +206,13 @@ begin
      db := _db;
 end;
 
+procedure TWalletController.clearAll();
+var
+    sql : String;
+begin
+     sql := 'delete from "Wallets"';
+     db.launchSql(sql)
+end;
 
 procedure TWalletController.save(Wallet: TWallet);
 var

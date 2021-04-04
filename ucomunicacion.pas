@@ -4,7 +4,6 @@ unit ucomunicacion;
 
 interface
 
-// https://api.cryptowat.ch/markets/coinbase-pro/btceur/price  
 
 uses
   Classes, SysUtils, fphttpclient, fpjson, jsonparser ,Dialogs;
@@ -22,16 +21,20 @@ var
   jsonObj : TJSONObject;
   json : String;
 begin
-  json := getUrl('https://api.cryptowat.ch/markets/coinbase-pro/'+pair+'/price' );
-  jsonObj := TJSONObject(GetJSON(json));
-  if jsonObj.IndexOfName('result') <> -1 then
-       begin
-          jsonObj := jsonObj.Objects['result'];
-          if jsonObj.IndexOfName('price') <> -1 then
-               begin
-                  result := jsonObj.Floats['price'];
-               end;
-       end;
+    json := getUrl('https://api.cryptowat.ch/markets/kraken/'+pair+'/price' );
+    if json <> 'error' then
+    begin
+      jsonObj := TJSONObject(GetJSON(json));
+      if jsonObj.IndexOfName('result') <> -1 then
+           begin
+              jsonObj := jsonObj.Objects['result'];
+              if jsonObj.IndexOfName('price') <> -1 then
+                   begin
+                      result := jsonObj.Floats['price'];
+                   end;
+           end;
+    end;
+
 end;
 
 

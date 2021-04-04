@@ -26,7 +26,11 @@ type
     function getShorName() : String;
     function getMarketPrice(): double;
 
+    procedure export(F : TStringList);
+    procedure import(line: String);
+
     procedure refreshMarketValue();
+    procedure save();
 
   end;
 
@@ -57,6 +61,8 @@ type
     procedure remove(crypto: TCrypto);
     function getCryptos(): TCryptoList;
     function getById(_id: integer): TCrypto;
+    procedure clearAll();
+
 
   end;
 
@@ -86,9 +92,36 @@ procedure TCrypto.setShorName(__short : String);begin           _shortName := __
 function TCrypto.getId() : integer;             begin           result := _id;          end;
 function TCrypto.getName() : String;            begin           result := _name;        end;
 function TCrypto.getShorName() : String;        begin           result := _shortName;   end;
-
 procedure TCrypto.setMarketPrice(v: double);begin         _MarketPrice:=v;   end;
 function TCrypto.getMarketPrice(): double;  begin          result := _MarketPrice;    end;
+
+procedure TCrypto.save();
+begin
+     cryptoController.save(self);
+end;
+
+procedure TCrypto.export(F : TStringList);
+var str : String;
+begin
+     str := inttostr(_id) + '^';
+     str := str +  _name + '^';
+     str := str +  _shortName;
+     F.Add(str);
+end;
+
+procedure TCrypto.import(line: String);
+var
+  str : TStringArray;
+begin
+     str := line.Split('^');
+     if length(str) = 3 then
+     begin
+       _id := strtoint(str[0]);
+       _name := str[1];
+       _shortName := str[2];
+     end;
+end;
+
 
 procedure TCrypto.refreshMarketValue();
 begin
@@ -171,6 +204,14 @@ begin
      db := _db;
 end;
 
+procedure TCryptoController.clearAll();
+var
+    sql : String;
+begin
+ sql := 'delete from "cryptocurrency"';
+ db.launchSql(sql);
+end;
+
 function TCryptoController.getNextId(): Integer;
 var
    Q : TSqlQuery;
@@ -189,12 +230,17 @@ end;
 procedure TCryptoController.save(crypto: TCrypto);
 var
    sql : String;
+   Q : TSQLQuery;
+   exists : Boolean;
 begin
      if crypto <> nil then
      begin
-          if crypto.getId() <= 0 then
+          Q := db.getSqlQuery('select * from "cryptocurrency" where crypto_id = "'+inttostr(crypto.getId())+'"');
+          exists := not Q.Eof;
+          Q.free;
+          if (crypto.getId() <= 0) or (not exists) then
           begin
-            crypto.setId(getNextId());
+            if (crypto.getId() <= 0) then crypto.setId(getNextId());
             sql := 'insert into "cryptocurrency" (crypto_id, crypto_name, crypto_short) values(';
             sql := sql + inttostr(crypto.getId()) + ', ';
             sql := sql + '"' + crypto.getName() + '", ';

@@ -1,0 +1,37 @@
+object fSettings: TfSettings
+  Left = 648
+  Height = 315
+  Top = 276
+  Width = 390
+  BorderStyle = bsDialog
+  Caption = 'Settings'
+  ClientHeight = 315
+  ClientWidth = 390
+  Color = 4927270
+  Position = poScreenCenter
+  LCLVersion = '2.0.2.0'
+  object SpeedButton1: TSpeedButton
+    Left = 33
+    Height = 47
+    Top = 41
+    Width = 143
+    Caption = 'Export Data'
+    OnClick = SpeedButton1Click
+  end
+  object SpeedButton2: TSpeedButton
+    Left = 216
+    Height = 47
+    Top = 41
+    Width = 143
+    Caption = 'Import data'
+    OnClick = SpeedButton2Click
+  end
+  object SpeedButton3: TSpeedButton
+    Left = 120
+    Height = 48
+    Top = 240
+    Width = 145
+    Caption = 'Clear database'
+    OnClick = SpeedButton3Click
+  end
+end

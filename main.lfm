@@ -16,7 +16,7 @@ object mainform: Tmainform
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '2.0.2.0'
   object Panel1: TPanel
     Left = 0
     Height = 98
@@ -2057,6 +2057,7 @@ object mainform: Tmainform
         FFFFC9AEFFFFC9AEFFFFC9AEFFFFC9AEFFFF
       }
       Layout = blGlyphTop
+      OnClick = btn_settingsClick
       ParentFont = False
     end
     object color_background: TShape
@@ -2731,6 +2732,7 @@ object mainform: Tmainform
       Font.Quality = fqDraft
       Options = [goRangeSelect, goSmoothScroll]
       ParentFont = False
+      PopupMenu = PopupMenu1
       TabOrder = 0
       TitleFont.CharSet = ANSI_CHARSET
       TitleFont.Color = clWhite
@@ -2745,8 +2747,8 @@ object mainform: Tmainform
         573
         166
         154
-        166
-        2
+        110
+        128
       )
       RowHeights = (
         32
@@ -2781,6 +2783,15 @@ object mainform: Tmainform
       Width = 82
       Caption = 'Movements'
       ParentColor = False
+    end
+  end
+  object PopupMenu1: TPopupMenu
+    OnPopup = PopupMenu1Popup
+    left = 1083
+    top = 45
+    object MenuItem1: TMenuItem
+      Caption = 'Remove this movement'
+      OnClick = MenuItem1Click
     end
   end
 end
