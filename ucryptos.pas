@@ -5,7 +5,7 @@ unit ucryptos;
 interface
 
 uses
-  Classes, SysUtils, udatabaseconector, SQLDB, ucomunicacion, uconfig;
+  Classes, SysUtils, udatabaseconector, SQLDB, ucomunicacion, uconfig, utils;
 
 type
   TCrypto = class(TObject)
@@ -13,18 +13,29 @@ type
      _id : integer;
      _name : String;
      _shortName : String;
-     _MarketPrice : double;
+     _MarketPriceEuro : double;
+     _MarketPriceDolar : double;
+     _updateDate : double;
+
+
   public
     constructor create();
     procedure setId(__id : Integer);
     procedure setName(__name : String);
     procedure setShorName(__short : String);
-    procedure setMarketPrice(v : double);
+
+    procedure setMarketPriceEuro(v : double);
+    procedure setMarketPriceDolar(v : double);
+    procedure setUpdateDate(v: double);
 
     function getId() : integer;
     function getName() : String;
     function getShorName() : String;
     function getMarketPrice(): double;
+
+    function getMarketPriceEuro(): double;
+    function getMarketPriceDolar(): double;
+    function getUpdateDate(): double;
 
     procedure export(F : TStringList);
     procedure import(line: String);
@@ -92,8 +103,33 @@ procedure TCrypto.setShorName(__short : String);begin           _shortName := __
 function TCrypto.getId() : integer;             begin           result := _id;          end;
 function TCrypto.getName() : String;            begin           result := _name;        end;
 function TCrypto.getShorName() : String;        begin           result := _shortName;   end;
-procedure TCrypto.setMarketPrice(v: double);begin         _MarketPrice:=v;   end;
-function TCrypto.getMarketPrice(): double;  begin          result := _MarketPrice;    end;
+function TCrypto.getUpdateDate() : double;      begin           result := _updateDate;   end;
+
+function TCrypto.getMarketPrice(): double;
+var
+   d : double;
+begin
+
+     if getConfig().useMarketSync then
+     begin
+        d := now() - _updateDate;
+        if d > 0.000001 then
+        begin
+           refreshMarketValue();
+        end;
+     end;
+     if getConfig().useCurrencyEuro then   result := _MarketPriceEuro
+     else result := _MarketPriceDolar;
+end;
+function TCrypto.getMarketPriceEuro(): double;  begin          result := _MarketPriceEuro;    end;
+function TCrypto.getMarketPriceDolar(): double;  begin          result := _MarketPriceDolar;    end;
+procedure TCrypto.setMarketPriceEuro(v: double);begin         _MarketPriceEuro:=v;   end;
+procedure TCrypto.setMarketPriceDolar(v: double);begin         _MarketPriceDolar:=v;   end;
+procedure TCrypto.setUpdateDate(v: double);      begin         _updateDate:=v;         end;
+
+
+
+
 
 procedure TCrypto.save();
 begin
@@ -125,17 +161,10 @@ end;
 
 procedure TCrypto.refreshMarketValue();
 begin
-     if getConfig().useMarketSync then
-     begin
-       if getConfig().useCurrencyEuro then
-           _MarketPrice := getMarketValue(LowerCase(_shortName)+'eur')
-       else
-           _MarketPrice := getMarketValue(LowerCase(_shortName)+'usd');
-     end
-     else
-     begin
-         _MarketPrice := 0;
-     end;
+   _MarketPriceEuro := getMarketValue(LowerCase(_shortName)+'eur');
+   _MarketPriceDolar := getMarketValue(LowerCase(_shortName)+'usd');
+   _updateDate:=now();
+   save();
 end;
 
 // *****************************************************************************
@@ -241,8 +270,11 @@ begin
           if (crypto.getId() <= 0) or (not exists) then
           begin
             if (crypto.getId() <= 0) then crypto.setId(getNextId());
-            sql := 'insert into "cryptocurrency" (crypto_id, crypto_name, crypto_short) values(';
+            sql := 'insert into "cryptocurrency" (crypto_id, crypto_marketvalueeuro, crypto_marketvaluedolar, crypto_updatedate, crypto_name, crypto_short) values(';
             sql := sql + inttostr(crypto.getId()) + ', ';
+            sql := sql + floatToSql(crypto.getMarketPriceEuro()) + ', ';
+            sql := sql + floatToSql(crypto.getMarketPriceDolar()) + ', ';
+            sql := sql + dateToSql(crypto.getUpdateDate()) + ', ';
             sql := sql + '"' + crypto.getName() + '", ';
             sql := sql + '"' + crypto.getShorName() + '")';
             db.launchSql(sql);
@@ -251,7 +283,10 @@ begin
           begin
                sql := 'update "cryptocurrency" set ';
                sql := sql + 'crypto_name = "' + crypto.getName() + '", ';
-               sql := sql + 'crypto_short = "' + crypto.getShorName() + '" ';
+               sql := sql + 'crypto_short = "' + crypto.getShorName() + '", ';
+               sql := sql + 'crypto_marketvalueeuro = ' + floatToSql(crypto.getMarketPriceEuro()) + ', ';
+               sql := sql + 'crypto_marketvaluedolar = ' + floatToSql(crypto.getMarketPriceDolar()) + ', ';
+               sql := sql + 'crypto_updatedate = ' + dateToSql(crypto.getUpdateDate()) ;
                sql := sql + ' where crypto_id =' + inttostr(crypto.getId());
                db.launchSql(sql);
           end;
@@ -283,6 +318,9 @@ begin
        result.setId(Q.FieldByName('crypto_id').AsInteger);
        result.setName(Q.FieldByName('crypto_name').AsString);
        result.setShorName(Q.FieldByName('crypto_short').AsString);
+       result.setMarketPriceEuro(Q.FieldByName('crypto_marketvalueeuro').AsFloat);
+       result.setMarketPriceDolar(Q.FieldByName('crypto_marketvaluedolar').AsFloat);
+       result.setUpdateDate(Q.FieldByName('crypto_updatedate').AsFloat);
        Q.Next;
    end;
    Q.Close;
@@ -303,6 +341,9 @@ begin
          crypto.setId(Q.FieldByName('crypto_id').AsInteger);
          crypto.setName(Q.FieldByName('crypto_name').AsString);
          crypto.setShorName(Q.FieldByName('crypto_short').AsString);
+         crypto.setMarketPriceEuro(Q.FieldByName('crypto_marketvalueeuro').AsFloat);
+         crypto.setMarketPriceDolar(Q.FieldByName('crypto_marketvaluedolar').AsFloat);
+         crypto.setUpdateDate(Q.FieldByName('ccrypto_updatedate').AsFloat);
          result.push(crypto);
          Q.Next;
      end;

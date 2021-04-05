@@ -9,6 +9,8 @@ uses
 
 function floatToSql(v: double): String;
 function sqlToFloat(str: String): double;
+function floatToCurrency(v: double): String;
+
 function dateToSql(value  :double): String;
 function checkKeyForNumber(Key: char): Boolean;
 function StringToSql(data : String):String;
@@ -62,6 +64,12 @@ function floatToSql(v: double): String;
 begin
   result := stringReplace(formatFloat('##0.00##########', v), ',', '.', [rfReplaceAll]) ;
 end;
+
+function floatToCurrency(v: double): String;
+begin
+  result := stringReplace(formatFloat('###,##0.00', v), ',', '.', [rfReplaceAll]) ;
+end;
+
 
 function sqlToFloat(str: String): double;
 begin

@@ -52,8 +52,8 @@ begin
 
     histLine := THistoryLine.create();
     histLine.setWallet(wallet.getPk());
-    histLine.setDateTime(FormatDateTime('dd/mm/yyyy hh:nn:ss', mov.getDateTime()));
-    histLine.setDescription('Shell ' + floatToSql(mov.getOutputCryptos())+ ' (value: '+floatToSql(shellValue)+ c +') for ' + floatToSql(totalCefiGet) + c+ ' (Profit: '+floatToSql(profit)+c+')');
+    histLine.setDateTime( mov.getDateTime());
+    histLine.setDescription('Shell ' + floatToSql(mov.getOutputCryptos())+ ' (value: '+floatToCurrency(shellValue)+ c +') for ' + floatToSql(totalCefiGet) + c+ ' (Profit: '+floatToCurrency(profit)+c+')');
     histLine.setConcept(mov.getConcept());
     histLine.setProfit(profit);
 
@@ -115,7 +115,7 @@ begin
 
                      histLine := THistoryLine.create();
                      histLine.setWallet(wallet.getPk());
-                     histLine.setDateTime(FormatDateTime('dd/mm/yyyy hh:nn:ss', mov.getDateTime()));
+                     histLine.setDateTime(mov.getDateTime());
                      histLine.setDescription('Buy ' + floatToSql(mov.getInputCryptos())+ ' coins by '+floatToSql(mov.getCotnableValueInput()) + c);
                      histLine.setConcept(mov.getConcept());
                      histLine.setImport(mov.getInputCryptos());
@@ -148,7 +148,7 @@ begin
                                 // Pay fee
                                 histLine := THistoryLine.create();
                                 histLine.setWallet(wallet.getPk());
-                                histLine.setDateTime(FormatDateTime('dd/mm/yyyy hh:nn:ss', mov.getDateTime()));
+                                histLine.setDateTime(mov.getDateTime());
                                 histLine.setDescription('Pay Fee ' + floatToSql(mov.getOutputFee()));
                                 histLine.setConcept(mov.getConcept());
                                 histLine.setImport(mov.getOutputFee() * -1);
@@ -161,7 +161,7 @@ begin
                                 // Transfer cryptos
                                 histLine := THistoryLine.create();
                                 histLine.setWallet(wallet.getPk());
-                                histLine.setDateTime(FormatDateTime('dd/mm/yyyy hh:nn:ss', mov.getDateTime()));
+                                histLine.setDateTime(mov.getDateTime());
                                 histLine.setDescription('Send ' + floatToSql(mov.getOutputCryptos()) + ' to ' + mov.getWalletInput());
                                 histLine.setConcept(mov.getConcept());
                                 histLine.setImport(mov.getOutputCryptos() * -1);
@@ -187,7 +187,7 @@ begin
                            // input Transfer cryptos
                            histLine := THistoryLine.create();
                            histLine.setWallet(wallet.getPk());
-                           histLine.setDateTime(FormatDateTime('dd/mm/yyyy hh:nn:ss', mov.getDateTime()));
+                           histLine.setDateTime(mov.getDateTime());
                            histLine.setDescription('Input ' + floatToSql(mov.getInputCryptos()) + ' from ' + mov.getWalletOutput());
                            histLine.setConcept(mov.getConcept());
                            histLine.setImport(mov.getInputCryptos());

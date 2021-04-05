@@ -2627,6 +2627,7 @@ object mainform: Tmainform
         FFFFC9AEFFFFC9AEFFFFC9AEFFFFC9AEFFFF
       }
       Layout = blGlyphTop
+      OnClick = btn_settings1Click
       ParentFont = False
     end
   end
@@ -2637,7 +2638,7 @@ object mainform: Tmainform
     Width = 1302
     Align = alTop
     BorderStyle = bsNone
-    ColCount = 7
+    ColCount = 8
     FixedCols = 0
     Flat = True
     Font.CharSet = ANSI_CHARSET
@@ -2663,6 +2664,7 @@ object mainform: Tmainform
       140
       143
       132
+      132
       64
     )
     RowHeights = (
@@ -2673,7 +2675,7 @@ object mainform: Tmainform
       28
     )
     Cells = (
-      6
+      7
       0
       0
       'PK'
@@ -2692,6 +2694,9 @@ object mainform: Tmainform
       5
       0
       'Market value'
+      6
+      0
+      'Profit'
     )
   end
   object Splitter1: TSplitter

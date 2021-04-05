@@ -39,7 +39,7 @@ end;
 
 constructor TConfig.create;
 begin
-     useMarketSync:=false;
+     useMarketSync:=true;
      useCurrencyEuro:=true;
 end;
 

@@ -12,7 +12,7 @@ type
   private
     _wallet: String;
     _id: integer;
-    _datetimestr: String;
+    _datetime: double;
     _description: String;
     _concept: String;
     _import: double;
@@ -25,7 +25,7 @@ type
     procedure save();
 
     procedure setWallet(v: string);
-    procedure setDateTime(v: string);
+    procedure setDateTime(v: double);
     procedure setDescription(v: string);
     procedure setConcept(v: string);
     procedure setId(v: integer);
@@ -36,7 +36,7 @@ type
     procedure setMoveId(v: integer);
 
     function getWallet():string;
-    function getDateTime(): string;
+    function getDateTime(): double;
     function getDescription():string;
     function getConcept(): string;
     function getId(): integer;
@@ -45,6 +45,7 @@ type
     function getProfit(): double;
     function getvalue(): double;
     function getMoveId(): integer;
+    function getDateTimeToStr(): String;
 
   end;
 
@@ -104,7 +105,7 @@ begin
 end;
 
 procedure THistoryLine.setWallet(v: string);    begin           _wallet := v;           end;
-procedure THistoryLine.setDateTime(v: string);  begin           _datetimestr:=v;        end;
+procedure THistoryLine.setDateTime(v: double);  begin           _datetime:=v;           end;
 procedure THistoryLine.setDescription(v: string);begin          _description:=v;        end;
 procedure THistoryLine.setConcept(v: string);    begin          _concept:=v;            end;
 procedure THistoryLine.setId(v: integer);        begin          _id:=v;                 end;
@@ -113,9 +114,10 @@ procedure THistoryLine.setbalance(v: double);    begin          _balance:=v;    
 procedure THistoryLine.setvalue(v: double);      begin          _value:=v;              end;
 procedure THistoryLine.setMoveId(v: integer);    begin          _moveid:=v;              end;
 procedure THistoryLine.setProfit(v: double);     begin          _profit:=v;             end;
+function THistoryLine.getDateTimeToStr(): String; begin result := FormatDateTime('dd/mm/yyyy hh:nn:ss', _datetime); end;
 
 function THistoryLine.getWallet():string;        begin          result:=_wallet;        end;
-function THistoryLine.getDateTime(): string;     begin          result:=_datetimestr;   end;
+function THistoryLine.getDateTime(): double;     begin          result:=_datetime;      end;
 function THistoryLine.getDescription():string;   begin          result:=_description;   end;
 function THistoryLine.getConcept(): string;      begin          result:=_concept;       end;
 function THistoryLine.getId(): integer;          begin          result:=_id;            end;
@@ -198,7 +200,7 @@ begin
         if Exists then
         begin
            sql := 'update "walletshistory" set';
-           sql := sql + 'hist_datetime = "' + v.getDateTime() + '", ';
+           sql := sql + 'hist_datetime = ' + dateToSql(v.getDateTime()) + ', ';
            sql := sql + 'hist_description = "' + v.getDescription() + '", ';
            sql := sql + 'hist_concept = "' + v.getConcept() + '", ';
            sql := sql + 'hist_import = '+floatToSql(v.getImport()) + ', ';
@@ -216,7 +218,7 @@ begin
              sql := 'insert into "walletshistory" (hist_pk, hist_id, hist_datetime, hist_description, hist_concept, hist_import, hist_balance, hist_value,hist_profit, hist_moveid) values ( ';
              sql := sql + '"' + v.getWallet() + '", ';
              sql := sql + inttostr(v.getId()) + ', ';
-             sql := sql + '"' + v.getDateTime() + '", ';
+             sql := sql + dateToSql( v.getDateTime()) + ', ';
              sql := sql + '"' + v.getDescription() + '", ';
              sql := sql + '"' + v.getConcept() + '", ';
              sql := sql + floatToSql(v.getImport()) + ', ';
@@ -252,7 +254,7 @@ begin
          line := THistoryLine.create;
          line.setWallet(Q.FieldByName('hist_pk').AsString);
          line.setId(Q.FieldByName('hist_id').AsInteger);
-         line.setDateTime(Q.FieldByName('hist_datetime').AsString);
+         line.setDateTime(Q.FieldByName('hist_datetime').AsFloat);
          line.setDescription(Q.FieldByName('hist_description').AsString);
          line.setConcept(Q.FieldByName('hist_concept').AsString);
          line.setImport(Q.FieldByName('hist_import').AsFloat);
@@ -278,7 +280,7 @@ begin
      begin
          result.setWallet(Q.FieldByName('hist_pk').AsString);
          result.setId(Q.FieldByName('hist_id').AsInteger);
-         result.setDateTime(Q.FieldByName('hist_datetime').AsString);
+         result.setDateTime(Q.FieldByName('hist_datetime').AsFloat);
          result.setDescription(Q.FieldByName('hist_description').AsString);
          result.setConcept(Q.FieldByName('hist_concept').AsString);
          result.setImport(Q.FieldByName('hist_import').AsFloat);

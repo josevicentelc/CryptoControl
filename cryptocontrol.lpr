@@ -10,7 +10,7 @@ uses
   Forms, datetimectrls, main, ucryptomanager, ucryptos, uwallets, unewcrypto,
   uwalletmanager, unewwallet, utils, umovementManager, umovements, ubuycrypto,
   umovementscompute, utransfercrytos, uwallethistory, uabout, ureport,
-  ushellcryptos, uconfig, exportdata, ufsettings
+  ushellcryptos, uconfig, exportdata, ufsettings, ufreports
   { you can add units after this };
 
 {$R *.res}
@@ -23,6 +23,7 @@ begin
   Application.CreateForm(Tfreport, freport);
   Application.CreateForm(Tfshellcryptos, fshellcryptos);
   Application.CreateForm(TfSettings, fSettings);
+  Application.CreateForm(TfReports, fReports);
   Application.Run;
 end.
 

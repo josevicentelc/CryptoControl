@@ -74,10 +74,13 @@ begin
 
      // Crypto list
       database.ExecuteDirect('CREATE TABLE "cryptocurrency"('+
-                  ' "crypto_id" integer not null PRIMARY KEY,'+                 // Internal identifier for the crypto
-                  ' "crypto_name" char(100) NOT NULL,'+                         // Crpyto name
-                  ' "crypto_short" char(10),'+                                  // Crypto short name e.j BTC
-                  ' "crypto_logo" blob); ');                                    // Crpyot image logo
+                  ' "crypto_id" integer not null PRIMARY KEY,'+                     // Internal identifier for the crypto
+                  ' "crypto_name" char(100) NOT NULL,'+                             // Crpyto name
+                  ' "crypto_short" char(10),'+                                      // Crypto short name e.j BTC
+                  ' "crypto_marketvalueeuro" numeric(16, 2) not null default 0,'+   // Market Value in €
+                  ' "crypto_marketvaluedolar" numeric(16, 2) not null default 0,'+  // Market Value in $
+                  ' "crypto_updatedate" numeric(18,6) not null default 0,'+         // Last update date
+                  ' "crypto_logo" blob); ');                                        // Crpyot image logo
       database.ExecuteDirect('CREATE UNIQUE INDEX "cryptocurrency_idx" ON "cryptocurrency"( "crypto_id" );');
 
       // Wallet list
@@ -97,7 +100,7 @@ begin
       database.ExecuteDirect('CREATE TABLE "walletshistory"('+
                   ' "hist_pk" char(100) not null,'+
                   ' "hist_id" integer not null,'+
-                  ' "hist_datetime" char(20),'+
+                  ' "hist_datetime" numeric(18,6) not null default 0,'+
                   ' "hist_description" char(100),'+
                   ' "hist_concept" char(100),'+
                   ' "hist_import" numeric(9, 16) NOT NULL default 0,'+

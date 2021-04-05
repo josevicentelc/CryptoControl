@@ -11,7 +11,7 @@ uses
   Buttons, StdCtrls, Menus, udatabaseconector, ucryptomanager, ucryptos,
   uwallets, uwalletmanager, umovementManager, umovements, umovementscompute,
   uwallethistory, utils, uabout, ubuycrypto, utransfercrytos, ushellcryptos,
-  uconfig, exportdata, ufsettings;
+  uconfig, exportdata, ufsettings, ufreports;
 
 
 type
@@ -39,6 +39,7 @@ type
     procedure btn_add_movementClick(Sender: TObject);
     procedure btn_admin_cryptosClick(Sender: TObject);
     procedure btn_register_walletClick(Sender: TObject);
+    procedure btn_settings1Click(Sender: TObject);
     procedure btn_settingsClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure formatColors();
@@ -87,11 +88,16 @@ var
   I : Integer;
   crypto: TCrypto;
   c : String;
+
+  totalValue : double;
+  totalMarketPrice : double;
+  totalProfit : double;
+
 begin
      c := getConfig().currency();
      wallets := walletController.getWallets();
-     gridWallets.RowCount:=wallets.count() + 1;
-     gridWallets.ColCount:= 6;
+     gridWallets.RowCount:=wallets.count() + 2;
+     gridWallets.ColCount:= 7;
 
      for I := 0 to wallets.count() -1 do
      begin
@@ -103,7 +109,19 @@ begin
        gridWallets.Cells[3, I+1] := formatFloat('##0.00', wallets.get(I).getContableValue()) + c;
        gridWallets.Cells[4, I+1] := formatFloat('##0.00', crypto.getMarketPrice()) + c;
        gridWallets.Cells[5, I+1] := formatFloat('##0.00', crypto.getMarketPrice() * wallets.get(I).getBalance() ) + c;
+       gridWallets.Cells[6, I+1] := formatFloat('##0.00', crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getContableValue()) + c;
+
+       totalValue:=totalValue + wallets.get(I).getContableValue();
+       totalMarketPrice:=totalMarketPrice + crypto.getMarketPrice() * wallets.get(I).getBalance();
+       totalProfit:=totalProfit + crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getContableValue();
      end;
+
+
+     gridWallets.Cells[3, wallets.count() +1] := formatFloat('##0.00', totalValue) + c;
+     gridWallets.Cells[5, wallets.count() +1] := formatFloat('##0.00', totalMarketPrice) + c;
+     gridWallets.Cells[6, wallets.count() +1] := formatFloat('##0.00', totalProfit) + c;
+
+
 end;
 
 // *****************************************************************************
@@ -274,7 +292,7 @@ begin
      gridMovements.RowCount:=history.count() + 1;
      for I := 0 to history.count() -1 do
      begin
-        gridMovements.Cells[0, I+1] := history.get(i).getDateTime();
+        gridMovements.Cells[0, I+1] := history.get(i).getDateTimeToStr();
         gridMovements.Cells[1, I+1] := history.get(i).getDescription();
         gridMovements.Cells[2, I+1] := floatToSql(history.get(i).getImport());
         gridMovements.Cells[3, I+1] := floatToSql(history.get(i).getbalance());
@@ -313,6 +331,15 @@ procedure Tmainform.btn_register_walletClick(Sender: TObject);
 begin
      if form_admin_wallet = nil then Application.CreateForm(Tfwalletmanager, form_admin_wallet);
      form_admin_wallet.showModal();
+end;
+
+procedure Tmainform.btn_settings1Click(Sender: TObject);
+var
+  fReports : TFReports;
+begin
+     application.createForm(TFReports, FReports);
+     FReports.ShowModal;
+     FReports.free;
 end;
 
 procedure Tmainform.btn_settingsClick(Sender: TObject);

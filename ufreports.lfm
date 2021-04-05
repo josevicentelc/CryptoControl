@@ -1,0 +1,242 @@
+object fReports: TfReports
+  Left = 606
+  Height = 304
+  Top = 293
+  Width = 358
+  BorderStyle = bsDialog
+  Caption = 'Report'
+  ClientHeight = 304
+  ClientWidth = 358
+  Color = 4927270
+  Position = poScreenCenter
+  LCLVersion = '2.0.2.0'
+  object dt_dateTime: TDateTimePicker
+    Left = 136
+    Height = 23
+    Top = 56
+    Width = 83
+    CenturyFrom = 1941
+    MaxDate = 2958465
+    MinDate = -53780
+    TabOrder = 0
+    TrailingSeparator = False
+    TextForNullDate = 'NULL'
+    LeadingZeros = True
+    Kind = dtkDate
+    TimeFormat = tf24
+    TimeDisplay = tdHMS
+    DateMode = dmComboBox
+    Date = 44274
+    Time = 0
+    UseDefaultSeparators = True
+    AutoAdvance = False
+    HideDateTimeParts = []
+    MonthNames = 'Long'
+    CalAlignment = dtaRight
+    Options = [dtpoFlatButton]
+  end
+  object dt_dateTime1: TDateTimePicker
+    Left = 256
+    Height = 23
+    Top = 56
+    Width = 83
+    CenturyFrom = 1941
+    MaxDate = 2958465
+    MinDate = -53780
+    TabOrder = 1
+    TrailingSeparator = False
+    TextForNullDate = 'NULL'
+    LeadingZeros = True
+    Kind = dtkDate
+    TimeFormat = tf24
+    TimeDisplay = tdHMS
+    DateMode = dmComboBox
+    Date = 44274
+    Time = 0
+    UseDefaultSeparators = True
+    AutoAdvance = False
+    HideDateTimeParts = []
+    MonthNames = 'Long'
+    CalAlignment = dtaRight
+    Options = [dtpoFlatButton]
+  end
+  object CheckBox1: TCheckBox
+    Left = 24
+    Height = 19
+    Top = 104
+    Width = 20
+    Checked = True
+    State = cbChecked
+    TabOrder = 2
+  end
+  object Label1: TLabel
+    Left = 50
+    Height = 17
+    Top = 104
+    Width = 115
+    Caption = 'Acounts && balances'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object CheckBox2: TCheckBox
+    Left = 50
+    Height = 19
+    Top = 128
+    Width = 20
+    TabOrder = 3
+  end
+  object Label2: TLabel
+    Left = 74
+    Height = 17
+    Top = 128
+    Width = 90
+    Caption = 'Detailed moves'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object CheckBox3: TCheckBox
+    Left = 24
+    Height = 19
+    Top = 152
+    Width = 20
+    Checked = True
+    State = cbChecked
+    TabOrder = 4
+  end
+  object Label3: TLabel
+    Left = 50
+    Height = 17
+    Top = 152
+    Width = 128
+    Caption = 'Buy / Shell and profits'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object CheckBox4: TCheckBox
+    Left = 24
+    Height = 19
+    Top = 182
+    Width = 20
+    Checked = True
+    State = cbChecked
+    TabOrder = 5
+  end
+  object Label4: TLabel
+    Left = 50
+    Height = 17
+    Top = 182
+    Width = 73
+    Caption = 'Taxes to pay'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object CheckBox5: TCheckBox
+    Left = 24
+    Height = 19
+    Top = 208
+    Width = 20
+    Checked = True
+    State = cbChecked
+    TabOrder = 6
+  end
+  object Label5: TLabel
+    Left = 50
+    Height = 17
+    Top = 208
+    Width = 56
+    Caption = 'Fees paid'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label6: TLabel
+    Left = 160
+    Height = 17
+    Top = 32
+    Width = 30
+    Caption = 'From'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label7: TLabel
+    Left = 296
+    Height = 17
+    Top = 32
+    Width = 14
+    Caption = 'To'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+  object BitBtn1: TBitBtn
+    Left = 160
+    Height = 30
+    Top = 256
+    Width = 75
+    Caption = 'Screen'
+    TabOrder = 7
+  end
+  object BitBtn2: TBitBtn
+    Left = 256
+    Height = 30
+    Top = 256
+    Width = 75
+    Caption = 'CSV'
+    TabOrder = 8
+  end
+  object Label8: TLabel
+    Left = 24
+    Height = 17
+    Top = 56
+    Width = 72
+    Caption = 'Move''s date'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -13
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    ParentColor = False
+    ParentFont = False
+  end
+end
