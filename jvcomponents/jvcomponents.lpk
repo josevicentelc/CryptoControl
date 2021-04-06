@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="jvComponents"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Files Count="4">
+      <Item1>
+        <Filename Value="jvedit.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="JVEdit"/>
+      </Item1>
+      <Item2>
+        <Filename Value="metrobutton.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="MetroButton"/>
+      </Item2>
+      <Item3>
+        <Filename Value="metrocheckbox.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="MetroCheckbox"/>
+      </Item3>
+      <Item4>
+        <Filename Value="jvstringgrid.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="JVStringGrid"/>
+      </Item4>
+    </Files>
+    <RequiredPkgs Count="9">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="LCL"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="LCL"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="LCL"/>
+      </Item5>
+      <Item6>
+        <PackageName Value="LCL"/>
+      </Item6>
+      <Item7>
+        <PackageName Value="LCL"/>
+      </Item7>
+      <Item8>
+        <PackageName Value="LCL"/>
+      </Item8>
+      <Item9>
+        <PackageName Value="FCL"/>
+      </Item9>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
+  </Package>
+</CONFIG>
