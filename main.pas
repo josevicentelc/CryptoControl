@@ -11,7 +11,7 @@ uses
   Buttons, StdCtrls, Menus, udatabaseconector, ucryptomanager, ucryptos,
   uwallets, uwalletmanager, umovementManager, umovements, umovementscompute,
   uwallethistory, utils, uabout, ubuycrypto, utransfercrytos, ushellcryptos,
-  uconfig, exportdata, ufsettings, ufreports;
+  uconfig, exportdata, ufsettings, ufreports, MetroButton;
 
 
 type
@@ -19,15 +19,15 @@ type
   { Tmainform }
 
   Tmainform = class(TForm)
-    btn_settings1: TSpeedButton;
     color_grid_fixed: TShape;
     Label1: TLabel;
     MenuItem1: TMenuItem;
+    MetroButton1: TMetroButton;
+    MetroButton2: TMetroButton;
+    MetroButton3: TMetroButton;
+    MetroButton4: TMetroButton;
+    MetroButton5: TMetroButton;
     Panel1: TPanel;
-    btn_register_wallet: TSpeedButton;
-    btn_admin_cryptos: TSpeedButton;
-    btn_add_movement: TSpeedButton;
-    btn_settings: TSpeedButton;
     Panel2: TPanel;
     color_background: TShape;
     color_grid_1: TShape;
@@ -94,6 +94,7 @@ var
   totalProfit : double;
 
 begin
+     totalValue := 0; totalMarketPrice := 0; totalProfit := 0;
      c := getConfig().currency();
      wallets := walletController.getWallets();
      gridWallets.RowCount:=wallets.count() + 2;
@@ -111,9 +112,9 @@ begin
        gridWallets.Cells[5, I+1] := formatFloat('##0.00', crypto.getMarketPrice() * wallets.get(I).getBalance() ) + c;
        gridWallets.Cells[6, I+1] := formatFloat('##0.00', crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getContableValue()) + c;
 
-       totalValue:=totalValue + wallets.get(I).getContableValue();
-       totalMarketPrice:=totalMarketPrice + crypto.getMarketPrice() * wallets.get(I).getBalance();
-       totalProfit:=totalProfit + crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getContableValue();
+       totalValue := totalValue + wallets.get(I).getContableValue();
+       totalMarketPrice := totalMarketPrice + crypto.getMarketPrice() * wallets.get(I).getBalance();
+       totalProfit := totalProfit + crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getContableValue();
      end;
 
 

@@ -5,7 +5,7 @@ unit ucryptos;
 interface
 
 uses
-  Classes, SysUtils, udatabaseconector, SQLDB, ucomunicacion, uconfig, utils;
+  Classes, SysUtils, udatabaseconector, SQLDB, ucomunicacion, uconfig, utils, forms;
 
 type
   TCrypto = class(TObject)
@@ -116,6 +116,7 @@ begin
         if d > 0.000001 then
         begin
            refreshMarketValue();
+           application.ProcessMessages;
         end;
      end;
      if getConfig().useCurrencyEuro then   result := _MarketPriceEuro
@@ -343,7 +344,7 @@ begin
          crypto.setShorName(Q.FieldByName('crypto_short').AsString);
          crypto.setMarketPriceEuro(Q.FieldByName('crypto_marketvalueeuro').AsFloat);
          crypto.setMarketPriceDolar(Q.FieldByName('crypto_marketvaluedolar').AsFloat);
-         crypto.setUpdateDate(Q.FieldByName('ccrypto_updatedate').AsFloat);
+         crypto.setUpdateDate(Q.FieldByName('crypto_updatedate').AsFloat);
          result.push(crypto);
          Q.Next;
      end;

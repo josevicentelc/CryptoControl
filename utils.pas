@@ -10,17 +10,34 @@ uses
 function floatToSql(v: double): String;
 function sqlToFloat(str: String): double;
 function floatToCurrency(v: double): String;
-
+function slash(value:string):string;
 function dateToSql(value  :double): String;
 function checkKeyForNumber(Key: char): Boolean;
 function StringToSql(data : String):String;
 function IMGtoBASE64(img : TPicture): String;
 function Base64ToIMG(base64: String):TPicture;
 function MemoryStreamToString(M: TMemoryStream): string;
+function getinstalldir:string;
 
 implementation
 
+function slash(value:string):string;
+begin
+  if (value='') then result:=''
+    else begin
+    {$IFDEF WINDOWS}
+    if (value[length(value)]<>'\') then result:=value+'\'
+    {$ELSE}
+    if (value[length(value)]<>'/') then result:=value+'/'
+    {$ENDIF}
+    else result:=value;
+  end;
+end;
 
+function getinstalldir:string;
+begin
+  result:=slash(extractfiledir(paramstr(0)));
+end;
 
 function IMGtoBASE64(img : TPicture): String;
 var
