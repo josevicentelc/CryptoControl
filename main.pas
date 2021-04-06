@@ -134,27 +134,27 @@ begin
              crypto.refreshMarketValue();
              useMarketPrice:=crypto.getUseSync();
 
-             gridWallets.Cells[0, row] := wallets.get(I).getPk();
-             gridWallets.Cells[1, row] := wallets.get(I).getName();
-             gridWallets.Cells[2, row] := floatToSql(wallets.get(I).getBalance());
-             gridWallets.Cells[3, row] := formatFloat('##0.00', wallets.get(I).getContableValue()) + c;
+             gridWallets.Cells[6, row] := wallets.get(I).getPk();
+             gridWallets.Cells[0, row] := wallets.get(I).getName();
+             gridWallets.Cells[1, row] := floatToSql(wallets.get(I).getBalance());
+             gridWallets.Cells[2, row] := formatFloat('##0.00', wallets.get(I).getContableValue()) + c;
 
              thisValue := wallets.get(I).getContableValue();
              if useMarketPrice then
              begin
                 thisMarketPrice := crypto.getMarketPrice() * wallets.get(I).getBalance();
                 thisProfit := crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getContableValue();
-                gridWallets.Cells[4, row] := formatFloat('##0.00', crypto.getMarketPrice()) + c;
-                gridWallets.Cells[5, row] := formatFloat('##0.00', thisMarketPrice) + c;
-                gridWallets.Cells[6, row] := formatFloat('##0.00', thisProfit) + c;
+                gridWallets.Cells[3, row] := formatFloat('##0.00', crypto.getMarketPrice()) + c;
+                gridWallets.Cells[4, row] := formatFloat('##0.00', thisMarketPrice) + c;
+                gridWallets.Cells[5, row] := formatFloat('##0.00', thisProfit) + c;
              end
              else
              begin
                thisMarketPrice := 0;
                thisProfit := 0;
+               gridWallets.Cells[3, row] := '----' + c;
                gridWallets.Cells[4, row] := '----' + c;
                gridWallets.Cells[5, row] := '----' + c;
-               gridWallets.Cells[6, row] := '----' + c;
              end;
 
 
@@ -168,9 +168,9 @@ begin
 
      gridWallets.RowCount:=gridWallets.RowCount+1;
      row := row + 1;
-     gridWallets.Cells[3, row] := formatFloat('##0.00', totalValue) + c;
-     gridWallets.Cells[5, row] := formatFloat('##0.00', totalMarketPrice) + c;
-     gridWallets.Cells[6, row] := formatFloat('##0.00', totalProfit) + c;
+     gridWallets.Cells[2, row] := formatFloat('##0.00', totalValue) + c;
+     gridWallets.Cells[4, row] := formatFloat('##0.00', totalMarketPrice) + c;
+     gridWallets.Cells[5, row] := formatFloat('##0.00', totalProfit) + c;
 
 
 end;
@@ -239,6 +239,7 @@ var
   frmBuy : Tfbuycrypto;
   frmTransfer : Tftransfercrytps;
   frmShell : Tfshellcryptos;
+  mr : integer;
 begin
   if gridMovements.Cells[5, selectedMoveRow] <> '' then
      begin
@@ -251,27 +252,30 @@ begin
                 begin
                     application.CreateForm(Tfbuycrypto, frmBuy);
                     frmBuy.moveId:=movId;
-                    frmBuy.ShowModal;
+                    mr := frmBuy.ShowModal;
                     frmBuy.free;
                 end;
              if movType = MV_TRANSFER then
                 begin
                     application.CreateForm(Tftransfercrytps, frmTransfer);
                     frmTransfer.moveId:=movId;
-                    frmTransfer.ShowModal;
+                    mr := frmTransfer.ShowModal;
                     frmTransfer.free;
                 end;
              if movType = MV_SHELL then
                 begin
                     application.CreateForm(Tfshellcryptos, frmShell);
                     frmShell.moveId:=movId;
-                    frmShell.ShowModal;
+                     mr := frmShell.ShowModal;
                     frmShell.free;
                 end;
 
-             computeWalletBalances();
-             refreshWalletBalances();
-             refreshMoves();
+             if mr = mrok then
+                begin
+                   computeWalletBalances();
+                   refreshWalletBalances();
+                   refreshMoves();
+                end;
           end;
      end;
 end;
@@ -343,7 +347,7 @@ begin
      begin
         c := getConfig().currency();
         selectedMoveRow:=-1;
-        wallet := gridWallets.Cells[0, selectedWalletRow];
+        wallet := gridWallets.Cells[6, selectedWalletRow];
         history := historyController.getFromWallet(wallet);
         gridMovements.RowCount:=history.count() + 1;
         for I := 0 to history.count() -1 do

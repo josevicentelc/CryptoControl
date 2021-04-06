@@ -16,7 +16,7 @@ object mainform: Tmainform
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '1.8.2.0'
   object Panel1: TPanel
     Left = 0
     Height = 132
@@ -2693,13 +2693,13 @@ object mainform: Tmainform
     TitleFont.Quality = fqDraft
     OnSelectCell = gridWalletsSelectCell
     ColWidths = (
-      357
-      243
+      217
+      155
       147
       140
       143
       132
-      132
+      517
       64
     )
     RowHeights = (
@@ -2713,25 +2713,25 @@ object mainform: Tmainform
       7
       0
       0
-      'PK'
+      'Wallet'
       1
       0
-      'Wallet'
+      'Balance'
       2
       0
-      'Balance'
+      'Value'
       3
       0
-      'Value.'
+      'Market Prc.'
       4
       0
-      'Market Prc.'
+      'Market value'
       5
       0
-      'Market value'
+      'Profit'
       6
       0
-      'Profit'
+      'PK'
     )
   end
   object Splitter1: TSplitter
