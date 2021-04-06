@@ -80,6 +80,7 @@ begin
                   ' "crypto_marketvalueeuro" numeric(16, 2) not null default 0,'+   // Market Value in €
                   ' "crypto_marketvaluedolar" numeric(16, 2) not null default 0,'+  // Market Value in $
                   ' "crypto_updatedate" numeric(18,6) not null default 0,'+         // Last update date
+                  ' "crypto_usesync" integer not null default 0,'+                  // sync market value
                   ' "crypto_logo" blob); ');                                        // Crpyot image logo
       database.ExecuteDirect('CREATE UNIQUE INDEX "cryptocurrency_idx" ON "cryptocurrency"( "crypto_id" );');
 

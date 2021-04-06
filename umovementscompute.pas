@@ -5,7 +5,7 @@ unit umovementscompute;
 interface
 
 uses
-  Classes, SysUtils, umovements, ucryptos, uwallets, uwallethistory, utils, uconfig;
+  Classes, SysUtils, umovements, ucryptos, uwallets, uwallethistory, utils, uconfig, forms;
 
 
 
@@ -100,6 +100,7 @@ begin
   movements := movementsController.getAll();
   for I := 0 to movements.count() -1 do
   begin
+       application.ProcessMessages;
        mov := movements.get(I);
        movType := mov.getType();
        case movType of

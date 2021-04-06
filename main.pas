@@ -11,7 +11,7 @@ uses
   Buttons, StdCtrls, Menus, udatabaseconector, ucryptomanager, ucryptos,
   uwallets, uwalletmanager, umovementManager, umovements, umovementscompute,
   uwallethistory, utils, uabout, ubuycrypto, utransfercrytos, ushellcryptos,
-  uconfig, exportdata, ufsettings, ufreports, MetroButton;
+  uconfig, exportdata, ufsettings, ufreports, MetroButton, JVEdit;
 
 
 type
@@ -20,6 +20,8 @@ type
 
   Tmainform = class(TForm)
     color_grid_fixed: TShape;
+    edit_filter_pk: TEdit;
+    edit_filter_name: TEdit;
     Label1: TLabel;
     MenuItem1: TMenuItem;
     MetroButton1: TMetroButton;
@@ -41,6 +43,7 @@ type
     procedure btn_register_walletClick(Sender: TObject);
     procedure btn_settings1Click(Sender: TObject);
     procedure btn_settingsClick(Sender: TObject);
+    procedure edit_filter_pkChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure formatColors();
     procedure FormShow(Sender: TObject);
@@ -93,34 +96,81 @@ var
   totalMarketPrice : double;
   totalProfit : double;
 
+  filterPk : String;
+  filterName : String;
+  wpk : String;
+  wname : String;
+  row : integer;
+  useMarketPrice : boolean;
+
+  thisValue : double;
+  thisMarketPrice : double;
+  thisProfit : double;
 begin
      totalValue := 0; totalMarketPrice := 0; totalProfit := 0;
      c := getConfig().currency();
      wallets := walletController.getWallets();
-     gridWallets.RowCount:=wallets.count() + 2;
+     gridWallets.RowCount:=1;
+     row := 0;
      gridWallets.ColCount:= 7;
+
+     filterPk := lowercase(trim(edit_filter_pk.text));
+     filtername := lowercase(trim(edit_filter_name.text));
 
      for I := 0 to wallets.count() -1 do
      begin
-       crypto := cryptoController.getById(wallets.get(i).getCrypto());
-       crypto.refreshMarketValue();
-       gridWallets.Cells[0, I+1] := wallets.get(I).getPk();
-       gridWallets.Cells[1, I+1] := wallets.get(I).getName();
-       gridWallets.Cells[2, I+1] := floatToSql(wallets.get(I).getBalance());
-       gridWallets.Cells[3, I+1] := formatFloat('##0.00', wallets.get(I).getContableValue()) + c;
-       gridWallets.Cells[4, I+1] := formatFloat('##0.00', crypto.getMarketPrice()) + c;
-       gridWallets.Cells[5, I+1] := formatFloat('##0.00', crypto.getMarketPrice() * wallets.get(I).getBalance() ) + c;
-       gridWallets.Cells[6, I+1] := formatFloat('##0.00', crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getContableValue()) + c;
 
-       totalValue := totalValue + wallets.get(I).getContableValue();
-       totalMarketPrice := totalMarketPrice + crypto.getMarketPrice() * wallets.get(I).getBalance();
-       totalProfit := totalProfit + crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getContableValue();
+       wpk := LowerCase(wallets.get(I).getPk());
+       wname := LowerCase(wallets.get(I).getName());
+
+       if (filterPk = '') or (wpk.Contains(filterPk)) then
+       begin
+          if (filterName = '') or (wname.Contains(filterName)) then
+          begin
+             gridWallets.RowCount:=gridWallets.RowCount+1;
+             row := row + 1;
+
+             crypto := cryptoController.getById(wallets.get(i).getCrypto());
+             crypto.refreshMarketValue();
+             useMarketPrice:=crypto.getUseSync();
+
+             gridWallets.Cells[0, row] := wallets.get(I).getPk();
+             gridWallets.Cells[1, row] := wallets.get(I).getName();
+             gridWallets.Cells[2, row] := floatToSql(wallets.get(I).getBalance());
+             gridWallets.Cells[3, row] := formatFloat('##0.00', wallets.get(I).getContableValue()) + c;
+
+             thisValue := wallets.get(I).getContableValue();
+             if useMarketPrice then
+             begin
+                thisMarketPrice := crypto.getMarketPrice() * wallets.get(I).getBalance();
+                thisProfit := crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getContableValue();
+                gridWallets.Cells[4, row] := formatFloat('##0.00', crypto.getMarketPrice()) + c;
+                gridWallets.Cells[5, row] := formatFloat('##0.00', thisMarketPrice) + c;
+                gridWallets.Cells[6, row] := formatFloat('##0.00', thisProfit) + c;
+             end
+             else
+             begin
+               thisMarketPrice := 0;
+               thisProfit := 0;
+               gridWallets.Cells[4, row] := '----' + c;
+               gridWallets.Cells[5, row] := '----' + c;
+               gridWallets.Cells[6, row] := '----' + c;
+             end;
+
+
+             totalValue := totalValue + thisValue;
+             totalMarketPrice := totalMarketPrice + thisMarketPrice;
+             totalProfit := totalProfit + thisProfit;
+          end;
+       end;
      end;
 
 
-     gridWallets.Cells[3, wallets.count() +1] := formatFloat('##0.00', totalValue) + c;
-     gridWallets.Cells[5, wallets.count() +1] := formatFloat('##0.00', totalMarketPrice) + c;
-     gridWallets.Cells[6, wallets.count() +1] := formatFloat('##0.00', totalProfit) + c;
+     gridWallets.RowCount:=gridWallets.RowCount+1;
+     row := row + 1;
+     gridWallets.Cells[3, row] := formatFloat('##0.00', totalValue) + c;
+     gridWallets.Cells[5, row] := formatFloat('##0.00', totalMarketPrice) + c;
+     gridWallets.Cells[6, row] := formatFloat('##0.00', totalProfit) + c;
 
 
 end;
@@ -286,19 +336,25 @@ var
   I : Integer;
   c : String;
 begin
-     c := getConfig().currency();
-     selectedMoveRow:=-1;
-     wallet := gridWallets.Cells[0, selectedWalletRow];
-     history := historyController.getFromWallet(wallet);
-     gridMovements.RowCount:=history.count() + 1;
-     for I := 0 to history.count() -1 do
+  if selectedWalletRow >= gridWallets.RowCount then selectedWalletRow:=0;
+  gridMovements.RowCount:= 1;
+
+  if selectedWalletRow > 0 then
      begin
-        gridMovements.Cells[0, I+1] := history.get(i).getDateTimeToStr();
-        gridMovements.Cells[1, I+1] := history.get(i).getDescription();
-        gridMovements.Cells[2, I+1] := floatToSql(history.get(i).getImport());
-        gridMovements.Cells[3, I+1] := floatToSql(history.get(i).getbalance());
-        gridMovements.Cells[4, I+1] := floatToSql(history.get(i).getvalue())+ c;
-        gridMovements.Cells[5, I+1] := inttostr(history.get(i).getMoveId());
+        c := getConfig().currency();
+        selectedMoveRow:=-1;
+        wallet := gridWallets.Cells[0, selectedWalletRow];
+        history := historyController.getFromWallet(wallet);
+        gridMovements.RowCount:=history.count() + 1;
+        for I := 0 to history.count() -1 do
+        begin
+           gridMovements.Cells[0, I+1] := history.get(i).getDateTimeToStr();
+           gridMovements.Cells[1, I+1] := history.get(i).getDescription();
+           gridMovements.Cells[2, I+1] := floatToSql(history.get(i).getImport());
+           gridMovements.Cells[3, I+1] := floatToSql(history.get(i).getbalance());
+           gridMovements.Cells[4, I+1] := floatToSql(history.get(i).getvalue())+ c;
+           gridMovements.Cells[5, I+1] := inttostr(history.get(i).getMoveId());
+        end;
      end;
 
 end;
@@ -355,6 +411,12 @@ begin
      refreshWalletBalances();
      refreshMoves();
 
+end;
+
+procedure Tmainform.edit_filter_pkChange(Sender: TObject);
+begin
+     refreshWalletBalances();
+     refreshMoves();
 end;
 
 // *****************************************************************************

@@ -16,15 +16,15 @@ object mainform: Tmainform
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
+  LCLVersion = '2.0.2.0'
   object Panel1: TPanel
     Left = 0
-    Height = 98
+    Height = 132
     Top = 0
     Width = 1302
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 98
+    ClientHeight = 132
     ClientWidth = 1302
     Font.CharSet = ANSI_CHARSET
     Font.Color = clWhite
@@ -2635,11 +2635,41 @@ object mainform: Tmainform
       Selected = False
       LeftTextAnchor = 0
     end
+    object edit_filter_pk: TEdit
+      Left = 0
+      Height = 33
+      Top = 99
+      Width = 320
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -19
+      Font.Name = '@Arial Unicode MS'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      OnChange = edit_filter_pkChange
+      ParentFont = False
+      TabOrder = 0
+    end
+    object edit_filter_name: TEdit
+      Left = 319
+      Height = 33
+      Top = 99
+      Width = 256
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clBlack
+      Font.Height = -19
+      Font.Name = '@Arial Unicode MS'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      OnChange = edit_filter_pkChange
+      ParentFont = False
+      TabOrder = 1
+    end
   end
   object gridWallets: TStringGrid
     Left = 0
     Height = 289
-    Top = 98
+    Top = 132
     Width = 1302
     Align = alTop
     BorderStyle = bsNone
@@ -2708,24 +2738,24 @@ object mainform: Tmainform
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 387
+    Top = 421
     Width = 1302
     Align = alTop
     ResizeAnchor = akTop
   end
   object Panel2: TPanel
     Left = 0
-    Height = 334
-    Top = 392
+    Height = 300
+    Top = 426
     Width = 1302
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 334
+    ClientHeight = 300
     ClientWidth = 1302
     TabOrder = 3
     object gridMovements: TStringGrid
       Left = 0
-      Height = 310
+      Height = 276
       Top = 24
       Width = 1302
       Align = alBottom

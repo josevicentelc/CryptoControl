@@ -33,7 +33,9 @@ begin
                       result := jsonObj.Floats['price'];
                    end;
            end;
-    end;
+    end
+    else
+        result := -999999;
 
 end;
 
