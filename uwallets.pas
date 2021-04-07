@@ -5,7 +5,7 @@ unit uwallets;
 interface
 
 uses
-  Classes, SysUtils, udatabaseconector, sqldb, utils;
+  Classes, SysUtils, udatabaseconector, sqldb, utils, ufifowallet;
 
 type
 
@@ -36,6 +36,11 @@ type
     function getContableValue(): double;
 
     procedure addBalance(_balance: double; _value: double);
+
+
+    procedure addFifoBalance(_balance: double; _value: double);
+    procedure reduceFifoBalance(_balance: double);
+    function getFifoValue(): double;
 
     procedure export(F : TStringList);
     procedure import(line: String);
@@ -104,15 +109,78 @@ begin
      contable_value :=0;
 end;
 
+procedure TWallet.reduceFifoBalance(_balance: double);
+var
+  fifolist : TFifoList;
+  toreduce : double;
+  I : Integer;
+  fifo : TFifo;
+begin
+  if _balance > 0 then
+  begin
+    toreduce:=_balance;
+    fifolist := fifoController.getFifoList(pk);
+    for I := 0 to fifolist.count() -1 do
+     begin
+       if toreduce > 0 then
+       begin
+         fifo := fifolist.get(I);
+         if fifo.amount > toreduce then
+         begin
+           fifo.amount:=fifo.amount - toreduce;
+           toreduce:=0;
+         end
+         else
+         if fifo.amount > 0 then
+         begin
+           toreduce:=toreduce - fifo.amount;
+           fifo.amount:=0;
+         end;
+       end;
+     end;
+    fifoController.save(fifolist);
+  end;
+end;
+
+procedure TWallet.addFifoBalance(_balance: double; _value: double);
+var
+  fifolist : TFifoList;
+  fifo : TFifo;
+begin
+  if _balance > 0 then
+       begin
+          fifolist := fifoController.getFifoList(pk);
+          fifo := TFifo.create;
+          fifo.wallet:=pk;
+          fifo.amount:=_balance;
+          fifo.value:=_value;
+          fifolist.push(fifo);
+          fifoController.save(fifolist);
+          fifolist.free;
+       end;
+end;
+
+function TWallet.getFifoValue(): double;
+var
+    fifolist : TFifoList;
+    I : Integer;
+begin
+    result := 0;
+    fifolist := fifoController.getFifoList(pk);
+    for I := 0 to fifolist.count() -1 do
+     begin
+       result := result + fifolist.get(I).value;
+     end;
+    fifolist.Free;
+end;
+
 procedure TWallet.addBalance(_balance: double; _value: double);
 var
-  f : double;
   newBalance : double;
   newValue : double;
 begin
      newBalance := _balance + balance;
      newValue:= _value + contable_value;
-
      setBalance(newBalance);
      setContableValue(newValue);
 end;
@@ -198,7 +266,6 @@ end;
 procedure initWalletController(db: TDatabaseConnector);
 begin
      WalletController := TWalletController.create(db);
-
 end;
 
 constructor TWalletController.create(_db: TDatabaseConnector);

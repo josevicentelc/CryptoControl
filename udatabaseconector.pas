@@ -97,6 +97,14 @@ begin
       database.ExecuteDirect('CREATE UNIQUE INDEX "wallets_pkx" ON "wallets"( "wallet_pk" );');
 
 
+      // FIFO values
+      database.ExecuteDirect('CREATE TABLE "fifowallet"('+
+                  ' "fifo_pk" char(100) not null,'+
+                  ' "fifo_id" integer not null,'+
+                  ' "fifo_amount" numeric(9, 16) not null default 0,'+
+                  ' "fifo_value" numeric(16, 2) not null default 0,'+
+                  ' PRIMARY KEY("fifo_pk", "fifo_id"));');
+
       // Wallet history
       database.ExecuteDirect('CREATE TABLE "walletshistory"('+
                   ' "hist_pk" char(100) not null,'+

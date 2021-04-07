@@ -10,7 +10,7 @@ uses
   Forms, datetimectrls, main, ucryptomanager, ucryptos, uwallets, unewcrypto,
   uwalletmanager, unewwallet, utils, umovementManager, umovements, ubuycrypto,
   umovementscompute, utransfercrytos, uwallethistory, uabout, ureport,
-  ushellcryptos, uconfig, exportdata, ufsettings, ufreports
+  ushellcryptos, uconfig, exportdata, ufsettings, ufreports, ufifowallet
   { you can add units after this };
 
 {$R *.res}

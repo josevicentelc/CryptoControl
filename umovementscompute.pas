@@ -112,6 +112,7 @@ begin
                 begin
                      wallet := walletController.getWallet(mov.getWalletInput());
                      wallet.addBalance(mov.getInputCryptos(), mov.getCotnableValueInput());
+                     wallet.addFifoBalance(mov.getInputCryptos(), mov.getCotnableValueInput());
                      wallet.save();
 
                      histLine := THistoryLine.create();
@@ -175,6 +176,7 @@ begin
 
                                 wallet.setBalance(wallet.getBalance() - outputcryptos);
                                 wallet.setContableValue(wallet.getContableValue() - outputvalue);
+                                wallet.reduceFifoBalance(outputcryptos);
                                 wallet.save();
                                 wallet.Free;
                           end;
@@ -183,6 +185,7 @@ begin
                      if wallet <> nil then
                      begin
                            wallet.addBalance(mov.getInputCryptos(), inputvalue);
+                           wallet.addFifoBalance(mov.getInputCryptos(), inputvalue);
                            wallet.save();
 
                            // input Transfer cryptos

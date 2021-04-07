@@ -9,12 +9,15 @@ uses
 
 type
 
+  TContableType=(CT_FIFO, CT_LIFO, CT_PMP);
+
   TConfig = class(TObject)
    private
      procedure processParameter(str: TStringArray);
    public
      useMarketSync : boolean;
      useCurrencyEuro: boolean;
+     contableType : TContableType;
      constructor create;
      procedure load();
      procedure save();
@@ -41,6 +44,7 @@ constructor TConfig.create;
 begin
      useMarketSync:=true;
      useCurrencyEuro:=true;
+     contableType:=CT_FIFO;
 end;
 
 function TConfig.currency(): String;
@@ -73,6 +77,12 @@ begin
      begin
        if str[0] = 'useMarketSync' then useMarketSync:=str[1] = 'true';
        if str[0] = 'useCurrencyEuro' then useCurrencyEuro:=str[1] = 'true';
+       if str[0] = 'contableType' then
+       begin
+         if str[1] = 'FIFO' then contableType:=CT_FIFO
+         else if str[1] = 'LIFO' then  contableType:=CT_LIFO
+           else if str[1] = 'PMP' then contableType:=CT_PMP;
+       end;
      end;
 end;
 
@@ -99,6 +109,10 @@ begin
      begin
        lines.Add('useCurrencyEuro=false');
      end;
+
+     if contableType=CT_FIFO then lines.Add('contableType=FIFO')
+     else if contableType=CT_LIFO then lines.Add('contableType=LIFO')
+     else if contableType=CT_PMP then lines.Add('contableType=PMP');
 
      lines.SaveToFile('config.cfg');
 end;

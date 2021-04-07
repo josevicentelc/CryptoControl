@@ -11,7 +11,7 @@ uses
   Buttons, StdCtrls, Menus, udatabaseconector, ucryptomanager, ucryptos,
   uwallets, uwalletmanager, umovementManager, umovements, umovementscompute,
   uwallethistory, utils, uabout, ubuycrypto, utransfercrytos, ushellcryptos,
-  uconfig, exportdata, ufsettings, ufreports, MetroButton, JVEdit;
+  uconfig, exportdata, ufsettings, ufreports, MetroButton, JVEdit, ufifowallet;
 
 
 type
@@ -217,6 +217,7 @@ begin
      initwalletController(db);
      initMovementsontroller(db);
      initHistoryController(db);
+     initFifoController(db);
 end;
 
 // *****************************************************************************
