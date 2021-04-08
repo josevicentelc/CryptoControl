@@ -5,7 +5,7 @@ unit umovementscompute;
 interface
 
 uses
-  Classes, SysUtils, umovements, ucryptos, uwallets, uwallethistory, utils, uconfig, forms;
+  Classes, SysUtils, umovements, ucryptos, uwallets, uwallethistory, utils, uconfig, forms, ufifowallet;
 
 
 
@@ -96,6 +96,8 @@ begin
     historyController.clear(wallets.get(i).getPk());
     wallets.get(I).save();
   end;
+
+  fifoController.clearAll();
 
   movements := movementsController.getAll();
   for I := 0 to movements.count() -1 do

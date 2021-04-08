@@ -11,7 +11,7 @@ uses
   Buttons, StdCtrls, Menus, udatabaseconector, ucryptomanager, ucryptos,
   uwallets, uwalletmanager, umovementManager, umovements, umovementscompute,
   uwallethistory, utils, uabout, ubuycrypto, utransfercrytos, ushellcryptos,
-  uconfig, exportdata, ufsettings, ufreports, MetroButton, JVEdit, ufifowallet;
+  uconfig, ufsettings, ufreports, MetroButton, ufifowallet;
 
 
 type
@@ -22,13 +22,14 @@ type
     color_grid_fixed: TShape;
     edit_filter_pk: TEdit;
     edit_filter_name: TEdit;
-    Label1: TLabel;
     MenuItem1: TMenuItem;
     MetroButton1: TMetroButton;
     MetroButton2: TMetroButton;
     MetroButton3: TMetroButton;
     MetroButton4: TMetroButton;
     MetroButton5: TMetroButton;
+    btnShowMoves: TMetroButton;
+    btnShowFifo: TMetroButton;
     Panel1: TPanel;
     Panel2: TPanel;
     color_background: TShape;
@@ -38,6 +39,7 @@ type
     Splitter1: TSplitter;
     gridWallets: TStringGrid;
     gridMovements: TStringGrid;
+    procedure btnShowMovesClick(Sender: TObject);
     procedure btn_add_movementClick(Sender: TObject);
     procedure btn_admin_cryptosClick(Sender: TObject);
     procedure btn_register_walletClick(Sender: TObject);
@@ -54,9 +56,6 @@ type
       var CanSelect: Boolean);
     procedure MenuItem1Click(Sender: TObject);
     procedure PopupMenu1Popup(Sender: TObject);
-    procedure SpeedButton1Click(Sender: TObject);
-    procedure SpeedButton2Click(Sender: TObject);
-    procedure SpeedButton3Click(Sender: TObject);
   private
     selectedMoveRow: integer;
     selectedWalletRow: integer;
@@ -70,6 +69,8 @@ type
   public
     procedure refreshWalletBalances();
     procedure refreshMoves();
+    procedure refreshFifo();
+    procedure refreshSubGrid();
     procedure showAbout();
 
   end;
@@ -275,7 +276,7 @@ begin
                 begin
                    computeWalletBalances();
                    refreshWalletBalances();
-                   refreshMoves();
+                   refreshSubGrid();
                 end;
           end;
      end;
@@ -297,7 +298,7 @@ procedure Tmainform.gridWalletsSelectCell(Sender: TObject; aCol, aRow: Integer;
   var CanSelect: Boolean);
 begin
      selectedWalletRow:=aRow;
-     refreshMoves;
+     refreshSubGrid();
 end;
 
 procedure Tmainform.MenuItem1Click(Sender: TObject);
@@ -308,7 +309,7 @@ begin
    movementsController.remove(movid);
    computeWalletBalances();
    refreshWalletBalances();
-   refreshMoves();
+   refreshSubGrid();
 end;
 
 procedure Tmainform.PopupMenu1Popup(Sender: TObject);
@@ -316,23 +317,51 @@ begin
   MenuItem1.enabled := selectedMoveRow >= 0;
 end;
 
-procedure Tmainform.SpeedButton1Click(Sender: TObject);
-begin
 
-end;
-
-procedure Tmainform.SpeedButton2Click(Sender: TObject);
-begin
-
-end;
-
-procedure Tmainform.SpeedButton3Click(Sender: TObject);
-begin
-
-end;
 
 // *****************************************************************************
 // *****************************************************************************
+
+procedure Tmainform.refreshSubGrid();
+begin
+  if btnShowMoves.Selected then refreshMoves()
+  else if btnShowFifo.Selected then refreshFifo();
+end;
+
+procedure Tmainform.refreshFifo();
+var
+  wallet : String;
+  list : TFifoList;
+  I : Integer;
+  c : String;
+begin
+
+     gridMovements.ColCount:=3;
+     gridMovements.RowCount:= 1;
+
+     gridMovements.Cells[0, 0] := 'Id';
+     gridMovements.Cells[1, 0] := 'Amount';
+     gridMovements.Cells[2, 0] := 'Value';
+     gridMovements.ColWidths[0] := 75;
+     gridMovements.ColWidths[1] := 250;
+     gridMovements.ColWidths[2] := 250;
+
+  if selectedWalletRow >= gridWallets.RowCount then selectedWalletRow:=0;
+  if selectedWalletRow > 0 then
+       begin
+          c := getConfig().currency();
+          selectedMoveRow:=-1;
+          wallet := gridWallets.Cells[6, selectedWalletRow];
+          list := fifoController.getFifoList(wallet);
+          gridMovements.RowCount:=list.count() + 1;
+          for I := 0 to list.count() -1 do
+          begin
+            gridMovements.Cells[0, I+1] := inttostr(list.get(i).id);
+             gridMovements.Cells[1, I+1] := floatToSql(list.get(i).amount);
+             gridMovements.Cells[2, I+1] := floatToCurrency(list.get(i).value) + ' '+ c;
+          end;
+       end;
+end;
 
 procedure Tmainform.refreshMoves();
 var
@@ -341,8 +370,23 @@ var
   I : Integer;
   c : String;
 begin
+
+   gridMovements.ColCount:=6;
+   gridMovements.RowCount:= 1;
+   gridMovements.Cells[0, 0] := 'Date/Time';
+   gridMovements.Cells[1, 0] := 'Action';
+   gridMovements.Cells[2, 0] := 'Amount';
+   gridMovements.Cells[3, 0] := 'Balance';
+   gridMovements.Cells[4, 0] := 'Value';
+   gridMovements.Cells[5, 0] := 'Id';
+   gridMovements.ColWidths[0] := 175;
+   gridMovements.ColWidths[1] := 600;
+   gridMovements.ColWidths[2] := 130;
+   gridMovements.ColWidths[3] := 130;
+   gridMovements.ColWidths[4] := 130;
+   gridMovements.ColWidths[5] := 130;
+
   if selectedWalletRow >= gridWallets.RowCount then selectedWalletRow:=0;
-  gridMovements.RowCount:= 1;
 
   if selectedWalletRow > 0 then
      begin
@@ -357,7 +401,7 @@ begin
            gridMovements.Cells[1, I+1] := history.get(i).getDescription();
            gridMovements.Cells[2, I+1] := floatToSql(history.get(i).getImport());
            gridMovements.Cells[3, I+1] := floatToSql(history.get(i).getbalance());
-           gridMovements.Cells[4, I+1] := floatToSql(history.get(i).getvalue())+ c;
+           gridMovements.Cells[4, I+1] := floatToCurrency(history.get(i).getvalue())+ c;
            gridMovements.Cells[5, I+1] := inttostr(history.get(i).getMoveId());
         end;
      end;
@@ -384,6 +428,21 @@ begin
      form_admin_movementst.showModal();
      computeWalletBalances();
      refreshWalletBalances();
+end;
+
+procedure Tmainform.btnShowMovesClick(Sender: TObject);
+begin
+  if sender = btnShowMoves then
+     begin
+        btnShowMoves.Selected:=true;
+        btnShowFifo.Selected:=false;
+     end
+  else
+  begin
+    btnShowMoves.Selected:=false;
+    btnShowFifo.Selected:=true;
+  end;
+  refreshSubGrid();
 end;
 
 // *****************************************************************************
@@ -414,14 +473,14 @@ begin
 
      computeWalletBalances();
      refreshWalletBalances();
-     refreshMoves();
+     refreshSubGrid();
 
 end;
 
 procedure Tmainform.edit_filter_pkChange(Sender: TObject);
 begin
      refreshWalletBalances();
-     refreshMoves();
+     refreshSubGrid();
 end;
 
 // *****************************************************************************

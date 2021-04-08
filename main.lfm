@@ -1,11 +1,11 @@
 object mainform: Tmainform
-  Left = 370
-  Height = 726
-  Top = 157
-  Width = 1302
+  Left = 165
+  Height = 812
+  Top = 100
+  Width = 1555
   Caption = 'Crypto Tracer'
-  ClientHeight = 726
-  ClientWidth = 1302
+  ClientHeight = 812
+  ClientWidth = 1555
   Color = 6052956
   Font.CharSet = ANSI_CHARSET
   Font.Color = clSilver
@@ -16,16 +16,16 @@ object mainform: Tmainform
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '1.8.2.0'
   object Panel1: TPanel
     Left = 0
     Height = 132
     Top = 0
-    Width = 1302
+    Width = 1555
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 132
-    ClientWidth = 1302
+    ClientWidth = 1555
     Font.CharSet = ANSI_CHARSET
     Font.Color = clWhite
     Font.Height = -19
@@ -2670,7 +2670,7 @@ object mainform: Tmainform
     Left = 0
     Height = 289
     Top = 132
-    Width = 1302
+    Width = 1555
     Align = alTop
     BorderStyle = bsNone
     ColCount = 8
@@ -2739,25 +2739,25 @@ object mainform: Tmainform
     Left = 0
     Height = 5
     Top = 421
-    Width = 1302
+    Width = 1555
     Align = alTop
     ResizeAnchor = akTop
   end
   object Panel2: TPanel
     Left = 0
-    Height = 300
+    Height = 386
     Top = 426
-    Width = 1302
+    Width = 1555
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 300
-    ClientWidth = 1302
+    ClientHeight = 386
+    ClientWidth = 1555
     TabOrder = 3
     object gridMovements: TStringGrid
       Left = 0
-      Height = 276
-      Top = 24
-      Width = 1302
+      Height = 338
+      Top = 48
+      Width = 1555
       Align = alBottom
       Anchors = [akTop, akLeft, akRight, akBottom]
       BorderStyle = bsNone
@@ -2816,13 +2816,38 @@ object mainform: Tmainform
         'Value'
       )
     end
-    object Label1: TLabel
+    object btnShowMoves: TMetroButton
       Left = 8
-      Height = 21
+      Height = 40
       Top = 0
-      Width = 82
+      Width = 134
       Caption = 'Movements'
-      ParentColor = False
+      Down = True
+      OnClick = btnShowMovesClick
+      MetroTextAlign = mtaMiddleMiddle
+      MetroGlyphAlign = mgaTopLeft
+      MetroColorNormal = 4927270
+      MetroColorOver = 4927270
+      MetroColorDown = 3434298
+      MetroColorDisabled = clGray
+      Selected = True
+      LeftTextAnchor = 0
+    end
+    object btnShowFifo: TMetroButton
+      Left = 152
+      Height = 40
+      Top = 0
+      Width = 134
+      Caption = 'FIFO Values'
+      OnClick = btnShowMovesClick
+      MetroTextAlign = mtaMiddleMiddle
+      MetroGlyphAlign = mgaTopLeft
+      MetroColorNormal = 4927270
+      MetroColorOver = 4927270
+      MetroColorDown = 3434298
+      MetroColorDisabled = clGray
+      Selected = False
+      LeftTextAnchor = 0
     end
   end
   object PopupMenu1: TPopupMenu
