@@ -138,13 +138,13 @@ begin
              gridWallets.Cells[6, row] := wallets.get(I).getPk();
              gridWallets.Cells[0, row] := wallets.get(I).getName();
              gridWallets.Cells[1, row] := floatToSql(wallets.get(I).getBalance());
-             gridWallets.Cells[2, row] := formatFloat('##0.00', wallets.get(I).getContableValue()) + c;
+             gridWallets.Cells[2, row] := formatFloat('##0.00', wallets.get(I).getFifoValue()) + c;
 
-             thisValue := wallets.get(I).getContableValue();
+             thisValue := wallets.get(I).getFifoValue();
              if useMarketPrice then
              begin
                 thisMarketPrice := crypto.getMarketPrice() * wallets.get(I).getBalance();
-                thisProfit := crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getContableValue();
+                thisProfit := crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getFifoValue();
                 gridWallets.Cells[3, row] := formatFloat('##0.00', crypto.getMarketPrice()) + c;
                 gridWallets.Cells[4, row] := formatFloat('##0.00', thisMarketPrice) + c;
                 gridWallets.Cells[5, row] := formatFloat('##0.00', thisProfit) + c;
@@ -243,7 +243,7 @@ var
   frmShell : Tfshellcryptos;
   mr : integer;
 begin
-  if gridMovements.Cells[5, selectedMoveRow] <> '' then
+  if (btnShowMoves.Selected) and (gridMovements.Cells[5, selectedMoveRow] <> '') then
      begin
        movId := strtoint(gridMovements.Cells[5, selectedMoveRow]);
        mov := movementsController.getById(movId);
@@ -272,7 +272,7 @@ begin
                     frmShell.free;
                 end;
 
-             if mr = mrok then
+             if mr = mryes then
                 begin
                    computeWalletBalances();
                    refreshWalletBalances();

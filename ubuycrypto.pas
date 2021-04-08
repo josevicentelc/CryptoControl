@@ -53,7 +53,6 @@ type
     cefiMinusComision : double;
     earnedPlusFee : double;
     cryptoPrice : double;
-    contableValue : double;
 
 
     wallets : TWalletList;
@@ -107,7 +106,6 @@ begin
      mvnt.setWalletInput(wallets.get(walletlist.ItemIndex).getPk());
      mvnt.setCefiOutput(cefiValue);
      mvnt.setComisionBuy(cefiComision);
-     mvnt.setContableValueInput(contableValue);
      mvnt.setInputFee(feeValue);
      mvnt.setInputCryptos(earnedValue);
      mvnt.setDateTime(dt_dateTime.DateTime);
@@ -215,16 +213,13 @@ begin
        lbContableValue.caption := '-';
        btnOk.Enabled:=false;
 
-       if (cefiValue > 0) and (earnedValue > 0) then
+       if earnedValue > 0 then
        begin
             earnedPlusFee:=earnedValue + feeValue;
             cefiMinusComision:=cefiValue - cefiComision;
             cryptoPrice := cefiMinusComision / earnedPlusFee ;
 
-            contableValue:=cefiMinusComision - cefiMinusComision * (feeValue / (earnedPlusFee));
-
             lbConversion.caption := '1 '+crypto.getShorName() + ' = ' + FormatFloat('###,##0.00', cryptoPrice) + '$/€';
-            lbContableValue.caption := 'Contable value: ' + FormatFloat('###,##0.00', contableValue) + '$/€';;
 
             btnOk.Enabled:=true;
        end;

@@ -90,8 +90,6 @@ begin
                   ' "wallet_name" char(100),'+
                   ' "wallet_user" integer NOT NULL,'+
                   ' "wallet_crypto" integer not null,'+
-                  ' "wallet_balance" numeric(9, 16) NOT NULL default 0,'+
-                  ' "wallet_contable_value" numeric(16, 2) NOT NULL default 0,'+
                   ' FOREIGN KEY (wallet_crypto) REFERENCES cryptocurrency (crypto_id),'+
                   ' FOREIGN KEY (wallet_user) REFERENCES users (user_id));');
       database.ExecuteDirect('CREATE UNIQUE INDEX "wallets_pkx" ON "wallets"( "wallet_pk" );');

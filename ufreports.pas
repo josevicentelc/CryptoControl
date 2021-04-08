@@ -146,7 +146,7 @@ begin
                  f.Add('<td>&nbsp</td>');
                  f.Add('<td>'+wallets.get(J).getName()+'</td>');
                  f.Add('<td>'+floatToSql(wallets.get(J).getBalance()) +' '+ cryptos.get(I).getShorName()+'</td>');
-                 f.Add('<td>'+floatToCurrency(wallets.get(J).getContableValue())+ ' ' + c+  '</td>');
+                 f.Add('<td>'+floatToCurrency(wallets.get(J).getFifoValue())+ ' ' + c+  '</td>');
                  f.Add('<td>'+wallets.get(J).getPk()+'</td>');
 
                  f.Add('</tr>');

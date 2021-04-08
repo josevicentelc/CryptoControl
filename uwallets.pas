@@ -15,16 +15,16 @@ type
          user: integer;
          wname: String;
          crypto: integer;
-         balance: double;
-         contable_value : double;
+         _computedBalance: double;
+         _computedValue : double;
+         _hasBalanceBeenComputed : boolean;
+         _hasValueBeenComputed : boolean;
   public
     constructor create();
     procedure setPk(_pk : string);
     procedure setName(_name : string);
     procedure setUser(_user : integer);
     procedure setCrypto(_crypto : integer);
-    procedure setBalance(_balance : double);
-    procedure setContableValue(_value : double);
     procedure clear();
     procedure save();
 
@@ -33,13 +33,9 @@ type
     function getCrypto(): integer;
     function getName(): String;
     function getBalance(): double;
-    function getContableValue(): double;
-
-    procedure addBalance(_balance: double; _value: double);
-
 
     procedure addFifoBalance(_balance: double; _value: double);
-    procedure reduceFifoBalance(_balance: double);
+    function reduceFifoBalance(_balance: double): double;
     function getFifoValue(): double;
 
     procedure export(F : TStringList);
@@ -84,6 +80,27 @@ implementation
 
 constructor TWallet.create();
 begin
+     _hasBalanceBeenComputed:=false;
+     _hasValueBeenComputed:=false;
+end;
+
+function TWallet.getBalance(): double;
+var
+  i : Integer;
+  list : TFifoList;
+begin
+     if _hasBalanceBeenComputed then result := _computedBalance
+     else
+       begin
+         list := fifoController.getFifoList(pk);
+         _hasBalanceBeenComputed:=true;
+         Result:=0;
+         for I := 0 to list.count() -1 do
+          begin
+            result := result + list.get(I).amount;
+          end;
+         _computedBalance:=result;
+       end;
 end;
 
 procedure TWallet.setPk(_pk : string);             begin     pk := _pk;         end;
@@ -95,27 +112,23 @@ function TWallet.getName(): string;                begin     result := wname;   
 function TWallet.getUser(): integer;               begin     result := user;    end;
 function TWallet.getCrypto(): integer;             begin     result := crypto;  end;
 
-procedure TWallet.setBalance(_balance : double);   begin     balance := _balance;end;
-procedure TWallet.setContableValue(_value : double);begin    contable_value:=_value;end;
-function TWallet.getBalance(): double;             begin     result := balance; end;
-function TWallet.getContableValue(): double;       begin     result := contable_value;end;
 procedure TWallet.save();
 begin
      walletController.save(self);
 end;
 procedure TWallet.clear();
 begin
-     balance:=0;
-     contable_value :=0;
+     fifoController.remove(pk);
 end;
 
-procedure TWallet.reduceFifoBalance(_balance: double);
+function TWallet.reduceFifoBalance(_balance: double) : double;
 var
   fifolist : TFifoList;
   toreduce : double;
   I : Integer;
   fifo : TFifo;
 begin
+  result := 0;
   if _balance > 0 then
   begin
     toreduce:=_balance;
@@ -127,19 +140,25 @@ begin
          fifo := fifolist.get(I);
          if fifo.amount > toreduce then
          begin
-           fifo.amount:=fifo.amount - toreduce;
+           result := result + fifo.value * (toreduce / fifo.amount);
+           fifo.value := fifo.value - fifo.value * (toreduce / fifo.amount);
+           fifo.amount := fifo.amount - toreduce;
            toreduce:=0;
          end
          else
          if fifo.amount > 0 then
          begin
            toreduce:=toreduce - fifo.amount;
+           result := result + fifo.value;
            fifo.amount:=0;
+           fifo.value:=0;
          end;
        end;
      end;
     fifoController.save(fifolist);
   end;
+  _computedBalance := _computedBalance - _balance;
+  _computedValue := _computedValue - Result;
 end;
 
 procedure TWallet.addFifoBalance(_balance: double; _value: double);
@@ -157,6 +176,8 @@ begin
           fifolist.push(fifo);
           fifoController.save(fifolist);
           fifolist.free;
+          _computedValue:=_computedValue + _value;
+          _computedBalance:=_computedBalance + _balance;
        end;
 end;
 
@@ -165,25 +186,21 @@ var
     fifolist : TFifoList;
     I : Integer;
 begin
-    result := 0;
-    fifolist := fifoController.getFifoList(pk);
-    for I := 0 to fifolist.count() -1 do
-     begin
-       result := result + fifolist.get(I).value;
-     end;
-    fifolist.Free;
+  if _hasValueBeenComputed then result := _computedValue
+  else
+    begin
+      result := 0;
+      fifolist := fifoController.getFifoList(pk);
+      for I := 0 to fifolist.count() -1 do
+       begin
+         result := result + fifolist.get(I).value;
+       end;
+      _computedValue:=result;
+      _hasValueBeenComputed:=true;
+      fifolist.Free;
+    end;
 end;
 
-procedure TWallet.addBalance(_balance: double; _value: double);
-var
-  newBalance : double;
-  newValue : double;
-begin
-     newBalance := _balance + balance;
-     newValue:= _value + contable_value;
-     setBalance(newBalance);
-     setContableValue(newValue);
-end;
 
 procedure TWallet.export(F : TStringList);
 var
@@ -298,19 +315,15 @@ begin
           sql := 'update "wallets" set ';
           sql := sql + 'wallet_crypto = ' + inttostr(Wallet.getCrypto()) + ', ';
           sql := sql + 'wallet_name = "' + Wallet.getName() +'",';
-          sql := sql + 'wallet_user = ' + inttostr(Wallet.getUser()) + ', ';
-          sql := sql + 'wallet_balance = '+ floatToSql(wallet.getBalance()) +', ';
-          sql := sql + 'wallet_contable_value = '+ floatToSql(wallet.getContableValue()) +' ';
+          sql := sql + 'wallet_user = ' + inttostr(Wallet.getUser()) + ' ';
           sql := sql + ' where wallet_pk = "' + Wallet.getPk() + '"';
         end
         else
         begin
-            sql := 'insert into "wallets" (Wallet_pk, Wallet_name, wallet_crypto, wallet_balance , wallet_contable_value, Wallet_user) values(';
+            sql := 'insert into "wallets" (Wallet_pk, Wallet_name, wallet_crypto, Wallet_user) values(';
             sql := sql + '"' + Wallet.getPk() + '", ';
             sql := sql + '"' + Wallet.getName() + '", ';
             sql := sql + inttostr(Wallet.getCrypto()) + ', ';
-            sql := sql + floatToSql(wallet.getBalance()) +',';
-            sql := sql + floatToSql(wallet.getContableValue()) +',';
             sql := sql + inttostr(Wallet.getUser()) + ')';
         end;
         db.launchSql(sql);
@@ -344,8 +357,6 @@ begin
          result.setName(Q.FieldByName('Wallet_name').AsString);
          result.setCrypto(Q.FieldByName('Wallet_crypto').Asinteger);
          result.setUser(Q.FieldByName('Wallet_user').Asinteger);
-         result.setContableValue(Q.FieldByName('wallet_contable_value').AsFloat);
-         result.setBalance(Q.FieldByName('wallet_balance').AsFloat);
          Q.Next;
      end;
      Q.Close;
@@ -368,8 +379,6 @@ begin
          Wallet.setName(Q.FieldByName('Wallet_name').AsString);
          Wallet.setCrypto(Q.FieldByName('Wallet_crypto').Asinteger);
          Wallet.setUser(Q.FieldByName('Wallet_user').Asinteger);
-         Wallet.setContableValue(Q.FieldByName('wallet_contable_value').AsFloat);
-         Wallet.setBalance(Q.FieldByName('wallet_balance').AsFloat);
          result.push(Wallet);
          Q.Next;
      end;
