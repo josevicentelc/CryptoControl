@@ -77,6 +77,7 @@ type
 
 var
   mainform: Tmainform;
+  bussy : boolean;
 
 implementation
 
@@ -181,16 +182,16 @@ end;
 
 procedure Tmainform.formatColors();
 begin
-     self.Color:=color_background.Brush.Color;
+     self.Color:=getConfig().mainColor;
 
-     gridWallets.Color:=color_grid_1.Brush.color;
-     gridMovements.Color:=color_grid_1.Brush.color;
+     gridWallets.Color:=getConfig().mainColor;
+     gridMovements.Color:=getConfig().mainColor;
 
-     gridWallets.AlternateColor:=color_grid_2.Brush.color;
-     gridMovements.AlternateColor:=color_grid_2.Brush.color;
+     gridWallets.AlternateColor:=getConfig().alternateColor;
+     gridMovements.AlternateColor:=getConfig().alternateColor;
 
-     gridWallets.FixedColor:=color_grid_fixed.Brush.color;
-     gridMovements.FixedColor:=color_grid_fixed.Brush.color;
+     gridWallets.FixedColor:=getConfig().fixedColor;
+     gridMovements.FixedColor:=getConfig().fixedColor;
 
 end;
 
@@ -330,35 +331,59 @@ end;
 
 procedure Tmainform.refreshFifo();
 var
-  wallet : String;
+  pk : String;
+  wallet : TWallet;
   list : TFifoList;
+  crypto : TCrypto;
   I : Integer;
   c : String;
+  amount, value, price, profit, cryptoMarketPrice : double;
 begin
-
-     gridMovements.ColCount:=3;
-     gridMovements.RowCount:= 1;
-
-     gridMovements.Cells[0, 0] := 'Id';
-     gridMovements.Cells[1, 0] := 'Amount';
-     gridMovements.Cells[2, 0] := 'Value';
-     gridMovements.ColWidths[0] := 75;
-     gridMovements.ColWidths[1] := 250;
-     gridMovements.ColWidths[2] := 250;
 
   if selectedWalletRow >= gridWallets.RowCount then selectedWalletRow:=0;
   if selectedWalletRow > 0 then
        begin
+
           c := getConfig().currency();
           selectedMoveRow:=-1;
-          wallet := gridWallets.Cells[6, selectedWalletRow];
-          list := fifoController.getFifoList(wallet);
+          pk := gridWallets.Cells[6, selectedWalletRow];
+          wallet := walletController.getWallet(pk);
+          crypto := cryptoController.getById(wallet.getCrypto());
+          list := fifoController.getFifoList(pk);
+          cryptoMarketPrice:=crypto.getMarketPrice();
+          wallet.Free;
+          crypto.Free;
+
+          gridMovements.ColCount:=5;
+          gridMovements.RowCount:= 1;
+
+          gridMovements.Cells[0, 0] := 'Id';
+          gridMovements.Cells[1, 0] := 'Amount';
+          gridMovements.Cells[2, 0] := 'Value';
+          gridMovements.Cells[3, 0] := 'Market price';
+          gridMovements.Cells[4, 0] := 'Profit';
+
+          gridMovements.ColWidths[0] := 75;
+          gridMovements.ColWidths[1] := 250;
+          gridMovements.ColWidths[2] := 250;
+          gridMovements.ColWidths[3] := 250;
+          gridMovements.ColWidths[4] := 250;
+
           gridMovements.RowCount:=list.count() + 1;
           for I := 0 to list.count() -1 do
           begin
-            gridMovements.Cells[0, I+1] := inttostr(list.get(i).id);
-             gridMovements.Cells[1, I+1] := floatToSql(list.get(i).amount);
-             gridMovements.Cells[2, I+1] := floatToCurrency(list.get(i).value) + ' '+ c;
+            if I+1 < gridMovements.RowCount then
+            begin
+               amount := list.get(i).amount;
+               value := list.get(i).value;
+               price := amount * cryptoMarketPrice;
+               profit := price - value;
+               gridMovements.Cells[0, I+1] := inttostr(list.get(i).id);
+               gridMovements.Cells[1, I+1] := floatToSql(amount);
+               gridMovements.Cells[2, I+1] := floatToCurrency(value) + ' '+ c;
+               gridMovements.Cells[3, I+1] := floatToCurrency(price) + ' ' + c;
+               gridMovements.Cells[4, I+1] := floatToCurrency(profit) + ' '+ c;
+            end;
           end;
        end;
 end;
@@ -371,25 +396,30 @@ var
   c : String;
 begin
 
-   gridMovements.ColCount:=6;
-   gridMovements.RowCount:= 1;
-   gridMovements.Cells[0, 0] := 'Date/Time';
-   gridMovements.Cells[1, 0] := 'Action';
-   gridMovements.Cells[2, 0] := 'Amount';
-   gridMovements.Cells[3, 0] := 'Balance';
-   gridMovements.Cells[4, 0] := 'Value';
-   gridMovements.Cells[5, 0] := 'Id';
-   gridMovements.ColWidths[0] := 175;
-   gridMovements.ColWidths[1] := 600;
-   gridMovements.ColWidths[2] := 130;
-   gridMovements.ColWidths[3] := 130;
-   gridMovements.ColWidths[4] := 130;
-   gridMovements.ColWidths[5] := 130;
+   //while bussy do
+   //application.ProcessMessages;
+
+   bussy := true;
 
   if selectedWalletRow >= gridWallets.RowCount then selectedWalletRow:=0;
 
   if selectedWalletRow > 0 then
      begin
+        gridMovements.ColCount:=6;
+        gridMovements.RowCount:= 1;
+        gridMovements.Cells[0, 0] := 'Date/Time';
+        gridMovements.Cells[1, 0] := 'Action';
+        gridMovements.Cells[2, 0] := 'Amount';
+        gridMovements.Cells[3, 0] := 'Balance';
+        gridMovements.Cells[4, 0] := 'Value';
+        gridMovements.Cells[5, 0] := 'Id';
+        gridMovements.ColWidths[0] := 175;
+        gridMovements.ColWidths[1] := 600;
+        gridMovements.ColWidths[2] := 130;
+        gridMovements.ColWidths[3] := 130;
+        gridMovements.ColWidths[4] := 130;
+        gridMovements.ColWidths[5] := 130;
+
         c := getConfig().currency();
         selectedMoveRow:=-1;
         wallet := gridWallets.Cells[6, selectedWalletRow];
@@ -405,6 +435,7 @@ begin
            gridMovements.Cells[5, I+1] := inttostr(history.get(i).getMoveId());
         end;
      end;
+   bussy := false;
 
 end;
 
@@ -452,6 +483,8 @@ procedure Tmainform.btn_register_walletClick(Sender: TObject);
 begin
      if form_admin_wallet = nil then Application.CreateForm(Tfwalletmanager, form_admin_wallet);
      form_admin_wallet.showModal();
+     computeWalletBalances();
+     refreshWalletBalances();
 end;
 
 procedure Tmainform.btn_settings1Click(Sender: TObject);

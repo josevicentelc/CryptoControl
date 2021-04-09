@@ -1,7 +1,7 @@
 object mainform: Tmainform
-  Left = 165
+  Left = 331
   Height = 812
-  Top = 100
+  Top = 110
   Width = 1555
   Caption = 'Crypto Tracer'
   ClientHeight = 812
@@ -16,7 +16,7 @@ object mainform: Tmainform
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '1.8.2.0'
   object Panel1: TPanel
     Left = 0
     Height = 132
@@ -1007,7 +1007,7 @@ object mainform: Tmainform
         AEFFC9AEFFC9AEFFC9AEFFC9AEFFC9AEFFC9AEFF0000
       }
       Layout = blGlyphTop
-      OnClick = btn_add_movementClick
+      OnClick = btn_admin_cryptosClick
       ParentBidiMode = False
       MetroTextAlign = mtaBottomMiddle
       MetroGlyphAlign = mgaTopMiddle
@@ -2678,11 +2678,11 @@ object mainform: Tmainform
     Flat = True
     Font.CharSet = ANSI_CHARSET
     Font.Color = clWhite
-    Font.Height = -15
+    Font.Height = -13
     Font.Name = '@Arial Unicode MS'
     Font.Pitch = fpVariable
     Font.Quality = fqDraft
-    Options = [goRangeSelect, goRelaxedRowSelect, goSmoothScroll, goRowHighlight]
+    Options = [goRangeSelect, goRowHighlight]
     ParentFont = False
     TabOrder = 1
     TitleFont.CharSet = ANSI_CHARSET
@@ -2766,7 +2766,7 @@ object mainform: Tmainform
       Flat = True
       Font.CharSet = ANSI_CHARSET
       Font.Color = clWhite
-      Font.Height = -15
+      Font.Height = -13
       Font.Name = '@Arial Unicode MS'
       Font.Pitch = fpVariable
       Font.Quality = fqDraft

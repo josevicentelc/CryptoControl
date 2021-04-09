@@ -18,6 +18,9 @@ type
      useMarketSync : boolean;
      useCurrencyEuro: boolean;
      contableType : TContableType;
+     mainColor: integer;
+     alternateColor: integer;
+     fixedColor: integer;
      constructor create;
      procedure load();
      procedure save();
@@ -45,6 +48,9 @@ begin
      useMarketSync:=true;
      useCurrencyEuro:=true;
      contableType:=CT_FIFO;
+     mainColor:=$004B2F26;
+     alternateColor:=$0043281F;
+     fixedColor:=$006D4132;
 end;
 
 function TConfig.currency(): String;

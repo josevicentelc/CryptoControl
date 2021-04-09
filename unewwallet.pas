@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Buttons, StdCtrls,
-  ucryptos;
+  ucryptos, uwallets, uconfig;
 
 type
 
@@ -22,9 +22,9 @@ type
     Label2: TLabel;
     Label3: TLabel;
     procedure coinsChange(Sender: TObject);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     destructor Destroy; override;
+    procedure FormShow(Sender: TObject);
 
   private
     procedure checkSaveBtn();
@@ -46,10 +46,6 @@ begin
   checkSaveBtn();
 end;
 
-procedure TfnewWallet.FormClose(Sender: TObject; var CloseAction: TCloseAction);
-begin
-
-end;
 
 procedure TfnewWallet.FormCreate(Sender: TObject);
 begin
@@ -77,6 +73,30 @@ destructor TfnewWallet.Destroy;
 begin
   coinList.Free;
   inherited;
+end;
+
+procedure TfnewWallet.FormShow(Sender: TObject);
+var
+  I : Integer;
+  w : TWallet;
+begin
+  if editPk.Text <> '' then
+  begin
+       w := walletController.getWallet(editPk.Text);
+       editName.Text:=w.getName();
+       for I := 0 to coinList.count() -1 do
+       begin
+            if coinList.get(i).getId() = w.getCrypto() then
+            begin
+                coins.ItemIndex:=I;
+            end;
+       end;
+       w.Free;
+       checkSaveBtn;
+  end;
+
+  self.color := getConfig().mainColor;
+
 end;
 
 end.

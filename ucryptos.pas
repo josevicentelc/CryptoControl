@@ -44,6 +44,7 @@ type
 
     procedure refreshMarketValue();
     procedure save();
+    function isValid(): Boolean;
 
   end;
 
@@ -110,6 +111,11 @@ function TCrypto.getName() : String;            begin           result := _name;
 function TCrypto.getShorName() : String;        begin           result := _shortName;   end;
 function TCrypto.getUpdateDate() : double;      begin           result := _updateDate;   end;
 function TCrypto.getUseSync(): boolean;         begin           result := _useSync;      end;
+
+function TCrypto.isValid(): Boolean;
+begin
+     result := (trim(_name) <> '') and (trim(_shortName) <> '');
+end;
 
 function TCrypto.getMarketPrice(): double;
 var
@@ -277,7 +283,7 @@ var
    Q : TSQLQuery;
    exists : Boolean;
 begin
-     if crypto <> nil then
+     if (crypto <> nil) and (crypto.isValid) then
      begin
           Q := db.getSqlQuery('select * from "cryptocurrency" where crypto_id = "'+inttostr(crypto.getId())+'"');
           exists := not Q.Eof;

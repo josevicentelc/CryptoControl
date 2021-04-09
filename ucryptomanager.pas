@@ -6,16 +6,16 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, Grids, ExtCtrls,
-  Buttons, udatabaseconector, ucryptos, unewcrypto;
+  Buttons, udatabaseconector, ucryptos, unewcrypto, uconfig, MetroButton;
 
 type
 
   { Tfcryptomanager }
 
   Tfcryptomanager = class(TForm)
+    MetroButton3: TMetroButton;
+    MetroButton5: TMetroButton;
     Panel1: TPanel;
-    SpeedButton1: TSpeedButton;
-    SpeedButton2: TSpeedButton;
     cryptolist: TStringGrid;
     procedure cryptolistClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -75,6 +75,7 @@ begin
   cryptolist.RowCount:=cryptos.count() + 1;
   for I := 0 to cryptos.count() -1 do
   begin
+    cryptolist.cells[0, I+1] := inttostr(cryptos.get(I).getId());
     cryptolist.cells[1, I+1] := cryptos.get(I).getName();
     cryptolist.cells[2, I+1] := cryptos.get(I).getShorName();
   end;
@@ -82,9 +83,10 @@ end;
 
 procedure Tfcryptomanager.formatGrid();
 begin
-  cryptolist.ColWidths[0] := 15;
-  cryptolist.ColWidths[1] := 200;
-  cryptolist.ColWidths[2] := 60;
+  self.Color := getConfig().mainColor;
+  cryptolist.Color:=getConfig().mainColor;
+  cryptolist.AlternateColor:=getConfig().alternateColor;
+  cryptolist.FixedColor:=getConfig().fixedColor;
 end;
 
 procedure  Tfcryptomanager.setConnection(_db: TDatabaseConnector);

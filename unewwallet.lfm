@@ -7,10 +7,11 @@ object fnewWallet: TfnewWallet
   Caption = 'New Wallet'
   ClientHeight = 180
   ClientWidth = 556
-  OnClose = FormClose
+  Color = 4270098
   OnCreate = FormCreate
+  OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.2.0'
+  LCLVersion = '1.8.2.0'
   object btnCancel: TBitBtn
     Left = 384
     Height = 30
@@ -55,31 +56,52 @@ object fnewWallet: TfnewWallet
     Width = 160
     ItemHeight = 15
     OnChange = coinsChange
+    Style = csDropDownList
     TabOrder = 4
-    Text = 'coins'
   end
   object Label1: TLabel
     Left = 14
-    Height = 15
+    Height = 16
     Top = 21
-    Width = 61
+    Width = 63
     Caption = 'Wallet Coin'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = '@Arial Unicode MS'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
     ParentColor = False
+    ParentFont = False
   end
   object Label2: TLabel
     Left = 14
-    Height = 15
+    Height = 16
     Top = 64
-    Width = 54
+    Width = 56
     Caption = 'Public key'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = '@Arial Unicode MS'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
     ParentColor = False
+    ParentFont = False
   end
   object Label3: TLabel
     Left = 16
-    Height = 15
+    Height = 16
     Top = 104
-    Width = 32
+    Width = 34
     Caption = 'Name'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = '@Arial Unicode MS'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
     ParentColor = False
+    ParentFont = False
   end
 end

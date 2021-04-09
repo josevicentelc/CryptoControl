@@ -66,7 +66,7 @@ private
 public
   constructor create(_db: TDatabaseConnector);
   procedure save(Wallet: TWallet);
-  procedure remove(Wallet: TWallet);
+  procedure remove(wallet: string);
   function getWallets(): TWalletList;
   function getWallet(pk: String): TWallet;
   procedure clearAll();
@@ -330,18 +330,15 @@ begin
      end;
 end;
 
-procedure TWalletController.remove(Wallet: TWallet);
+procedure TWalletController.remove(Wallet: string);
 var
    sql : string;
 begin
-     if Wallet <> nil then
-     begin
-          if Wallet.getPk() <> '' then
-          begin
-            sql := 'delete from "Wallets" where Wallet_pk = "' + Wallet.getPk() +'"';
-            db.launchSql(sql);
-          end;
-     end;
+   if Wallet <> '' then
+   begin
+      sql := 'delete from "Wallets" where Wallet_pk = "' + Wallet +'"';
+      db.launchSql(sql);
+   end;
 end;
 
 function TWalletController.getWallet(pk: String): TWallet;

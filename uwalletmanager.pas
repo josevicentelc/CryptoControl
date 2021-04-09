@@ -6,23 +6,28 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Grids,
-  Buttons, uwallets, ucryptos, unewwallet;
+  Buttons, uwallets, ucryptos, unewwallet, uconfig, MetroButton;
 
 type
 
   { Tfwalletmanager }
 
   Tfwalletmanager = class(TForm)
-    btnAddWallet: TBitBtn;
-    btnRemoveWallet: TBitBtn;
+    MetroButton3: TMetroButton;
+    btn_editwallet: TMetroButton;
+    btn_deletewallet: TMetroButton;
     Panel1: TPanel;
     walletlist: TStringGrid;
     procedure btnAddWalletClick(Sender: TObject);
+    procedure btn_deletewalletClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure walletlistSelectCell(Sender: TObject; aCol, aRow: Integer;
+      var CanSelect: Boolean);
   private
       procedure formatgrid();
       procedure updateWalletList();
   public
+    selectedWallet : String;
 
   end;
 
@@ -37,13 +42,16 @@ implementation
 
 procedure Tfwalletmanager.formatGrid();
 begin
-  walletlist.ColWidths[0] := 15;
-  walletlist.ColWidths[1] := 500; // wallet pk
-  walletlist.ColWidths[2] := 200; // Name
-  walletlist.ColWidths[3] := 150; // crypto
-  walletlist.Cells[1, 0] := 'Wallet Id (Pub.Key)';
-  walletlist.Cells[2, 0] := 'Wallet Name';
-  walletlist.Cells[3, 0] := 'Coin';
+  walletlist.ColWidths[0] := 500; // wallet pk
+  walletlist.ColWidths[1] := 200; // Name
+  walletlist.ColWidths[2] := 150; // crypto
+  walletlist.Cells[0, 0] := 'Wallet Id (Pub.Key)';
+  walletlist.Cells[1, 0] := 'Wallet Name';
+  walletlist.Cells[2, 0] := 'Coin';
+
+  walletList.Color:=getConfig().mainColor;
+  walletList.AlternateColor:=getConfig().alternateColor;
+  walletList.FixedColor:=getConfig().fixedColor;
 
 end;
 
@@ -57,10 +65,10 @@ begin
   walletlist.RowCount:=wallets.count() + 1;
   for I := 0 to wallets.count() -1 do
   begin
-    walletlist.cells[1, I+1] := wallets.get(I).getPk();
-    walletlist.cells[2, I+1] := wallets.get(I).getName();
+    walletlist.cells[0, I+1] := wallets.get(I).getPk();
+    walletlist.cells[1, I+1] := wallets.get(I).getName();
     crypto := cryptoController.getById(wallets.get(I).getCrypto());
-    walletlist.cells[3, I+1] := crypto.getName();
+    walletlist.cells[2, I+1] := crypto.getName();
     crypto.Free;
   end;
 end;
@@ -71,12 +79,22 @@ begin
      updateWalletList();
 end;
 
+procedure Tfwalletmanager.walletlistSelectCell(Sender: TObject; aCol,
+  aRow: Integer; var CanSelect: Boolean);
+begin
+  selectedWallet:=walletlist.Cells[0, aRow];
+end;
+
 procedure Tfwalletmanager.btnAddWalletClick(Sender: TObject);
 var
   fnewwallet : TfnewWallet;
   newWallet : TWallet;
 begin
      Application.createForm(TFNewWallet, fNewWallet);
+     if (Sender = btn_editwallet) and (selectedWallet <> '') then
+     begin
+       fnewwallet.editPk.Text := selectedWallet;
+     end;
      if fnewwallet.ShowModal = MrYes then
      begin
        // Insert
@@ -89,6 +107,16 @@ begin
        updateWalletList();
      end;
      fnewwallet.free;
+end;
+
+procedure Tfwalletmanager.btn_deletewalletClick(Sender: TObject);
+begin
+  if selectedWallet <> '' then
+  begin
+    walletController.remove(selectedWallet);
+    selectedWallet:='';
+    updateWalletList();
+  end;
 end;
 
 end.
