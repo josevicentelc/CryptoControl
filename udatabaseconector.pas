@@ -163,13 +163,25 @@ begin
       database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (9, "Wrapped Bitcoin", "WBTC")');
       database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (10, "Aave", "AAVE")');
       database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (11, "Cosmos", "ATOM")');
-
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (12, "Tron", "TRX")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (13, "Cardano", "ADA")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (14, "Filecoin", "FIL")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (15, "EOS", "EOS")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (16, "Tezos", "XTZ")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (17, "Algorand", "ALGO")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (18, "Dai", "DAI")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (19, "Dash", "DASH")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (20, "Maker", "MKR")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (21, "ZCash", "ZEC")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (22, "Compound", "COMP")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (23, "Ethereum Classic", "ETC")');
+      database.ExecuteDirect('insert into cryptocurrency (crypto_id, crypto_name, crypto_short) values (24, "The Graph", "GRT")');
 
       // Debug data
-      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("0xDdfGDSFfgSDgfgFd", "Bitcoin wallet", 0, 1)');
-      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("FF5wGgewgh6F", "Bitcoin Cash wallet", 0, 2)');
-      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("DFdfwq45wG54gvgx0x", "Ethereum wallet", 0, 3)');
-      database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("0xDdfGDSdFGDFG", "Cold Bitcoin wallet", 0, 1)');
+      //database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("0xDdfGDSFfgSDgfgFd", "Bitcoin wallet", 0, 1)');
+      //database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("FF5wGgewgh6F", "Bitcoin Cash wallet", 0, 2)');
+      //database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("DFdfwq45wG54gvgx0x", "Ethereum wallet", 0, 3)');
+      //database.ExecuteDirect('insert into wallets (wallet_pk, wallet_name, wallet_user, wallet_crypto) values ("0xDdfGDSdFGDFG", "Cold Bitcoin wallet", 0, 1)');
 
       transaction.Commit;
 

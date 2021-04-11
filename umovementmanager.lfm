@@ -1,11 +1,11 @@
 object fMovementsManager: TfMovementsManager
   Left = 436
-  Height = 236
+  Height = 117
   Top = 251
   Width = 371
   BorderStyle = bsDialog
   Caption = 'Movements'
-  ClientHeight = 236
+  ClientHeight = 117
   ClientWidth = 371
   Position = poScreenCenter
   LCLVersion = '2.0.2.0'

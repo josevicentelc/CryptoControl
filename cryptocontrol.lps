@@ -2,7 +2,7 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <BuildModes Active="Default"/>
     <Units Count="37">
       <Unit0>
@@ -12,7 +12,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="145"/>
+        <UsageCount Value="146"/>
       </Unit0>
       <Unit1>
         <Filename Value="main.pas"/>
@@ -20,10 +20,9 @@
         <ComponentName Value="mainform"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <TopLine Value="482"/>
         <CursorPos X="31" Y="487"/>
-        <UsageCount Value="145"/>
+        <UsageCount Value="146"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -33,29 +32,29 @@
         <ComponentName Value="fcryptomanager"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="64"/>
-        <CursorPos X="38" Y="86"/>
-        <UsageCount Value="142"/>
+        <CursorPos X="33" Y="66"/>
+        <UsageCount Value="143"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="ucryptos.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="100"/>
-        <CursorPos X="15" Y="117"/>
-        <UsageCount Value="142"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="144"/>
+        <CursorPos X="23" Y="177"/>
+        <UsageCount Value="143"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="uwallets.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="324"/>
         <CursorPos X="66" Y="339"/>
-        <UsageCount Value="130"/>
+        <UsageCount Value="131"/>
         <Loaded Value="True"/>
       </Unit4>
       <Unit5>
@@ -67,7 +66,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="14"/>
         <CursorPos X="88" Y="40"/>
-        <UsageCount Value="127"/>
+        <UsageCount Value="128"/>
       </Unit5>
       <Unit6>
         <Filename Value="uwalletmanager.pas"/>
@@ -78,7 +77,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="85"/>
         <CursorPos X="32" Y="93"/>
-        <UsageCount Value="127"/>
+        <UsageCount Value="128"/>
       </Unit6>
       <Unit7>
         <Filename Value="unewwallet.pas"/>
@@ -89,14 +88,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="70"/>
         <CursorPos X="31" Y="81"/>
-        <UsageCount Value="126"/>
+        <UsageCount Value="127"/>
       </Unit7>
       <Unit8>
         <Filename Value="utils.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="18" Y="3"/>
-        <UsageCount Value="123"/>
+        <UsageCount Value="124"/>
       </Unit8>
       <Unit9>
         <Filename Value="umovementmanager.pas"/>
@@ -105,17 +104,20 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="umovementManager"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="14"/>
         <CursorPos X="55" Y="36"/>
-        <UsageCount Value="123"/>
+        <UsageCount Value="124"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit9>
       <Unit10>
         <Filename Value="umovements.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="100" Y="13"/>
-        <UsageCount Value="122"/>
+        <UsageCount Value="123"/>
       </Unit10>
       <Unit11>
         <Filename Value="ubuycrypto.pas"/>
@@ -126,14 +128,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="83"/>
         <CursorPos X="14" Y="109"/>
-        <UsageCount Value="121"/>
+        <UsageCount Value="122"/>
       </Unit11>
       <Unit12>
         <Filename Value="umovementscompute.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="9"/>
         <CursorPos X="32" Y="12"/>
-        <UsageCount Value="99"/>
+        <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit12>
       <Unit13>
@@ -145,7 +147,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="30"/>
         <CursorPos X="54" Y="92"/>
-        <UsageCount Value="96"/>
+        <UsageCount Value="97"/>
       </Unit13>
       <Unit14>
         <Filename Value="uwallethistory.pas"/>
@@ -159,7 +161,7 @@
           <TopLine Value="111"/>
           <CursorPos Y="128"/>
         </ExtraEditor1>
-        <UsageCount Value="91"/>
+        <UsageCount Value="92"/>
       </Unit14>
       <Unit15>
         <Filename Value="uabout.pas"/>
@@ -170,7 +172,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="49"/>
         <CursorPos Y="58"/>
-        <UsageCount Value="85"/>
+        <UsageCount Value="86"/>
       </Unit15>
       <Unit16>
         <Filename Value="ureport.pas"/>
@@ -179,7 +181,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="84"/>
+        <UsageCount Value="85"/>
       </Unit16>
       <Unit17>
         <Filename Value="ushellcryptos.pas"/>
@@ -190,23 +192,23 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="50"/>
         <CursorPos X="56" Y="73"/>
-        <UsageCount Value="84"/>
+        <UsageCount Value="85"/>
       </Unit17>
       <Unit18>
         <Filename Value="ucomunicacion.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="13"/>
-        <CursorPos X="27" Y="38"/>
-        <UsageCount Value="76"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="24" Y="13"/>
+        <UsageCount Value="77"/>
+        <Loaded Value="True"/>
       </Unit18>
       <Unit19>
         <Filename Value="uconfig.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="20"/>
         <CursorPos X="27" Y="53"/>
-        <UsageCount Value="75"/>
+        <UsageCount Value="76"/>
         <Loaded Value="True"/>
       </Unit19>
       <Unit20>
@@ -215,7 +217,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="107"/>
         <CursorPos Y="133"/>
-        <UsageCount Value="69"/>
+        <UsageCount Value="70"/>
       </Unit20>
       <Unit21>
         <Filename Value="ufsettings.pas"/>
@@ -226,7 +228,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="18"/>
         <CursorPos Y="33"/>
-        <UsageCount Value="67"/>
+        <UsageCount Value="68"/>
       </Unit21>
       <Unit22>
         <Filename Value="ufreports.pas"/>
@@ -234,40 +236,39 @@
         <ComponentName Value="fReports"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="128"/>
-        <CursorPos X="74" Y="149"/>
-        <UsageCount Value="58"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="170"/>
+        <CursorPos X="33" Y="185"/>
+        <UsageCount Value="59"/>
+        <Loaded Value="True"/>
       </Unit22>
       <Unit23>
         <Filename Value="ufifowallet.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos Y="67"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="38"/>
       </Unit23>
       <Unit24>
         <Filename Value="udatabaseconector.pas"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="86"/>
-        <CursorPos X="61" Y="83"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="37" Y="5"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
           <TopLine Value="86"/>
           <CursorPos Y="93"/>
         </ExtraEditor1>
-        <UsageCount Value="62"/>
+        <UsageCount Value="63"/>
         <Loaded Value="True"/>
       </Unit24>
       <Unit25>
         <Filename Value="C:\lazarus\lcl\grids.pas"/>
         <UnitName Value="Grids"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="4694"/>
         <CursorPos Y="4710"/>
         <UsageCount Value="26"/>
-        <Loaded Value="True"/>
       </Unit25>
       <Unit26>
         <Filename Value="C:\lazarus\lcl\stdctrls.pp"/>
@@ -309,11 +310,10 @@
       <Unit31>
         <Filename Value="C:\lazarus\lcl\lclmessageglue.pas"/>
         <UnitName Value="LCLMessageGlue"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="96"/>
         <CursorPos Y="123"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit31>
       <Unit32>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\sysstrh.inc"/>
@@ -324,38 +324,34 @@
       </Unit32>
       <Unit33>
         <Filename Value="C:\lazarus\lcl\include\customcontrol.inc"/>
-        <EditorIndex Value="10"/>
-        <TopLine Value="105"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="96"/>
         <CursorPos Y="114"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit33>
       <Unit34>
         <Filename Value="C:\lazarus\lcl\include\wincontrol.inc"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="5382"/>
         <CursorPos Y="5398"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit34>
       <Unit35>
         <Filename Value="C:\lazarus\lcl\include\control.inc"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="2230"/>
         <CursorPos Y="2253"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit35>
       <Unit36>
         <Filename Value="C:\lazarus\lcl\interfaces\win32\win32callback.inc"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="2610"/>
         <CursorPos Y="2636"/>
         <UsageCount Value="11"/>
-        <Loaded Value="True"/>
       </Unit36>
     </Units>
-    <JumpHistory Count="12" HistoryIndex="11">
+    <JumpHistory Count="13" HistoryIndex="12">
       <Position1>
         <Filename Value="main.pas"/>
         <Caret Line="343" Column="3" TopLine="329"/>
@@ -404,6 +400,14 @@
         <Filename Value="main.pas"/>
         <Caret Line="460" TopLine="451"/>
       </Position12>
+      <Position13>
+        <Filename Value="ucryptos.pas"/>
+        <Caret Line="117" Column="15" TopLine="100"/>
+      </Position13>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>
