@@ -2,16 +2,17 @@ object fReports: TfReports
   Left = 606
   Height = 330
   Top = 293
-  Width = 358
+  Width = 316
   BorderStyle = bsDialog
   Caption = 'Report'
   ClientHeight = 330
-  ClientWidth = 358
+  ClientWidth = 316
   Color = 4927270
+  OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.2.0'
-  object dt_dateTime: TDateTimePicker
-    Left = 136
+  LCLVersion = '2.0.2.0'
+  object dt_from: TDateTimePicker
+    Left = 40
     Height = 23
     Top = 56
     Width = 83
@@ -35,8 +36,8 @@ object fReports: TfReports
     CalAlignment = dtaRight
     Options = [dtpoFlatButton]
   end
-  object dt_dateTime1: TDateTimePicker
-    Left = 256
+  object dt_to: TDateTimePicker
+    Left = 192
     Height = 23
     Top = 56
     Width = 83
@@ -61,7 +62,7 @@ object fReports: TfReports
     Options = [dtpoFlatButton]
   end
   object chkShowAcounts: TCheckBox
-    Left = 24
+    Left = 40
     Height = 19
     Top = 104
     Width = 20
@@ -70,7 +71,7 @@ object fReports: TfReports
     TabOrder = 2
   end
   object Label1: TLabel
-    Left = 50
+    Left = 66
     Height = 17
     Top = 104
     Width = 115
@@ -85,14 +86,14 @@ object fReports: TfReports
     ParentFont = False
   end
   object chkShowAcountMoves: TCheckBox
-    Left = 50
+    Left = 66
     Height = 19
     Top = 128
     Width = 20
     TabOrder = 3
   end
   object Label2: TLabel
-    Left = 74
+    Left = 90
     Height = 17
     Top = 128
     Width = 90
@@ -107,7 +108,7 @@ object fReports: TfReports
     ParentFont = False
   end
   object CheckBox3: TCheckBox
-    Left = 24
+    Left = 40
     Height = 19
     Top = 176
     Width = 20
@@ -116,7 +117,7 @@ object fReports: TfReports
     TabOrder = 4
   end
   object Label3: TLabel
-    Left = 50
+    Left = 66
     Height = 17
     Top = 176
     Width = 128
@@ -131,7 +132,7 @@ object fReports: TfReports
     ParentFont = False
   end
   object CheckBox4: TCheckBox
-    Left = 24
+    Left = 40
     Height = 19
     Top = 206
     Width = 20
@@ -140,7 +141,7 @@ object fReports: TfReports
     TabOrder = 5
   end
   object Label4: TLabel
-    Left = 50
+    Left = 66
     Height = 17
     Top = 206
     Width = 73
@@ -154,32 +155,8 @@ object fReports: TfReports
     ParentColor = False
     ParentFont = False
   end
-  object CheckBox5: TCheckBox
-    Left = 24
-    Height = 19
-    Top = 232
-    Width = 20
-    Checked = True
-    State = cbChecked
-    TabOrder = 6
-  end
-  object Label5: TLabel
-    Left = 50
-    Height = 17
-    Top = 232
-    Width = 56
-    Caption = 'Fees paid'
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clWhite
-    Font.Height = -13
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    ParentColor = False
-    ParentFont = False
-  end
   object Label6: TLabel
-    Left = 160
+    Left = 64
     Height = 17
     Top = 32
     Width = 30
@@ -194,7 +171,7 @@ object fReports: TfReports
     ParentFont = False
   end
   object Label7: TLabel
-    Left = 296
+    Left = 232
     Height = 17
     Top = 32
     Width = 14
@@ -209,46 +186,32 @@ object fReports: TfReports
     ParentFont = False
   end
   object BitBtn1: TBitBtn
-    Left = 160
+    Left = 75
     Height = 30
-    Top = 288
+    Top = 264
     Width = 75
     Caption = 'Screen'
     OnClick = BitBtn1Click
-    TabOrder = 7
+    TabOrder = 6
   end
   object BitBtn2: TBitBtn
-    Left = 256
+    Left = 171
     Height = 30
-    Top = 288
+    Top = 264
     Width = 75
     Caption = 'CSV'
-    TabOrder = 8
-  end
-  object Label8: TLabel
-    Left = 24
-    Height = 17
-    Top = 56
-    Width = 72
-    Caption = 'Move''s date'
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clWhite
-    Font.Height = -13
-    Font.Name = 'Segoe UI'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    ParentColor = False
-    ParentFont = False
+    Enabled = False
+    TabOrder = 7
   end
   object chkShowAcountsCeroBalance: TCheckBox
-    Left = 51
+    Left = 67
     Height = 19
     Top = 152
     Width = 20
-    TabOrder = 9
+    TabOrder = 8
   end
   object Label9: TLabel
-    Left = 75
+    Left = 91
     Height = 17
     Top = 152
     Width = 180

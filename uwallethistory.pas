@@ -15,7 +15,13 @@ type
     _datetime: double;
     _description: String;
     _concept: String;
+
     _import: double;
+    _importValue: double;
+    _importBuyFee: double;
+    _importShellFee: double;
+    _shellPrice: double;
+
     _balance: double;
     _value: double;
     _moveid: integer;
@@ -30,6 +36,10 @@ type
     procedure setConcept(v: string);
     procedure setId(v: integer);
     procedure setImport(v: double);
+    procedure setImportValue(v: double);
+    procedure setImportBuyFee(v: double);
+    procedure setImportShellFee(v: double);
+    procedure setShellPrice(v: double);
     procedure setbalance(v: double);
     procedure setProfit(v: double);
     procedure setvalue(v: double);
@@ -41,6 +51,10 @@ type
     function getConcept(): string;
     function getId(): integer;
     function getImport(): double;
+    function getImportValue(): double;
+    function getImportBuyFee(): double;
+    function getImportShellFee(): double;
+    function getShellPrice(): double;
     function getbalance(): double;
     function getProfit(): double;
     function getvalue(): double;
@@ -110,7 +124,11 @@ procedure THistoryLine.setDescription(v: string);begin          _description:=v;
 procedure THistoryLine.setConcept(v: string);    begin          _concept:=v;            end;
 procedure THistoryLine.setId(v: integer);        begin          _id:=v;                 end;
 procedure THistoryLine.setImport(v: double);     begin          _import:=v;             end;
+procedure THistoryLine.setImportValue(v: double);begin          _importValue:=v;        end;
+procedure THistoryLine.setImportBuyFee(v: double);begin         _importBuyFee:=v;        end;
+procedure THistoryLine.setImportShellFee(v: double);begin       _importShellFee:=v;        end;
 procedure THistoryLine.setbalance(v: double);    begin          _balance:=v;            end;
+procedure THistoryLine.setShellPrice(v: double); begin          _shellPrice:=v;            end;
 procedure THistoryLine.setvalue(v: double);      begin          _value:=v;              end;
 procedure THistoryLine.setMoveId(v: integer);    begin          _moveid:=v;              end;
 procedure THistoryLine.setProfit(v: double);     begin          _profit:=v;             end;
@@ -122,7 +140,11 @@ function THistoryLine.getDescription():string;   begin          result:=_descrip
 function THistoryLine.getConcept(): string;      begin          result:=_concept;       end;
 function THistoryLine.getId(): integer;          begin          result:=_id;            end;
 function THistoryLine.getImport(): double;       begin          result:=_import;        end;
+function THistoryLine.getImportValue(): double;  begin          result:=_importValue;   end;
+function THistoryLine.getImportBuyFee(): double; begin          result:=_importBuyFee;   end;
+function THistoryLine.getImportShellFee(): double; begin        result:=_importShellFee; end;
 function THistoryLine.getbalance(): double;      begin          result:=_balance;       end;
+function THistoryLine.getShellPrice(): double;   begin          result:=_shellPrice;       end;
 function THistoryLine.getvalue(): double;        begin          result:=_value;         end;
 function THistoryLine.getMoveId(): integer;      begin          result:=_moveid;         end;
 function THistoryLine.getProfit(): double;       begin          result:=_profit;       end;
@@ -204,6 +226,10 @@ begin
            sql := sql + 'hist_description = "' + v.getDescription() + '", ';
            sql := sql + 'hist_concept = "' + v.getConcept() + '", ';
            sql := sql + 'hist_import = '+floatToSql(v.getImport()) + ', ';
+           sql := sql + 'hist_importvalue = '+floatToSql(v.getImportValue()) + ', ';
+           sql := sql + 'hist_importbuyfee = '+floatToSql(v.getImportBuyFee()) + ', ';
+           sql := sql + 'hist_importshellfee = '+floatToSql(v.getImportShellFee()) + ', ';
+           sql := sql + 'hist_shellprice = '+floatToSql(v.getShellPrice()) + ', ';
            sql := sql + 'hist_balance = '+ floatToSql(v.getbalance()) + ', ';
            sql := sql + 'hist_value = ' + floatToSql(v.getvalue()) + ', ' ;
            sql := sql + 'hist_moveid = ' + inttostr(v.getMoveId()) + ', ' ;
@@ -215,13 +241,17 @@ begin
         else
         begin
              v.setId(getNextId(v.getWallet()));
-             sql := 'insert into "walletshistory" (hist_pk, hist_id, hist_datetime, hist_description, hist_concept, hist_import, hist_balance, hist_value,hist_profit, hist_moveid) values ( ';
+             sql := 'insert into "walletshistory" (hist_pk, hist_id, hist_datetime, hist_description, hist_concept, hist_shellprice, hist_import, hist_importvalue, hist_importbuyfee, hist_importshellfee, hist_balance, hist_value,hist_profit, hist_moveid) values ( ';
              sql := sql + '"' + v.getWallet() + '", ';
              sql := sql + inttostr(v.getId()) + ', ';
              sql := sql + dateToSql( v.getDateTime()) + ', ';
              sql := sql + '"' + v.getDescription() + '", ';
              sql := sql + '"' + v.getConcept() + '", ';
+             sql := sql + floatToSql(v.getShellPrice()) + ', ';
              sql := sql + floatToSql(v.getImport()) + ', ';
+             sql := sql + floatToSql(v.getImportValue()) + ', ';
+             sql := sql + floatToSql(v.getImportBuyFee()) + ', ';
+             sql := sql + floatToSql(v.getImportShellFee()) + ', ';
              sql := sql + floatToSql(v.getbalance()) + ', ';
              sql := sql + floatToSql(v.getvalue()) + ',';
              sql := sql + floatToSql(v.getProfit()) + ',';
@@ -258,6 +288,10 @@ begin
          line.setDescription(Q.FieldByName('hist_description').AsString);
          line.setConcept(Q.FieldByName('hist_concept').AsString);
          line.setImport(Q.FieldByName('hist_import').AsFloat);
+         line.setShellPrice(Q.FieldByName('hist_shellprice').AsFloat);
+         line.setImportValue(Q.FieldByName('hist_importvalue').AsFloat);
+         line.setImportBuyFee(Q.FieldByName('hist_importbuyfee').AsFloat);
+         line.setImportShellFee(Q.FieldByName('hist_importshellfee').AsFloat);
          line.setbalance(Q.FieldByName('hist_balance').AsFloat);
          line.setvalue(Q.FieldByName('hist_value').AsFloat);
          line.setProfit(Q.FieldByName('hist_profit').AsFloat);
@@ -284,6 +318,10 @@ begin
          result.setDescription(Q.FieldByName('hist_description').AsString);
          result.setConcept(Q.FieldByName('hist_concept').AsString);
          result.setImport(Q.FieldByName('hist_import').AsFloat);
+         result.setShellPrice(Q.FieldByName('hist_shellprice').AsFloat);
+         result.setImportValue(Q.FieldByName('hist_importvalue').AsFloat);
+         result.setImportBuyFee(Q.FieldByName('hist_importbuyfee').AsFloat);
+         result.setImportshellFee(Q.FieldByName('hist_importshellfee').AsFloat);
          result.setbalance(Q.FieldByName('hist_balance').AsFloat);
          result.setvalue(Q.FieldByName('hist_value').AsFloat);
          result.setProfit(Q.FieldByName('hist_profit').AsFloat);

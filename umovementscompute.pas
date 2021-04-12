@@ -36,6 +36,8 @@ begin
   histLine.setDescription('Buy ' + floatToSql(mov.getInputCryptos())+ ' coins by '+floatToSql(mov.getCefiOutput()) + c);
   histLine.setConcept(mov.getConcept());
   histLine.setImport(mov.getInputCryptos());
+  histLine.setImportValue(mov.getCefiOutput());
+  histLine.setImportValue(mov.getComisionBuy());
   histLine.setbalance(wallet.getBalance());
   histLine.setvalue(wallet.getFifoValue());
   histLine.setMoveId(mov.getId());
@@ -115,7 +117,9 @@ begin
         histLine.setDateTime(mov.getDateTime());
         histLine.setDescription('Input ' + floatToSql(mov.getInputCryptos()) + ' from ' + mov.getWalletOutput());
         histLine.setConcept(mov.getConcept());
-        histLine.setImport(mov.getInputCryptos());
+        histLine.setImport(fifoTranfer.amount);
+        histLine.setImportValue(fifoTranfer.value);
+        histLine.setImportBuyFee(fifoTranfer.buyFee);
         histLine.setbalance(wallet.getBalance());
         histLine.setvalue(wallet.getFifoValue());
         histLine.setMoveId(mov.getId());
@@ -152,6 +156,11 @@ begin
     histLine.setProfit(profit);
 
     histLine.setImport(mov.getOutputCryptos() * -1);
+    histLine.setImportValue(fifomov.value);
+    histLine.setImportBuyFee(fifomov.buyFee);
+    histLine.setImportShellFee(fee);
+    histLine.setShellPrice(totalCefiGet);
+
     histLine.setbalance(wallet.getBalance());
     histLine.setvalue(wallet.getFifoValue());
     histLine.setMoveId(mov.getId());

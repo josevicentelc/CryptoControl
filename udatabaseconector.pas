@@ -112,6 +112,11 @@ begin
                   ' "hist_description" char(100),'+
                   ' "hist_concept" char(100),'+
                   ' "hist_import" numeric(9, 16) NOT NULL default 0,'+
+                  ' "hist_importvalue" numeric(16, 2) NOT NULL default 0,'+
+                  ' "hist_importbuyfee" numeric(16, 2) NOT NULL default 0,'+
+                  ' "hist_importshellfee" numeric(16, 2) NOT NULL default 0,'+
+                  ' "hist_shellprice" numeric(16, 2) NOT NULL default 0,'+
+
                   ' "hist_balance" numeric(9, 16) NOT NULL default 0,'+
                   ' "hist_value" numeric(16, 2) NOT NULL default 0,'+
                   ' "hist_moveid" integer NOT NULL default 0,'+
@@ -219,12 +224,12 @@ begin
           else version:=Q.fields[0].AsInteger;
        Q.Close;
 
-       //if (version < 1) then
-       //begin
+       if (version < 1) then
+       begin
          //transaction.Active := true;
-         //database.ExecuteDirect('SQL TO LAUNCH');
+         //database.ExecuteDirect('alter table "walletshistory" add hist_shellprice numeric (16, 2) not null default 0');
          //transaction.Commit;
-       //end;
+       end;
 
        Q.free;
 

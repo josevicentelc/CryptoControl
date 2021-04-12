@@ -19,20 +19,18 @@ type
     chkShowAcountMoves: TCheckBox;
     CheckBox3: TCheckBox;
     CheckBox4: TCheckBox;
-    CheckBox5: TCheckBox;
     chkShowAcountsCeroBalance: TCheckBox;
-    dt_dateTime: TDateTimePicker;
-    dt_dateTime1: TDateTimePicker;
+    dt_from: TDateTimePicker;
+    dt_to: TDateTimePicker;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
-    Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
-    Label8: TLabel;
     Label9: TLabel;
     procedure BitBtn1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
         procedure reportWalletBalances(f : TStringList);
         procedure reportprofits(f : TStringList);
@@ -173,9 +171,20 @@ var
    hasProfits : boolean;
    I, J : Integer;
    c : String;
+
+   adquisitionCosts: double;
+   transmisionCosts: double;
+   valueBuy: double;
+   valueShell: double;
+
 begin
+
   c := getConfig().currency();
   profit := 0;
+  adquisitionCosts:=0;
+  transmisionCosts:=0;
+  valueBuy := 0;
+  valueShell:=0;
   wallets := walletController.getWallets();
   f.Add('<h1>Report profits</h1><br>');
   f.add('<table>');
@@ -186,7 +195,10 @@ begin
       hasProfits := false;
 
       for J := 0 to lines.count() -1 do
-        if lines.get(J).getProfit() <> 0 then hasProfits := true;
+      begin
+        if (lines.get(J).getProfit() <> 0) and (lines.get(J).getDateTime() >= dt_from.Date) and (lines.get(J).getDateTime() <= dt_to.Date +1) then
+            hasProfits := true;
+      end;
 
       if hasProfits then
       begin
@@ -201,28 +213,45 @@ begin
 
                   f.Add('<tr class="tablesubheader">');
                   f.Add('<td width="15%">Date</td>');
-                  f.Add('<td width="65%">Movement</td>');
-                  f.Add('<td width="20%">Profit</td>');
+                  f.Add('<td width="14%">Quantity</td>');
+                  f.Add('<td width="14%">Buy price</td>');
+                  f.Add('<td width="14%">Buy fees</td>');
+                  f.Add('<td width="14%">Shell fees</td>');
+                  f.Add('<td width="14%">Shell price</td>');
+                  f.Add('<td width="15%">Profit</td>');
                   f.Add('</tr>');
 
                   for J := 0 to lines.count() -1 do
                   begin
-                    if lines.get(J).getProfit() <> 0 then
+                    if (lines.get(J).getProfit() <> 0) and (lines.get(J).getDateTime() >= dt_from.Date) and (lines.get(J).getDateTime() <= dt_to.Date +1 ) then
                     begin
 
                        f.Add('<tr class="tableline1">');
-                       f.Add('<td width="15%">'+lines.get(J).getDateTimeToStr()+'</td>');
-                       f.Add('<td width="65%">'+lines.get(J).getDescription()+'</td>');
-                       f.Add('<td width="20%">'+ floatToCurrency( lines.get(J).getProfit())+ ' ' + c + '</td>');
+                       f.Add('<td>'+lines.get(J).getDateTimeToStr()+'</td>'); // Date
+                       f.Add('<td>'+floatToSql( lines.get(J).getImport())+'</td>');   // Quantity
+                       f.Add('<td>'+floatToCurrency(lines.get(J).getImportValue())+ ' ' + c+'</td>');
+                       f.Add('<td>'+floatToCurrency(lines.get(J).getImportBuyFee())+ ' ' + c+'</td>');
+                       f.Add('<td>'+floatToCurrency(lines.get(J).getImportShellFee())+ ' ' + c+'</td>');
+                       f.Add('<td>'+floatToCurrency(lines.get(J).getShellPrice())+ ' ' + c+'</td>');
+                       f.Add('<td>'+floatToCurrency( lines.get(J).getProfit())+ ' ' + c+'</td>');
                        f.Add('</tr>');
+
                        profit := profit + lines.get(J).getProfit();
+                       adquisitionCosts := adquisitionCosts + lines.get(J).getImportBuyFee();
+                       transmisionCosts := transmisionCosts + lines.get(J).getImportShellFee();
+                       valueBuy := valueBuy + lines.get(J).getImportValue();
+                       valueShell := valueShell + lines.get(J).getShellPrice();
 
                     end;
                   end;
                   f.Add('<tr>');
-                  f.Add('<td width="15%">&nbsp</td>');
-                  f.Add('<td width="65%">&nbsp</td>');
-                  f.Add('<td width="20%">&nbsp</td>');
+                  f.Add('<td>&nbsp</td>');
+                  f.Add('<td>&nbsp</td>');
+                  f.Add('<td>&nbsp</td>');
+                  f.Add('<td>&nbsp</td>');
+                  f.Add('<td>&nbsp</td>');
+                  f.Add('<td>&nbsp</td>');
+                  f.Add('<td>&nbsp</td>');
                   f.Add('</tr>');
 
          f.Add('</table>');
@@ -235,8 +264,15 @@ begin
     end;
   f.add('</table>');
 
-  f.add('<table><tr class="sumatory"><td width="70%">&nbsp</td><td width="13%">Total profit</td><td width="17%">'+floatToCurrency(profit)+ ' ' + c +'</td></tr></table>');
+  f.add('<table style="width : 500px"><tr class="sumatory"><td width=300>Sumatory</td><td width=200>&nbsp</td></tr>');
+  f.add('<tr><td>Buy import</td><td>'+ floatToCurrency(valueBuy)+ ' ' + c +'</td></tr>');
+  f.add('<tr><td>Buy fees</td><td>'+ floatToCurrency(adquisitionCosts)+ ' ' + c +'</td></tr>');
+  f.add('<tr><td>Shell import</td><td>'+ floatToCurrency(valueShell)+ ' ' + c +'</td></tr>');
+  f.add('<tr><td>Shell fees</td><td>'+ floatToCurrency(transmisionCosts)+ ' ' + c +'</td></tr>');
+  f.add('<tr><td>Profit</td><td>'+ floatToCurrency(profit)+ ' ' + c +'</td></tr>');
+  f.add('</table>');
 
+  //  // profit
 
 end;
 
@@ -293,6 +329,12 @@ begin
 //  WinExec(PChar('explorer.exe /e, ' + getinstalldir()),SW_SHOWNORMAL);
   OpenURL(route);
 
+end;
+
+procedure TfReports.FormShow(Sender: TObject);
+begin
+  dt_from.Date:=Now();
+  dt_to.Date:=Now();
 end;
 
 end.
