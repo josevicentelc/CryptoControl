@@ -1,7 +1,7 @@
 object mainform: Tmainform
   Left = 331
   Height = 812
-  Top = 110
+  Top = 102
   Width = 1555
   Caption = 'Crypto Tracer'
   ClientHeight = 812
@@ -2666,96 +2666,28 @@ object mainform: Tmainform
       TabOrder = 1
     end
   end
-  object gridWallets: TStringGrid
-    Left = 0
-    Height = 393
-    Top = 132
-    Width = 1555
-    Align = alTop
-    BorderStyle = bsNone
-    ColCount = 8
-    FixedCols = 0
-    Flat = True
-    Font.CharSet = ANSI_CHARSET
-    Font.Color = clWhite
-    Font.Height = -13
-    Font.Name = '@Arial Unicode MS'
-    Font.Pitch = fpVariable
-    Font.Quality = fqDraft
-    Options = [goRangeSelect, goRowHighlight]
-    ParentFont = False
-    TabOrder = 1
-    TitleFont.CharSet = ANSI_CHARSET
-    TitleFont.Color = clWhite
-    TitleFont.Height = -19
-    TitleFont.Name = '@Arial Unicode MS'
-    TitleFont.Pitch = fpVariable
-    TitleFont.Quality = fqDraft
-    OnSelectCell = gridWalletsSelectCell
-    ColWidths = (
-      217
-      155
-      147
-      140
-      143
-      132
-      517
-      64
-    )
-    RowHeights = (
-      28
-      28
-      28
-      28
-      28
-    )
-    Cells = (
-      7
-      0
-      0
-      'Wallet'
-      1
-      0
-      'Balance'
-      2
-      0
-      'Value'
-      3
-      0
-      'Market Prc.'
-      4
-      0
-      'Market value'
-      5
-      0
-      'Profit'
-      6
-      0
-      'PK'
-    )
-  end
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 525
+    Top = 527
     Width = 1555
     Align = alTop
     ResizeAnchor = akTop
   end
   object Panel2: TPanel
     Left = 0
-    Height = 282
-    Top = 530
+    Height = 280
+    Top = 532
     Width = 1555
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 282
+    ClientHeight = 280
     ClientWidth = 1555
-    TabOrder = 3
+    TabOrder = 2
     object gridMovements: TStringGrid
       Left = 0
-      Height = 234
+      Height = 232
       Top = 48
       Width = 1555
       Align = alBottom
@@ -2847,6 +2779,103 @@ object mainform: Tmainform
       MetroColorDisabled = clGray
       Selected = False
       LeftTextAnchor = 0
+    end
+  end
+  object Panel3: TPanel
+    Left = 0
+    Height = 395
+    Top = 132
+    Width = 1555
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 395
+    ClientWidth = 1555
+    TabOrder = 3
+    object gridWallets: TStringGrid
+      Left = 0
+      Height = 395
+      Top = 0
+      Width = 1555
+      Align = alClient
+      BorderStyle = bsNone
+      ColCount = 8
+      FixedCols = 0
+      Flat = True
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWhite
+      Font.Height = -13
+      Font.Name = '@Arial Unicode MS'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Options = [goRangeSelect, goRowHighlight]
+      ParentFont = False
+      TabOrder = 0
+      TitleFont.CharSet = ANSI_CHARSET
+      TitleFont.Color = clWhite
+      TitleFont.Height = -19
+      TitleFont.Name = '@Arial Unicode MS'
+      TitleFont.Pitch = fpVariable
+      TitleFont.Quality = fqDraft
+      OnSelectCell = gridWalletsSelectCell
+      ColWidths = (
+        217
+        155
+        147
+        140
+        143
+        132
+        517
+        64
+      )
+      RowHeights = (
+        28
+        28
+        28
+        28
+        28
+      )
+      Cells = (
+        7
+        0
+        0
+        'Wallet'
+        1
+        0
+        'Balance'
+        2
+        0
+        'Value'
+        3
+        0
+        'Market Prc.'
+        4
+        0
+        'Market value'
+        5
+        0
+        'Profit'
+        6
+        0
+        'PK'
+      )
+    end
+    object Label1: TLabel
+      Left = 424
+      Height = 85
+      Top = 171
+      Width = 688
+      Alignment = taCenter
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      AutoSize = False
+      Caption = 'Recomputing balances'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clLime
+      Font.Height = -48
+      Font.Name = '@Arial Unicode MS'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      ParentColor = False
+      ParentFont = False
     end
   end
   object PopupMenu1: TPopupMenu

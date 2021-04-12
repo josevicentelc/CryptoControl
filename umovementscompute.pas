@@ -28,7 +28,7 @@ var
 begin
   c := getConfig().currency();
   wallet := walletController.getWallet(mov.getWalletInput());
-  wallet.addFifoBalance(mov.getInputCryptos(), mov.getCefiOutput());
+  wallet.addFifoBalance(mov.getInputCryptos(), mov.getCefiOutput(), mov.getComisionBuy());
 
   histLine := THistoryLine.create();
   histLine.setWallet(wallet.getPk());
@@ -51,7 +51,7 @@ end;
 procedure processTransferMove(mov: TMovement);
 var
  wallet : TWallet;
- transferValue : double;
+ fifoTranfer : TFifoMovement;
  histLine : THistoryLine;
  oldBalance : double;
  newBalance : double;
@@ -84,7 +84,7 @@ begin
 
              oldBalance:=newBalance;
              oldValue := newValue;
-             transferValue := wallet.reduceFifoBalance(mov.getOutputCryptos());
+             fifoTranfer := wallet.reduceFifoBalance(mov.getOutputCryptos());
              newBalance:=wallet.getBalance();
              newValue := wallet.getFifoValue();
 
@@ -107,7 +107,7 @@ begin
   wallet := walletController.getWallet(mov.getWalletInput());
   if wallet <> nil then
   begin
-        wallet.addFifoBalance(mov.getInputCryptos(), transferValue);
+        wallet.addFifoBalance(fifoTranfer);
 
         // input Transfer cryptos
         histLine := THistoryLine.create();
@@ -131,7 +131,7 @@ procedure processShellMove(mov: TMovement);
 var
  wallet : TWallet;
  histLine : THistoryLine;
- shellValue: double;
+ fifomov: TFifoMovement;
  totalCefiGet : double;
  profit: double;
  c : String;
@@ -141,13 +141,13 @@ begin
     totalCefiGet:= mov.getCefiInput();
     fee := mov.getComisionShell();
     wallet := walletController.getWallet(mov.getWalletOutput());
-    shellValue := wallet.reduceFifoBalance(mov.getOutputCryptos());
-    profit := totalCefiGet-shellValue;
+    fifomov := wallet.reduceFifoBalance(mov.getOutputCryptos());
+    profit := totalCefiGet-fifomov.value;
 
     histLine := THistoryLine.create();
     histLine.setWallet(wallet.getPk());
     histLine.setDateTime( mov.getDateTime());
-    histLine.setDescription('Shell ' + floatToSql(mov.getOutputCryptos())+ ' (value: '+floatToCurrency(shellValue)+ c +') for ' + floatToSql(totalCefiGet) + c+ ' (Profit: '+floatToCurrency(profit)+c+'), Fee: ' + floatToCurrency(fee)+' ' + c );
+    histLine.setDescription('Shell ' + floatToSql(mov.getOutputCryptos())+ ' (value: '+floatToCurrency(fifomov.value)+ c +') for ' + floatToSql(totalCefiGet) + c+ ' (Profit: '+floatToCurrency(profit)+c+'), Fee: ' + floatToCurrency(fee)+' ' + c );
     histLine.setConcept(mov.getConcept());
     histLine.setProfit(profit);
 

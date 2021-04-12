@@ -101,6 +101,7 @@ begin
                   ' "fifo_id" integer not null,'+
                   ' "fifo_amount" numeric(9, 16) not null default 0,'+
                   ' "fifo_value" numeric(16, 2) not null default 0,'+
+                  ' "fifo_buyfee" numeric(16, 2) not null default 0,'+
                   ' PRIMARY KEY("fifo_pk", "fifo_id"));');
 
       // Wallet history

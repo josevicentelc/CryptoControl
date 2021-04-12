@@ -16,6 +16,7 @@ type
     id : integer;
     amount : double;
     value : double;
+    buyfee: double;
   end;
 
   TFifoArray = Array of TFifo;
@@ -127,12 +128,19 @@ begin
            begin
                 if fifolist.get(i).amount <> 0 then
                 begin
+
+                  if wallet = '' then
+                  begin
+                       // Non controlled wallet. These amounts will go to wallet pk = ''
+                  end;
+
                   id := id + 1;
-                  sql := 'insert into "fifowallet" (fifo_pk, fifo_id, fifo_amount, fifo_value) values(';
+                  sql := 'insert into "fifowallet" (fifo_pk, fifo_id, fifo_amount, fifo_value, fifo_buyfee) values(';
                   sql := sql + '"' + wallet + '", ';
                   sql := sql + inttostr(id) + ', ';
                   sql := sql + floatToSql(fifolist.get(i).amount) + ', ';
-                  sql := sql + floatToSql(fifolist.get(i).value) + '); ';
+                  sql := sql + floatToSql(fifolist.get(i).value) + ', ';
+                  sql := sql + floatToSql(fifolist.get(i).buyfee) + '); ';
                   db.launchSql(sql);
                 end;
            end;
@@ -159,6 +167,7 @@ begin
        fifo.id        :=   Q.FieldByName('fifo_id').AsInteger;
        fifo.amount    :=   Q.FieldByName('fifo_amount').AsFloat;
        fifo.value     :=   Q.FieldByName('fifo_value').AsFloat;
+       fifo.buyfee    :=   Q.FieldByName('fifo_buyfee').AsFloat;
        result.push(fifo);
        Q.Next;
    end;

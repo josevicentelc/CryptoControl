@@ -22,6 +22,8 @@ type
     color_grid_fixed: TShape;
     edit_filter_pk: TEdit;
     edit_filter_name: TEdit;
+    gridWallets: TStringGrid;
+    Label1: TLabel;
     MenuItem1: TMenuItem;
     MetroButton1: TMetroButton;
     MetroButton2: TMetroButton;
@@ -35,9 +37,9 @@ type
     color_background: TShape;
     color_grid_1: TShape;
     color_grid_2: TShape;
+    Panel3: TPanel;
     PopupMenu1: TPopupMenu;
     Splitter1: TSplitter;
-    gridWallets: TStringGrid;
     gridMovements: TStringGrid;
     procedure btnShowMovesClick(Sender: TObject);
     procedure btn_add_movementClick(Sender: TObject);
@@ -72,6 +74,7 @@ type
     procedure refreshFifo();
     procedure refreshSubGrid();
     procedure showAbout();
+    procedure recomputeAll();
 
   end;
 
@@ -207,6 +210,17 @@ begin
      fabout.free;
 end;
 
+procedure Tmainform.recomputeAll();
+begin
+  gridWallets.Visible:=false;
+  gridMovements.Visible:=false;
+  computeWalletBalances();
+  refreshWalletBalances();
+  refreshSubGrid();
+  gridWallets.Visible:=true;
+  gridMovements.Visible:=true;
+end;
+
 // *****************************************************************************
 // *****************************************************************************
 
@@ -273,12 +287,7 @@ begin
                     frmShell.free;
                 end;
 
-             if mr = mryes then
-                begin
-                   computeWalletBalances();
-                   refreshWalletBalances();
-                   refreshSubGrid();
-                end;
+             if mr = mryes then recomputeAll();
           end;
      end;
 end;
@@ -340,8 +349,25 @@ var
   amount, value, price, profit, cryptoMarketPrice : double;
 begin
 
+  gridMovements.ColCount:=6;
+  gridMovements.RowCount:= 1;
+
+  gridMovements.Cells[0, 0] := 'Id';
+  gridMovements.Cells[1, 0] := 'Amount';
+  gridMovements.Cells[2, 0] := 'Value';
+  gridMovements.Cells[3, 0] := 'Buy fee';
+  gridMovements.Cells[4, 0] := 'Market price';
+  gridMovements.Cells[5, 0] := 'Profit';
+
+  gridMovements.ColWidths[0] := 75;
+  gridMovements.ColWidths[1] := 250;
+  gridMovements.ColWidths[2] := 175;
+  gridMovements.ColWidths[3] := 175;
+  gridMovements.ColWidths[4] := 175;
+  gridMovements.ColWidths[5] := 175;
+
   if selectedWalletRow >= gridWallets.RowCount then selectedWalletRow:=0;
-  if selectedWalletRow > 0 then
+  if (selectedWalletRow > 0)  and (gridWallets.Cells[6, selectedWalletRow] <> '') then
        begin
 
           c := getConfig().currency();
@@ -353,21 +379,6 @@ begin
           cryptoMarketPrice:=crypto.getMarketPrice();
           wallet.Free;
           crypto.Free;
-
-          gridMovements.ColCount:=5;
-          gridMovements.RowCount:= 1;
-
-          gridMovements.Cells[0, 0] := 'Id';
-          gridMovements.Cells[1, 0] := 'Amount';
-          gridMovements.Cells[2, 0] := 'Value';
-          gridMovements.Cells[3, 0] := 'Market price';
-          gridMovements.Cells[4, 0] := 'Profit';
-
-          gridMovements.ColWidths[0] := 75;
-          gridMovements.ColWidths[1] := 250;
-          gridMovements.ColWidths[2] := 250;
-          gridMovements.ColWidths[3] := 250;
-          gridMovements.ColWidths[4] := 250;
 
           gridMovements.RowCount:=list.count() + 1;
           for I := 0 to list.count() -1 do
@@ -381,8 +392,9 @@ begin
                gridMovements.Cells[0, I+1] := inttostr(list.get(i).id);
                gridMovements.Cells[1, I+1] := floatToSql(amount);
                gridMovements.Cells[2, I+1] := floatToCurrency(value) + ' '+ c;
-               gridMovements.Cells[3, I+1] := floatToCurrency(price) + ' ' + c;
-               gridMovements.Cells[4, I+1] := floatToCurrency(profit) + ' '+ c;
+               gridMovements.Cells[3, I+1] := floatToCurrency(list.get(i).buyfee) + ' '+ c;
+               gridMovements.Cells[4, I+1] := floatToCurrency(price) + ' ' + c;
+               gridMovements.Cells[5, I+1] := floatToCurrency(profit) + ' '+ c;
             end;
           end;
        end;
@@ -457,8 +469,7 @@ procedure Tmainform.btn_add_movementClick(Sender: TObject);
 begin
      if form_admin_movementst = nil then Application.CreateForm(TfMovementsManager, form_admin_movementst);
      form_admin_movementst.showModal();
-     computeWalletBalances();
-     refreshWalletBalances();
+     recomputeAll();
 end;
 
 procedure Tmainform.btnShowMovesClick(Sender: TObject);

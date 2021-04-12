@@ -138,7 +138,7 @@ begin
           _short2.caption := crypto.getShorName();
 
           dt_dateTime.DateTime:=mvnt.getDateTime();
-          editCefiImport.text := floatToSql(mvnt.getComisionBuy() + mvnt.getCotnableValueInput());
+          editCefiImport.text := floatToSql( mvnt.getCefiOutput());
           editCefiComision.text := floatToSql(mvnt.getComisionBuy());
           editTransactionFee.text := floatToSql(mvnt.getInputFee());
           editCryptoEarned.text := floatToSql(mvnt.getInputCryptos());

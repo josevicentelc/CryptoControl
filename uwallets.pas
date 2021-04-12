@@ -9,6 +9,13 @@ uses
 
 type
 
+  TFifoMovement = class(TObject)
+   public
+    amount: double;
+    value : double;
+    buyFee : double;
+  end;
+
   TWallet = class(TObject)
   private
          pk : string;
@@ -17,8 +24,10 @@ type
          crypto: integer;
          _computedBalance: double;
          _computedValue : double;
+         _computedBuyFee : double;
          _hasBalanceBeenComputed : boolean;
          _hasValueBeenComputed : boolean;
+         _hasBuyFeeBeenComputed : boolean;
   public
     constructor create();
     procedure setPk(_pk : string);
@@ -34,9 +43,13 @@ type
     function getName(): String;
     function getBalance(): double;
 
-    procedure addFifoBalance(_balance: double; _value: double);
-    function reduceFifoBalance(_balance: double): double;
+    procedure computeFifo();
+
+    procedure addFifoBalance(_balance: double; _value: double; buyFee: double);
+    procedure addFifoBalance(mov: TFifoMovement);
+    function reduceFifoBalance(_balance: double): TFifoMovement;
     function getFifoValue(): double;
+    function getFifoBuyFee(): double;
 
     procedure export(F : TStringList);
     procedure import(line: String);
@@ -82,25 +95,47 @@ constructor TWallet.create();
 begin
      _hasBalanceBeenComputed:=false;
      _hasValueBeenComputed:=false;
+     _hasBuyFeeBeenComputed:=false;
 end;
 
-function TWallet.getBalance(): double;
-var
-  i : Integer;
-  list : TFifoList;
+function TWallet.getFifoValue(): double;
 begin
-     if _hasBalanceBeenComputed then result := _computedBalance
-     else
-       begin
-         list := fifoController.getFifoList(pk);
-         _hasBalanceBeenComputed:=true;
-         Result:=0;
-         for I := 0 to list.count() -1 do
-          begin
-            result := result + list.get(I).amount;
-          end;
-         _computedBalance:=result;
-       end;
+  if not _hasValueBeenComputed then computeFifo();
+  result := _computedValue;
+end;
+
+
+function TWallet.getBalance(): double;
+begin
+     if not _hasBalanceBeenComputed then computeFifo();
+     result := _computedBalance;
+end;
+
+function TWallet.getFifoBuyFee(): double;
+begin
+  if not _hasBuyFeeBeenComputed then computeFifo();
+  result := _computedBuyFee;
+end;
+
+procedure TWallet.computeFifo();
+var
+    fifolist : TFifoList;
+    I : Integer;
+begin
+     _hasBuyFeeBeenComputed:=true;
+     _hasBalanceBeenComputed:=true;
+     _hasValueBeenComputed:=true;
+     fifolist := fifoController.getFifoList(pk);
+     _computedBuyFee:=0;
+     _computedBalance:=0;
+     _computedValue:=0;
+     for I := 0 to fifolist.count() -1 do
+      begin
+        _computedBalance := _computedBalance + fifolist.get(I).amount;
+        _computedValue := _computedValue + fifolist.get(I).value;
+        _computedBuyFee := _computedBuyFee + fifolist.get(I).buyfee;
+      end;
+     fifolist.Free;
 end;
 
 procedure TWallet.setPk(_pk : string);             begin     pk := _pk;         end;
@@ -121,14 +156,17 @@ begin
      fifoController.remove(pk);
 end;
 
-function TWallet.reduceFifoBalance(_balance: double) : double;
+function TWallet.reduceFifoBalance(_balance: double) : TFifoMovement;
 var
   fifolist : TFifoList;
   toreduce : double;
   I : Integer;
   fifo : TFifo;
+  buyfee: double;
 begin
-  result := 0;
+
+  result := TFifoMovement.create;
+
   if _balance > 0 then
   begin
     toreduce:=_balance;
@@ -140,8 +178,11 @@ begin
          fifo := fifolist.get(I);
          if fifo.amount > toreduce then
          begin
-           result := result + fifo.value * (toreduce / fifo.amount);
+           result.value := result.value + fifo.value * (toreduce / fifo.amount);
+           result.buyFee := result.buyFee + fifo.buyfee * (toreduce / fifo.amount);
+           result.amount := result.amount + toreduce;
            fifo.value := fifo.value - fifo.value * (toreduce / fifo.amount);
+           fifo.buyfee := fifo.buyfee - fifo.buyfee * (toreduce / fifo.amount);
            fifo.amount := fifo.amount - toreduce;
            toreduce:=0;
          end
@@ -149,19 +190,30 @@ begin
          if fifo.amount > 0 then
          begin
            toreduce:=toreduce - fifo.amount;
-           result := result + fifo.value;
+           result.value := result.value + fifo.value;
+           result.buyfee := result.buyfee + fifo.buyfee;
+           result.amount := result.amount + fifo.amount;
            fifo.amount:=0;
            fifo.value:=0;
+           fifo.buyfee:=0;
          end;
        end;
      end;
     fifoController.save(fifolist);
   end;
-  _computedBalance := _computedBalance - _balance;
-  _computedValue := _computedValue - Result;
+  _computedBalance := _computedBalance - Result.amount;
+  _computedValue := _computedValue - Result.value;
+  _computedBuyFee:=_computedBuyFee - result.buyfee;
 end;
 
-procedure TWallet.addFifoBalance(_balance: double; _value: double);
+procedure TWallet.addFifoBalance(mov: TFifoMovement);
+begin
+     if mov <> nil then
+       addFifoBalance(mov.Amount, mov.value, mov.buyfee);
+end;
+
+
+procedure TWallet.addFifoBalance(_balance: double; _value: double; buyFee: double);
 var
   fifolist : TFifoList;
   fifo : TFifo;
@@ -173,34 +225,15 @@ begin
           fifo.wallet:=pk;
           fifo.amount:=_balance;
           fifo.value:=_value;
+          fifo.buyfee:=buyfee;
           fifolist.push(fifo);
           fifoController.save(fifolist);
           fifolist.free;
           _computedValue:=_computedValue + _value;
           _computedBalance:=_computedBalance + _balance;
+          _computedBuyFee:=_computedBuyFee + buyFee;
        end;
 end;
-
-function TWallet.getFifoValue(): double;
-var
-    fifolist : TFifoList;
-    I : Integer;
-begin
-  if _hasValueBeenComputed then result := _computedValue
-  else
-    begin
-      result := 0;
-      fifolist := fifoController.getFifoList(pk);
-      for I := 0 to fifolist.count() -1 do
-       begin
-         result := result + fifolist.get(I).value;
-       end;
-      _computedValue:=result;
-      _hasValueBeenComputed:=true;
-      fifolist.Free;
-    end;
-end;
-
 
 procedure TWallet.export(F : TStringList);
 var
