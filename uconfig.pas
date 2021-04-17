@@ -17,6 +17,8 @@ type
    public
      useMarketSync : boolean;
      useCurrencyEuro: boolean;
+     showNonBalanceAccounts : boolean;
+
      contableType : TContableType;
      mainColor: integer;
      alternateColor: integer;
@@ -48,6 +50,8 @@ begin
      useMarketSync:=true;
      useCurrencyEuro:=true;
      contableType:=CT_FIFO;
+     showNonBalanceAccounts:=true;
+
      mainColor:=$004B2F26;
      alternateColor:=$0043281F;
      fixedColor:=$006D4132;
@@ -83,6 +87,7 @@ begin
      begin
        if str[0] = 'useMarketSync' then useMarketSync:=str[1] = 'true';
        if str[0] = 'useCurrencyEuro' then useCurrencyEuro:=str[1] = 'true';
+       if str[0] = 'showNonBalanceAccounts' then showNonBalanceAccounts:=str[1] = 'true';
        if str[0] = 'contableType' then
        begin
          if str[1] = 'FIFO' then contableType:=CT_FIFO
@@ -98,23 +103,16 @@ var
   lines : TStringList;
 begin
      lines := TStringList.create;
-     if useMarketSync then
-     begin
-       lines.Add('useMarketSync=true');
-     end
-     else
-     begin
-       lines.Add('useMarketSync=false');
-     end;
 
-     if useCurrencyEuro then
-     begin
-       lines.Add('useCurrencyEuro=true');
-     end
-     else
-     begin
-       lines.Add('useCurrencyEuro=false');
-     end;
+     if useMarketSync then  lines.Add('useMarketSync=true')
+     else                   lines.Add('useMarketSync=false');
+
+     if useCurrencyEuro then   lines.Add('useCurrencyEuro=true')
+     else                      lines.Add('useCurrencyEuro=false');
+
+     if showNonBalanceAccounts then   lines.Add('showNonBalanceAccounts=true')
+     else                             lines.Add('showNonBalanceAccounts=false');
+
 
      if contableType=CT_FIFO then lines.Add('contableType=FIFO')
      else if contableType=CT_LIFO then lines.Add('contableType=LIFO')

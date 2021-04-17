@@ -24,6 +24,8 @@ type
     edit_filter_name: TEdit;
     gridWallets: TStringGrid;
     Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
     MenuItem1: TMenuItem;
     MetroButton1: TMetroButton;
     MetroButton2: TMetroButton;
@@ -69,7 +71,7 @@ type
     wallets: TWalletList;
 
   public
-    procedure refreshWalletBalances();
+    procedure refreshWalletBalances(fastMode: boolean);
     procedure refreshMoves();
     procedure refreshFifo();
     procedure refreshSubGrid();
@@ -91,7 +93,7 @@ implementation
 // *****************************************************************************
 // *****************************************************************************
 
-procedure Tmainform.refreshWalletBalances();
+procedure Tmainform.refreshWalletBalances(fastMode: boolean);
 var
   I : Integer;
   crypto: TCrypto;
@@ -111,7 +113,16 @@ var
   thisValue : double;
   thisMarketPrice : double;
   thisProfit : double;
+  showByBalanceFilter : boolean;
+  originalUsePriceSync : boolean;
 begin
+
+     // Si fast mode es True, desactivo la actualización de precios desde internet
+     // Así evito retardos durante la actualización del listado
+     originalUsePriceSync:=getConfig().useMarketSync;
+     getConfig().useMarketSync := not fastMode;
+
+
      totalValue := 0; totalMarketPrice := 0; totalProfit := 0;
      c := getConfig().currency();
      wallets := walletController.getWallets();
@@ -127,8 +138,9 @@ begin
 
        wpk := LowerCase(wallets.get(I).getPk());
        wname := LowerCase(wallets.get(I).getName());
+       showByBalanceFilter:= (wallets.get(I).getBalance() <> 0) or (getConfig().showNonBalanceAccounts);
 
-       if (filterPk = '') or (wpk.Contains(filterPk)) then
+       if ((filterPk = '') or (wpk.Contains(filterPk))) and (showByBalanceFilter) then
        begin
           if (filterName = '') or (wname.Contains(filterName)) then
           begin
@@ -177,6 +189,7 @@ begin
      gridWallets.Cells[4, row] := formatFloat('##0.00', totalMarketPrice) + c;
      gridWallets.Cells[5, row] := formatFloat('##0.00', totalProfit) + c;
 
+     getConfig().useMarketSync := originalUsePriceSync;
 
 end;
 
@@ -215,7 +228,7 @@ begin
   gridWallets.Visible:=false;
   gridMovements.Visible:=false;
   computeWalletBalances();
-  refreshWalletBalances();
+  refreshWalletBalances(false);
   refreshSubGrid();
   gridWallets.Visible:=true;
   gridMovements.Visible:=true;
@@ -241,7 +254,7 @@ end;
 
 procedure Tmainform.FormShow(Sender: TObject);
 begin
-  refreshWalletBalances();
+  refreshWalletBalances(false);
   showAbout();
 end;
 
@@ -318,7 +331,7 @@ begin
    movId := strtoint(gridMovements.Cells[5, selectedMoveRow]);
    movementsController.remove(movid);
    computeWalletBalances();
-   refreshWalletBalances();
+   refreshWalletBalances(false);
    refreshSubGrid();
 end;
 
@@ -495,7 +508,7 @@ begin
      if form_admin_wallet = nil then Application.CreateForm(Tfwalletmanager, form_admin_wallet);
      form_admin_wallet.showModal();
      computeWalletBalances();
-     refreshWalletBalances();
+     refreshWalletBalances(false);
 end;
 
 procedure Tmainform.btn_settings1Click(Sender: TObject);
@@ -516,14 +529,14 @@ begin
      fsettings.free;
 
      computeWalletBalances();
-     refreshWalletBalances();
+     refreshWalletBalances(false);
      refreshSubGrid();
 
 end;
 
 procedure Tmainform.edit_filter_pkChange(Sender: TObject);
 begin
-     refreshWalletBalances();
+     refreshWalletBalances(true);
      refreshSubGrid();
 end;
 

@@ -281,6 +281,7 @@ var
   f : TStringList;
   route: String;
 begin
+  (sender as TBitBtn).enabled := false;
   computeWalletBalances();
   f := TStringList.Create;
 
@@ -328,6 +329,8 @@ begin
   f.free;
 //  WinExec(PChar('explorer.exe /e, ' + getinstalldir()),SW_SHOWNORMAL);
   OpenURL(route);
+  (sender as TBitBtn).enabled := true;
+
 
 end;
 

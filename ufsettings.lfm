@@ -8,20 +8,21 @@ object fSettings: TfSettings
   ClientHeight = 315
   ClientWidth = 390
   Color = 4927270
+  OnShow = FormShow
   Position = poScreenCenter
   LCLVersion = '2.0.2.0'
   object SpeedButton1: TSpeedButton
-    Left = 33
+    Left = 32
     Height = 47
-    Top = 41
+    Top = 184
     Width = 143
     Caption = 'Export Data'
     OnClick = SpeedButton1Click
   end
   object SpeedButton2: TSpeedButton
-    Left = 216
+    Left = 215
     Height = 47
-    Top = 41
+    Top = 184
     Width = 143
     Caption = 'Import data'
     OnClick = SpeedButton2Click
@@ -33,5 +34,21 @@ object fSettings: TfSettings
     Width = 145
     Caption = 'Clear database'
     OnClick = SpeedButton3Click
+  end
+  object btn_showNonBalanceAccounts: TMetroButton
+    Left = 32
+    Height = 31
+    Top = 24
+    Width = 327
+    Caption = 'Show accounts with balance 0'
+    OnClick = btn_showNonBalanceAccountsClick
+    MetroTextAlign = mtaMiddleMiddle
+    MetroGlyphAlign = mgaTopLeft
+    MetroColorNormal = clRed
+    MetroColorOver = 13037957
+    MetroColorDown = clLime
+    MetroColorDisabled = clGray
+    Selected = False
+    LeftTextAnchor = 0
   end
 end

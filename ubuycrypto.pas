@@ -104,6 +104,7 @@ begin
      mvnt := TMovement.create();
      mvnt.setType(MV_BUY);
      mvnt.setWalletInput(wallets.get(walletlist.ItemIndex).getPk());
+     mvnt.setConcept(editConcept.text);
      mvnt.setCefiOutput(cefiValue);
      mvnt.setComisionBuy(cefiComision);
      mvnt.setInputFee(feeValue);
@@ -137,6 +138,7 @@ begin
           _short1.caption := crypto.getShorName();
           _short2.caption := crypto.getShorName();
 
+          editConcept.Text:=mvnt.getConcept();
           dt_dateTime.DateTime:=mvnt.getDateTime();
           editCefiImport.text := floatToSql( mvnt.getCefiOutput());
           editCefiComision.text := floatToSql(mvnt.getComisionBuy());

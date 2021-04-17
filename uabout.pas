@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Buttons, Clipbrd, ubarcodes;
+  Buttons, Clipbrd, ubarcodes, lclintf;
 
 type
 
@@ -19,6 +19,7 @@ type
     Button1: TButton;
     Label1: TLabel;
     Label10: TLabel;
+    Label11: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
@@ -28,6 +29,7 @@ type
     Label8: TLabel;
     Label9: TLabel;
     Shape1: TShape;
+    procedure Label11Click(Sender: TObject);
     procedure Label2Click(Sender: TObject);
     procedure Label6Click(Sender: TObject);
     procedure Label6MouseEnter(Sender: TObject);
@@ -50,6 +52,11 @@ implementation
 procedure TfAbout.Label2Click(Sender: TObject);
 begin
 
+end;
+
+procedure TfAbout.Label11Click(Sender: TObject);
+begin
+  OpenURL('http://jvlc.es/cryptotaxes.html')
 end;
 
 procedure TfAbout.Label6Click(Sender: TObject);

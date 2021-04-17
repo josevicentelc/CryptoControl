@@ -1,11 +1,11 @@
 object fAbout: TfAbout
   Left = 370
-  Height = 676
+  Height = 731
   Top = 127
   Width = 618
   BorderStyle = bsDialog
   Caption = 'Acerca de...'
-  ClientHeight = 676
+  ClientHeight = 731
   ClientWidth = 618
   Color = 4927270
   Position = poScreenCenter
@@ -46,13 +46,13 @@ object fAbout: TfAbout
   object Shape1: TShape
     Left = 13
     Height = 3
-    Top = 235
+    Top = 272
     Width = 587
   end
   object Label3: TLabel
     Left = 113
     Height = 21
-    Top = 285
+    Top = 322
     Width = 58
     Caption = 'Bitcoin:'
     Font.CharSet = ANSI_CHARSET
@@ -68,7 +68,7 @@ object fAbout: TfAbout
   object Label4: TLabel
     Left = 259
     Height = 21
-    Top = 450
+    Top = 487
     Width = 98
     Caption = 'Bitcoin Cash:'
     Font.CharSet = ANSI_CHARSET
@@ -100,7 +100,7 @@ object fAbout: TfAbout
   object Label6: TLabel
     Left = 32
     Height = 15
-    Top = 421
+    Top = 458
     Width = 228
     Caption = '1Yb1NaDjrJqCn77qHp2ZrdCTQa7x3vwZr'
     Font.CharSet = ANSI_CHARSET
@@ -119,7 +119,7 @@ object fAbout: TfAbout
   object Label7: TLabel
     Left = 128
     Height = 15
-    Top = 599
+    Top = 636
     Width = 348
     Caption = 'bitcoincash:qzx7qty939shh6pmlzaedf30n6uvwhe95ut3379znc'
     Font.CharSet = ANSI_CHARSET
@@ -138,7 +138,7 @@ object fAbout: TfAbout
   object Label8: TLabel
     Left = 304
     Height = 15
-    Top = 421
+    Top = 458
     Width = 290
     Caption = '0x9670CA60114Fc885Fa2CFD9f4d5BCe73272F7395'
     Font.CharSet = ANSI_CHARSET
@@ -157,7 +157,7 @@ object fAbout: TfAbout
   object Button1: TButton
     Left = 248
     Height = 41
-    Top = 632
+    Top = 669
     Width = 115
     Caption = 'Ok'
     ModalResult = 1
@@ -166,7 +166,7 @@ object fAbout: TfAbout
   object Label9: TLabel
     Left = 19
     Height = 21
-    Top = 254
+    Top = 291
     Width = 168
     Caption = 'Cuentas de donativos:'
     Font.CharSet = ANSI_CHARSET
@@ -198,7 +198,7 @@ object fAbout: TfAbout
   object BarcodeQR1: TBarcodeQR
     Left = 88
     Height = 110
-    Top = 309
+    Top = 346
     Width = 110
     StrictSize = True
     Text = '1Yb1NaDjrJqCn77qHp2ZrdCTQa7x3vwZr'
@@ -206,7 +206,7 @@ object fAbout: TfAbout
   object BarcodeQR2: TBarcodeQR
     Left = 248
     Height = 122
-    Top = 475
+    Top = 512
     Width = 122
     StrictSize = True
     Text = 'bitcoincash:qzx7qty939shh6pmlzaedf30n6uvwhe95ut3379znc'
@@ -214,9 +214,28 @@ object fAbout: TfAbout
   object BarcodeQR3: TBarcodeQR
     Left = 400
     Height = 110
-    Top = 309
+    Top = 346
     Width = 110
     StrictSize = True
     Text = '0x9670CA60114Fc885Fa2CFD9f4d5BCe73272F7395'
+  end
+  object Label11: TLabel
+    Left = 253
+    Height = 15
+    Top = 232
+    Width = 104
+    Caption = 'http://www.jvlc.es'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsBold, fsUnderline]
+    ParentColor = False
+    ParentFont = False
+    OnClick = Label11Click
+    OnMouseEnter = Label6MouseEnter
+    OnMouseLeave = Label6MouseLeave
   end
 end

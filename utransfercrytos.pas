@@ -85,6 +85,7 @@ begin
           begin
                editWalletDestiny.Text:=mvnt.getWalletInput();
           end;
+          editConcept.text := mvnt.getConcept();
           dt_dateTime.DateTime:=mvnt.getDateTime();
           editTransactionFee.text := floatToSql(mvnt.getOutputFee());
           editCryptoEarned.text := floatToSql(mvnt.getInputCryptos());
@@ -120,6 +121,7 @@ begin
      end;
 
      mvnt.setDateTime(dt_dateTime.DateTime);
+     mvnt.setConcept(editConcept.text);
      mvnt.setOutputCryptos(cryptos);
      mvnt.setOutputFee(fee);
      mvnt.setInputCryptos(cryptos);
