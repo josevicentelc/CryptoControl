@@ -47,7 +47,7 @@ end;
 
 constructor TConfig.create;
 begin
-     useMarketSync:=true;
+     useMarketSync:=false;
      useCurrencyEuro:=true;
      contableType:=CT_FIFO;
      showNonBalanceAccounts:=true;

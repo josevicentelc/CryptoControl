@@ -11,7 +11,7 @@ uses
   Buttons, StdCtrls, Menus, udatabaseconector, ucryptomanager, ucryptos,
   uwallets, uwalletmanager, umovementManager, umovements, umovementscompute,
   uwallethistory, utils, uabout, ubuycrypto, utransfercrytos, ushellcryptos,
-  uconfig, ufsettings, ufreports, MetroButton, ufifowallet;
+  uconfig, ufsettings, ufreports, MetroButton, JVStringGrid, ufifowallet, Types;
 
 
 type
@@ -56,6 +56,8 @@ type
     procedure gridMovementsDblClick(Sender: TObject);
     procedure gridMovementsSelectCell(Sender: TObject; aCol, aRow: Integer;
       var CanSelect: Boolean);
+    procedure gridWalletsDrawCell(Sender: TObject; aCol, aRow: Integer;
+      aRect: TRect; aState: TGridDrawState);
     procedure gridWalletsSelectCell(Sender: TObject; aCol, aRow: Integer;
       var CanSelect: Boolean);
     procedure MenuItem1Click(Sender: TObject);
@@ -154,16 +156,16 @@ begin
              gridWallets.Cells[6, row] := wallets.get(I).getPk();
              gridWallets.Cells[0, row] := wallets.get(I).getName();
              gridWallets.Cells[1, row] := floatToSql(wallets.get(I).getBalance());
-             gridWallets.Cells[2, row] := formatFloat('##0.00', wallets.get(I).getFifoValue()) + c;
+             gridWallets.Cells[2, row] := floatToCurrency(wallets.get(I).getFifoValue()) + c;
 
              thisValue := wallets.get(I).getFifoValue();
              if useMarketPrice then
              begin
                 thisMarketPrice := crypto.getMarketPrice() * wallets.get(I).getBalance();
                 thisProfit := crypto.getMarketPrice() * wallets.get(I).getBalance() -  wallets.get(I).getFifoValue();
-                gridWallets.Cells[3, row] := formatFloat('##0.00', crypto.getMarketPrice()) + c;
-                gridWallets.Cells[4, row] := formatFloat('##0.00', thisMarketPrice) + c;
-                gridWallets.Cells[5, row] := formatFloat('##0.00', thisProfit) + c;
+                gridWallets.Cells[3, row] := floatToCurrency(crypto.getMarketPrice()) + c;
+                gridWallets.Cells[4, row] := floatToCurrency(thisMarketPrice) + c;
+                gridWallets.Cells[5, row] := floatToCurrency(thisProfit) + c;
              end
              else
              begin
@@ -185,9 +187,9 @@ begin
 
      gridWallets.RowCount:=gridWallets.RowCount+1;
      row := row + 1;
-     gridWallets.Cells[2, row] := formatFloat('##0.00', totalValue) + c;
-     gridWallets.Cells[4, row] := formatFloat('##0.00', totalMarketPrice) + c;
-     gridWallets.Cells[5, row] := formatFloat('##0.00', totalProfit) + c;
+     gridWallets.Cells[2, row] := floatToCurrency(totalValue) + c;
+     gridWallets.Cells[4, row] := floatToCurrency(totalMarketPrice) + c;
+     gridWallets.Cells[5, row] := floatToCurrency(totalProfit) + c;
 
      getConfig().useMarketSync := originalUsePriceSync;
 
@@ -312,6 +314,32 @@ procedure Tmainform.gridMovementsSelectCell(Sender: TObject; aCol,
   aRow: Integer; var CanSelect: Boolean);
 begin
      selectedMoveRow:=aRow;
+end;
+
+procedure Tmainform.gridWalletsDrawCell(Sender: TObject; aCol, aRow: Integer;
+  aRect: TRect; aState: TGridDrawState);
+var
+  val : double;
+  texto : String;
+  grid : TStringGrid;
+begin
+  grid := (sender as TStringGrid);
+  if (aCol = 5) and (aRow > 0) then
+     begin
+        texto := trim( stringReplace( grid.Cells[aCol, aRow], '€', '', [rfreplaceall] ) );
+        texto := stringReplace(texto, '.', '', [rfreplaceall]);
+        if texto <> '' then
+        begin
+            trystrtofloat(texto, val);
+            grid.Canvas.FillRect(aRect);
+
+            if val > 0 then   grid.Canvas.Font.color := clGreen
+            else if val < 0 then grid.Canvas.Font.color := $3333BB
+            else grid.Canvas.Font.color := clWhite;
+
+            Grid.canvas.TextRect(aRect,aRect.Left +2, aRect.Top + 2, grid.Cells[aCol, aRow]);
+        end;
+     end;
 end;
 
 // *****************************************************************************

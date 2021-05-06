@@ -367,4 +367,23 @@ object fshellcryptos: Tfshellcryptos
     ParentColor = False
     ParentFont = False
   end
+  object Label1: TLabel
+    Left = 16
+    Height = 15
+    Top = 168
+    Width = 120
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'MAX'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -12
+    Font.Name = 'Segoe UI'
+    Font.Pitch = fpVariable
+    Font.Quality = fqDraft
+    Font.Style = [fsUnderline]
+    ParentColor = False
+    ParentFont = False
+    OnClick = Label1Click
+  end
 end

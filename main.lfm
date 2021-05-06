@@ -2594,6 +2594,7 @@ object mainform: Tmainform
       TitleFont.Name = '@Arial Unicode MS'
       TitleFont.Pitch = fpVariable
       TitleFont.Quality = fqDraft
+      OnDrawCell = gridWalletsDrawCell
       OnSelectCell = gridWalletsSelectCell
       ColWidths = (
         217

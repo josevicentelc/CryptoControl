@@ -20,6 +20,7 @@ type
     editComision: TEdit;
     editTotalCefi: TEdit;
     Image1: TImage;
+    Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
     lblPrice: TLabel;
@@ -31,6 +32,7 @@ type
     procedure btnOkClick(Sender: TObject);
     procedure editCryptoKeyPress(Sender: TObject; var Key: char);
     procedure FormShow(Sender: TObject);
+    procedure Label1Click(Sender: TObject);
     procedure walletoriginChange(Sender: TObject);
   private
     wallets : TWalletList;
@@ -81,6 +83,15 @@ begin
   updateWalletList();
   if moveId >= 0 then loadMove(moveId);
   checkStatus();
+end;
+
+procedure Tfshellcryptos.Label1Click(Sender: TObject);
+begin
+  if walletorigin.ItemIndex <> -1 then
+  begin
+       editCrypto.Text :=  floatToSql(wallets.get(walletorigin.ItemIndex).getBalance());
+       checkStatus();
+  end;
 end;
 
 procedure Tfshellcryptos.btnOkClick(Sender: TObject);

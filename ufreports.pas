@@ -5,8 +5,9 @@ unit ufreports;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons, uconfig,
-  ExtCtrls, DateTimePicker, LCLIntf, umovementscompute, utils, uwallets, ucryptos, uwallethistory;
+  Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, Buttons,
+  uconfig, ExtCtrls, DateTimePicker, LR_Class, LCLIntf, umovementscompute,
+  utils, uwallets, ucryptos, uwallethistory, umovements, MetroButton;
 
 type
 
@@ -15,6 +16,7 @@ type
   TfReports = class(TForm)
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
+    chk_captial: TCheckBox;
     chkShowAcounts: TCheckBox;
     chkShowAcountMoves: TCheckBox;
     CheckBox3: TCheckBox;
@@ -26,14 +28,19 @@ type
     Label2: TLabel;
     Label3: TLabel;
     Label4: TLabel;
+    Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label9: TLabel;
+    MetroButton1: TMetroButton;
+    MetroButton2: TMetroButton;
+    MetroButton3: TMetroButton;
     procedure BitBtn1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
         procedure reportWalletBalances(f : TStringList);
         procedure reportprofits(f : TStringList);
+        procedure reportInvertedCaptial(f : TStringList);
         function getTableMovesForAcount(pk: String): string;
   public
 
@@ -85,6 +92,63 @@ begin
   end;
 
   history.Free;
+end;
+
+procedure TfReports.reportInvertedCaptial(f : TStringList);
+var
+  inverted : double;
+  deposit : double;
+  fees : double;
+  moves : TMovementList;
+  move : TMovement;
+  newInversion : double;
+  I : Integer;
+  c : string;
+begin
+  inverted := 0;
+  deposit := 0;
+  fees:=0;
+
+  c := getConfig().currency();
+  f.Add('<h1>Inverted and fees paid</h1><br>');
+
+  f.add('<table>');
+  moves := movementsController.getAll();
+  for I := 0 to moves.count() -1 do
+  begin
+       move := moves.get(I);
+       if move.getType() = MV_BUY then
+       begin
+            if move.getCefiOutput() <= deposit then
+            begin
+               deposit:=deposit - move.getCefiOutput();
+            end
+            else
+            begin
+              f.add('<tr>');
+              newInversion:= move.getCefiOutput() - deposit;
+              f.add('<td>'+ FormatDateTime('dd/mm/yyyy hh:nn:ss', move.getDateTime()) +'</td><td>'  + floatToCurrency(newInversion) + ' ' + c + '</td>');
+              inverted:=inverted + newInversion;
+              deposit := 0;
+              f.add('</tr>');
+            end;
+
+            fees:=fees + move.getComisionBuy();
+       end;
+       if move.getType() = MV_SHELL then
+       begin
+            deposit:=deposit + move.getCefiInput();
+            fees:=fees + move.getComisionShell();
+       end;
+  end;
+
+  f.add('</table>');
+
+  f.add('<p>-------------------</p>' );
+  f.add('<p>Inverted: ' + floatToCurrency(inverted) + ' ' + c +'</p>');
+  f.add('<p>Fees paid: ' + floatToCurrency(fees) + ' ' + c +'</p>');
+
+
 end;
 
 procedure TfReports.reportWalletBalances(f : TStringList);
@@ -322,6 +386,8 @@ begin
 
   reportprofits(f);
 
+  if chk_captial.Checked then reportInvertedCaptial(f);
+
 
   f.Add('</body></html>');
   route := getinstalldir() + 'report.html';
@@ -335,8 +401,11 @@ begin
 end;
 
 procedure TfReports.FormShow(Sender: TObject);
+var
+  YY,MM,DD : Word;
 begin
-  dt_from.Date:=Now();
+  DecodeDate (now(),YY,MM,DD);
+  dt_from.Date:=EnCodeDate(YY,1,1);
   dt_to.Date:=Now();
 end;
 

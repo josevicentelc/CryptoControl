@@ -84,7 +84,7 @@ end;
 
 function floatToCurrency(v: double): String;
 begin
-  result := stringReplace(formatFloat('###,##0.00', v), ',', '.', [rfReplaceAll]) ;
+  result := formatFloat('#,##0.00', v) ;
 end;
 
 
