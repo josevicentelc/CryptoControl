@@ -34,6 +34,7 @@ type
     MetroButton5: TMetroButton;
     btnShowMoves: TMetroButton;
     btnShowFifo: TMetroButton;
+    btnrefresh: TMetroButton;
     Panel1: TPanel;
     Panel2: TPanel;
     color_background: TShape;
@@ -43,6 +44,7 @@ type
     PopupMenu1: TPopupMenu;
     Splitter1: TSplitter;
     gridMovements: TStringGrid;
+    procedure btnrefreshClick(Sender: TObject);
     procedure btnShowMovesClick(Sender: TObject);
     procedure btn_add_movementClick(Sender: TObject);
     procedure btn_admin_cryptosClick(Sender: TObject);
@@ -526,6 +528,12 @@ begin
     btnShowFifo.Selected:=true;
   end;
   refreshSubGrid();
+end;
+
+procedure Tmainform.btnrefreshClick(Sender: TObject);
+begin
+     refreshWalletBalances(false);
+     refreshSubGrid();
 end;
 
 // *****************************************************************************
