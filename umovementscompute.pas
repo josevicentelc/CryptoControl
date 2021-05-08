@@ -43,7 +43,6 @@ begin
   histLine.setMoveId(mov.getId());
   histLine.save();
 
-  wallet.Free;
   histLine.Free;
 end;
 
@@ -102,8 +101,6 @@ begin
              histLine.setMoveId(mov.getId());
              histLine.save();
              histLine.Free;
-
-             wallet.Free;
        end;
   //destiny
   wallet := walletController.getWallet(mov.getWalletInput());
@@ -167,7 +164,6 @@ begin
     histLine.save();
 
     histLine.free;
-    wallet.free;
 end;
 
 
@@ -191,7 +187,6 @@ begin
   begin
     wallets.get(I).clear();
     historyController.clear(wallets.get(i).getPk());
-    wallets.get(I).save();
   end;
 
   // Remove all the FIFO values stored

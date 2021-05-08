@@ -81,6 +81,7 @@ private
  function readWallets(): TWalletList;
 
 public
+ procedure addWallet(wallet: TWallet);
   constructor create(_db: TDatabaseConnector);
   procedure writeWallet(Wallet: TWallet);
   procedure remove(wallet: string);
@@ -325,6 +326,24 @@ end;
 constructor TWalletController.create(_db: TDatabaseConnector);
 begin
      db := _db;
+end;
+
+procedure TWalletController.addWallet(wallet: TWallet);
+var
+    I : Integer;
+    exists : boolean;
+begin
+     exists := false;
+     for I := 0 to wallets.count()-1 do
+      begin
+        if wallets.get(i).getPk() = wallet.getPk() then exists := true;
+      end;
+
+     if not exists then
+     begin
+       wallets.push(wallet);
+       wallet.save();
+     end;
 end;
 
 procedure TWalletController.clearAll();

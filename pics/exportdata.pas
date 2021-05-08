@@ -149,10 +149,10 @@ begin
   for I := 0 to f.Count -1 do
   begin
     wallet.import(f[I]);
-    wallet.save();
+    walletController.addWallet(wallet);
+
   end;
   f.free;
-  wallet.free;
 end;
 
 procedure importMoves(fileName: String);

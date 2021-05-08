@@ -418,8 +418,6 @@ begin
           crypto := cryptoController.getById(wallet.getCrypto());
           list := fifoController.getFifoList(pk);
           cryptoMarketPrice:=crypto.getMarketPrice();
-          wallet.Free;
-          crypto.Free;
 
           gridMovements.RowCount:=list.count() + 1;
           for I := 0 to list.count() -1 do

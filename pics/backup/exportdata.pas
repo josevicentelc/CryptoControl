@@ -41,6 +41,9 @@ begin
   importMoves(fileName+'_movs.exp');
 end;
 
+// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+
 procedure exportCoins(filename: String);
 var
   F : TSTringList;
@@ -95,18 +98,24 @@ begin
   f.free;
 end;
 
+// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+
 procedure clearCoins();
 begin
      cryptoController.clearAll();
 end;
 procedure clearWallets();
 begin
-
+     walletController.clearAll();
 end;
 procedure clearMoves();
 begin
-
+     movementsController.clearAll();
 end;
+
+// -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 procedure importCoins(fileName: String);
 var
@@ -124,17 +133,45 @@ begin
     crypto.save();
   end;
   f.free;
-
+  crypto.free;
 end;
 
 procedure importWallets(fileName: String);
+var
+  F : TSTringList;
+  wallet : TWallet;
+  I : Integer;
 begin
+  f := TStringList.Create;
+  f.LoadFromFile(filename);
+  wallet := TWallet.create;
 
+  for I := 0 to f.Count -1 do
+  begin
+    wallet.import(f[I]);
+    walletController.addWallet(wallet.save());
+
+  end;
+  f.free;
 end;
 
 procedure importMoves(fileName: String);
+var
+  F : TSTringList;
+  move : TMovement;
+  I : Integer;
 begin
+  f := TStringList.Create;
+  f.LoadFromFile(filename);
+  move := TMovement.create;
 
+  for I := 0 to f.Count -1 do
+  begin
+    move.import(f[I]);
+    move.save();
+  end;
+  f.free;
+  move.free;
 end;
 
 
