@@ -76,10 +76,15 @@ end;
 TWalletController = class(TObject)
 private
  db: TDatabaseConnector;
+ wallets : TWalletList;
+ loaded: boolean;
+ function readWallets(): TWalletList;
+
 public
   constructor create(_db: TDatabaseConnector);
-  procedure save(Wallet: TWallet);
+  procedure writeWallet(Wallet: TWallet);
   procedure remove(wallet: string);
+  procedure saveWallets();
   function getWallets(): TWalletList;
   function getWallet(pk: String): TWallet;
   procedure clearAll();
@@ -149,7 +154,7 @@ function TWallet.getCrypto(): integer;             begin     result := crypto;  
 
 procedure TWallet.save();
 begin
-     walletController.save(self);
+     walletController.writewallet(self);
 end;
 procedure TWallet.clear();
 begin
@@ -304,7 +309,6 @@ end;
 
 destructor TWalletList.Destroy;
 begin
-     clear();
      inherited;
 end;
 
@@ -331,7 +335,7 @@ begin
      db.launchSql(sql)
 end;
 
-procedure TWalletController.save(Wallet: TWallet);
+procedure TWalletController.writeWallet(Wallet: TWallet);
 var
    sql : String;
    Q : TSQLQuery;
@@ -374,27 +378,46 @@ begin
    end;
 end;
 
-function TWalletController.getWallet(pk: String): TWallet;
-var
-   Q : TSQLQuery;
+function TWalletController.getWallets(): TWalletList;
 begin
-     // refresh and returns Wallet list
-     result := TWallet.create;
-     Q := db.getSqlQuery('select * from "Wallets" where Wallet_pk = "'+pk+'"');
-     while not Q.Eof do
-     begin
-         result.setpk(Q.FieldByName('Wallet_pk').AsString);
-         result.setName(Q.FieldByName('Wallet_name').AsString);
-         result.setCrypto(Q.FieldByName('Wallet_crypto').Asinteger);
-         result.setUser(Q.FieldByName('Wallet_user').Asinteger);
-         Q.Next;
-     end;
-     Q.Close;
-     Q.Free;
+  if not loaded then
+  begin
+    wallets := readWallets();
+    loaded := true;
+  end;
+  result := wallets;
+end;
+
+procedure TWalletController.saveWallets();
+var
+   I : Integer;
+begin
+  for I := 0 to wallets.Count -1 do
+   begin
+     writeWallet(wallets.Get(I));
+   end;
 end;
 
 
-function TWalletController.getWallets(): TWalletList;
+function TWalletController.getWallet(pk: String): TWallet;
+var
+   I : Integer;
+begin
+  if not loaded then
+  begin
+    wallets := readWallets();
+    loaded := true;
+  end;
+  for I := 0 to wallets.Count -1 do
+   begin
+        if wallets.Get(I).getPk = pk then result := wallets.Get(I);
+   end;
+
+
+end;
+
+
+function TWalletController.readWallets(): TWalletList;
 var
    Q : TSQLQuery;
    Wallet : TWallet;

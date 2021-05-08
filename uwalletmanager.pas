@@ -102,7 +102,7 @@ begin
        newWallet.setPk(fnewwallet.editPk.text);
        newWallet.setName(fnewwallet.editName.text);
        newWallet.setCrypto(fnewwallet.coinList.get(fnewwallet.coins.ItemIndex).getId());
-       walletController.save(newWallet);
+       walletController.writeWallet(newWallet);
        newWallet.free;
        updateWalletList();
      end;
