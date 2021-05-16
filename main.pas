@@ -26,6 +26,12 @@ type
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
+    Label4: TLabel;
+    Label5: TLabel;
+    lbl_invertido: TLabel;
+    lbl_ganancia: TLabel;
+    Label8: TLabel;
+    lbl_saldo: TLabel;
     MenuItem1: TMenuItem;
     MetroButton1: TMetroButton;
     MetroButton2: TMetroButton;
@@ -41,6 +47,7 @@ type
     color_grid_1: TShape;
     color_grid_2: TShape;
     Panel3: TPanel;
+    Panel4: TPanel;
     PopupMenu1: TPopupMenu;
     Splitter1: TSplitter;
     gridMovements: TStringGrid;
@@ -192,6 +199,27 @@ begin
      gridWallets.Cells[2, row] := floatToCurrency(totalValue) + c;
      gridWallets.Cells[4, row] := floatToCurrency(totalMarketPrice) + c;
      gridWallets.Cells[5, row] := floatToCurrency(totalProfit) + c;
+
+     lbl_invertido.Caption:=floatToCurrency(totalValue) + c; ;
+     lbl_ganancia.Caption:=floatToCurrency(totalProfit) + c; ;
+     lbl_saldo.Caption:=floatToCurrency(totalMarketPrice) + c;
+     if totalProfit > 0 then
+     begin
+         lbl_ganancia.Font.Color:=clGreen;
+         lbl_saldo.Font.Color:=clGreen;
+     end
+     else
+     if totalProfit < 0 then
+     begin
+         lbl_ganancia.Font.Color:=clRed;
+         lbl_saldo.Font.Color:=clRed;
+     end
+     else
+     begin
+         lbl_ganancia.Font.Color:=clWhite;
+         lbl_saldo.Font.Color:=clWhite;
+     end;
+
 
      getConfig().useMarketSync := originalUsePriceSync;
 

@@ -1,7 +1,7 @@
 object mainform: Tmainform
-  Left = 331
+  Left = 225
   Height = 812
-  Top = 102
+  Top = 139
   Width = 1555
   Caption = 'Crypto Tracer'
   ClientHeight = 812
@@ -35,7 +35,7 @@ object mainform: Tmainform
     ParentFont = False
     TabOrder = 0
     object color_background: TShape
-      Left = 864
+      Left = 948
       Height = 32
       Top = 16
       Width = 32
@@ -2982,6 +2982,90 @@ object mainform: Tmainform
       Selected = False
       LeftTextAnchor = 0
     end
+    object Panel4: TPanel
+      Left = 776
+      Height = 96
+      Top = 2
+      Width = 776
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      ClientHeight = 96
+      ClientWidth = 776
+      TabOrder = 2
+      object Label4: TLabel
+        Left = 40
+        Height = 32
+        Top = 17
+        Width = 88
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoSize = False
+        Caption = 'Invertido'
+        ParentColor = False
+      end
+      object Label5: TLabel
+        Left = 40
+        Height = 32
+        Top = 49
+        Width = 96
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoSize = False
+        Caption = 'Ganancia'
+        ParentColor = False
+      end
+      object lbl_invertido: TLabel
+        Left = 136
+        Height = 32
+        Top = 17
+        Width = 184
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoSize = False
+        Caption = '0.00€'
+        ParentColor = False
+      end
+      object lbl_ganancia: TLabel
+        Left = 136
+        Height = 32
+        Top = 49
+        Width = 184
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoSize = False
+        Caption = '0.00€'
+        ParentColor = False
+      end
+      object Label8: TLabel
+        Left = 392
+        Height = 46
+        Top = 25
+        Width = 96
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoSize = False
+        Caption = 'Saldo:'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clWhite
+        Font.Height = -32
+        Font.Name = '@Arial Unicode MS'
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
+        ParentColor = False
+        ParentFont = False
+      end
+      object lbl_saldo: TLabel
+        Left = 496
+        Height = 44
+        Top = 27
+        Width = 240
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        AutoSize = False
+        Caption = '0.00€'
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clWhite
+        Font.Height = -32
+        Font.Name = '@Arial Unicode MS'
+        Font.Pitch = fpVariable
+        Font.Quality = fqDraft
+        ParentColor = False
+        ParentFont = False
+      end
+    end
   end
   object Splitter1: TSplitter
     Cursor = crVSplit
@@ -3198,8 +3282,8 @@ object mainform: Tmainform
   end
   object PopupMenu1: TPopupMenu
     OnPopup = PopupMenu1Popup
-    left = 1083
-    top = 45
+    left = 704
+    top = 88
     object MenuItem1: TMenuItem
       Caption = 'Remove this movement'
       OnClick = MenuItem1Click
